@@ -1,0 +1,193 @@
+openapi: 3.1.0
+info:
+  title: Food Delivery API - Combined
+  version: 1.0.0
+paths:
+  /deliveryexecutives/{executiveId}/create-profile:
+    post:
+      summary: Create Delivery Executive Profile (To add a new Delivery executive)
+      description: Create the profile of a delivery executive.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeliveryExecutiveProfile'
+      responses:
+        '200':
+          description: Delivery executive profile created successfully
+          content:
+            application/json:
+              example:
+                message: "Delivery executive profile created successfully."
+                updatedProfile:
+                  $ref: '#/components/schemas/DeliveryExecutive'
+        '404':
+          description: Something is broken. Not Found.
+        '422':
+          description: Invalid request payload
+
+  /deliveryexecutives/{executiveId}/update-profile:
+    put:
+      summary: Update Delivery Executive Profile
+      description: Update the profile of a delivery executive based on the executive ID.
+      parameters:
+        - $ref: '#/components/parameters/DeliveryExecutiveId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDeliveryExecutiveProfile'
+      responses:
+        '200':
+          description: Delivery executive profile updated successfully
+          content:
+            application/json:
+              example:
+                message: "Delivery executive profile updated successfully."
+                updatedProfile:
+                  $ref: '#/components/schemas/DeliveryExecutive'
+        '404':
+          description: Delivery executive not found
+        '422':
+          description: Invalid request payload
+
+  
+
+components:
+  parameters:
+    DeliveryExecutiveId:
+      name: executiveId
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: The ID of the delivery executive.
+
+  schemas:
+    CreateDeliveryExecutiveProfile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the delivery executive.
+          examples: 
+            - "Name Name"
+        phoneNumber:
+          type: string
+          description: The updated phone number of the delivery executive.
+          examples:
+            - "+11122334455"
+        email:
+          type: string
+          description: The updated email id of the delivery executive.
+          examples: 
+            - "delivery@abc.com"
+        profilePhoto:
+          type: string
+          format: uri
+          description: URL of the updated profile photo of the delivery executive.
+          examples:
+            - "https://abc.com/profile-photo.jpg"
+
+    UpdateDeliveryExecutiveProfile:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          description: The updated phone number of the delivery executive.
+          examples:
+            - "+11122334455"
+        email:
+          type: string
+          description: The updated email id of the delivery executive.
+          examples: 
+            - "delivery@abc.com"
+        profilePhoto:
+          type: string
+          format: uri
+          description: URL of the updated profile photo of the delivery executive.
+          examples:
+            - "https://abc.com/profile-photo.jpg"
+            
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+          format: uuid
+          description: The unique identifier for the order.
+          examples:
+            - "1a2euuuu-5e6f-euuu-9i0j-1k2euuuuuo6p"
+        customerName:
+          type: string
+          description: The name of the customer who placed the order.
+          examples:
+            - "Name Name"
+        customerPhoneNumber:
+          type: string
+          description: The phone number of the customer.
+          examples:
+            - "+1122334455"
+        items:
+          type: array
+          items:
+            type: string
+          description: The list of items in the order.
+          examples:
+            - ["Pizza", "Burger", "Cola"]
+        totalAmount:
+          type: number
+          format: double
+          description: The total amount of the order.
+          examples:
+            - 25.99
+        status:
+          type: string
+          description: The status of the order (e.g., "Pending", "In Progress", "Delivered").
+          examples:
+            - "In Progress"
+          
+    DeliveryExecutive:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the delivery executive.
+          examples:
+            - "1a2beuuuu-5e6f-7g8h-euuu-1k2leuuuuo6p"
+        name:
+          type: string
+          description: The name of the delivery executive.
+          examples:
+            - "Name Name"
+        rating:
+          type: number
+          format: double
+          description: The rating of the delivery executive.
+          examples:
+            - 4.7
+        completedOrders:
+          type: integer
+          description: The number of completed orders by the delivery executive.
+          examples:
+            - 55
+        phoneNumber:
+          type: string
+          description: The phone number of the delivery executive.
+          examples:
+            - "+11122334455"
+        profilePhoto:
+          type: string
+          format: uri
+          description: URL of the delivery executive's profile photo.
+          examples:
+            - "https://abc.com/profile-photo.jpg"
+        status:
+          type: string
+          description: The status of the delivery executive (e.g., "Available", "Busy").
+          examples:
+            - "Available"
