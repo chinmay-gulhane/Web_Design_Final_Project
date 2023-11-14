@@ -10,3 +10,4 @@ HuskyBites is a meal delivery site that allows customers to place orders from ne
 # Project Object Model
 
 ![Project Object Model](/assets/object-diagram.jpg)
+![yml](/docs/restaurant/openapi-restaurant.yml)
