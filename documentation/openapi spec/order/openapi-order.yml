@@ -1,0 +1,376 @@
+openapi: 3.1.0
+info:
+  title: INFO6150 - Web Design and User Experience Engineering || Final Project || HUSKYBITES
+  description: HuskyBites is food delivery app which helps users to search the restaurants in their local area and order food, while restaurant can manage food offered and process an order. Food delivery agent is assigned to deliver the food while also managing their own acocunt.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/
+tags:
+  - name: orders
+    description: Orders endpoints
+paths:
+  /user/orders:
+    get:
+      summary: Get a list of orders with pagination and optional userId filtering
+      tags:
+        - orders
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            default: 10
+          description: Number of items per page
+        - in: query
+          name: userId
+          schema:
+            type: string
+          description: Filter orders by userId
+      responses:
+        2XX:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+                properties:
+                  success: 
+                    type: boolean 
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Order"
+                  message:
+                    type: string
+                    examples: 
+                      - "Retrieved orders successfully"
+        4XX:
+          description: Client error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErrorResponse'
+        5XX:
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+    post:
+      summary: Create a new order
+      tags:
+        - orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/Order"
+      responses:
+        2XX:
+          description: Order created successfully
+          content:
+            application/json:
+              example:
+                success: true
+                data:
+                  id: "order1"
+                message: "Order created successfully"
+        4XX:
+          description: Client error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErrorResponse'
+        5XX:
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+    put:
+      summary: Update an existing order
+      tags:
+        - orders
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          description: ID of the order to be updated
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/Order"
+            example:
+              status: "Delivered"
+              deliveredIn: "1.5 hours"
+      responses:
+        2XX:
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/Order"
+              example:
+                success: true
+                data:
+                  id: "order1"
+                message: "Order updated successfully"
+        4XX:
+          description: Client error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErrorResponse'
+        5XX:
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+    delete:
+      summary: Delete an existing order
+      tags:
+        - orders
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          description: ID of the order to be deleted
+          schema:
+            type: string
+      responses:
+        2XX:
+          description: Order deleted successfully
+          content:
+            application/json:
+              schema:  
+                type: object
+                $ref: "#/components/schemas/Order"
+              example:
+                success: true
+                data:
+                  id: "order1"
+                message: "Order deleted successfully"
+        4XX:
+          description: Client error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErrorResponse'
+        5XX:
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the order.
+          examples: 
+            - "order1"
+        userId:
+          type: string
+          format: uuid
+          description: The unique identifier for the user.
+          examples: 
+            - "user1"
+        customerName:
+          type: string
+          description: The name of the customer who placed the order.
+          examples:
+            - "FirstName LastName"
+        customerPhoneNumber:
+          type: string
+          description: The phone number of the customer.
+          examples:
+            - "+1122334455"
+        orderItems:
+          type: array
+          items:
+            type: object
+            properties:
+              foodItem:
+                $ref: "#/components/schemas/FoodItem"
+              quantity:
+                type: integer
+                description: The quantity of the food item in the order.
+            description: Food items and their quantities in the order.
+            examples:
+        promoCode:
+          type: string
+          description: The promotional code used for the order.
+          examples: 
+            - "PROMO123"
+            - "DISCOUNT50"
+        status:
+          type: string
+          description: The status of the order (e.g., "Processing", "Delivered").
+          examples: 
+            - "Processing"
+            - "Delivered"
+        restaurantId:
+          type: string
+          format: uuid
+          description: The unique identifier for the restaurant.
+          examples: 
+            - "restaurant1"
+        paymentDetails:
+          $ref: "#/components/schemas/PaymentDetails"
+        finalAmount:
+          type: number
+          format: double
+          description: The final amount to be paid for the order.
+          examples: 
+            - 25.99
+        restaurantName:
+          type: string
+          description: The name of the restaurant.
+          examples:
+            - "Punjab Rasoi"
+        specialInstructions:
+          type: string
+          description: Special instructions for the order.
+          examples: 
+            - "Extra spicy"
+        ETA:
+          type: string
+          format: date-time
+          description: The estimated time of arrival for the order.
+          examples: 
+            - "2023-11-15T12:00:00Z"
+        deliveredIn:
+          type: string
+          description: The actual time taken for order delivery.
+          examples: 
+            - "2 hours"
+        tip:
+          type: number
+          format: double
+          description: The tip amount for the delivery executive.
+          examples: 
+            - 5.0
+        deliveryExecutiveId:
+          type: string
+          format: uuid
+          description: The unique identifier for the delivery executive
+          examples: 
+            - "executive1"
+    FoodItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the food item.
+          examples: 
+            - "Pizza"
+        foodImage:
+          type: string
+          format: uri
+          description: URL of the food item image.
+          examples: 
+            - "https://husky-bites.com/pizza.jpg"
+        restaurantId:
+          type: string
+          format: uuid
+          description: The unique identifier for the restaurant.
+          examples: 
+            - "restaurent1"
+        price:
+          type: number
+          format: double
+          description: The price of the food item.
+          examples: 
+            - 20
+    PaymentDetails:
+      type: object
+      properties:
+        cardUsed:
+          type: object
+          properties:
+            cardNumber:
+              type: string
+              description: The card number.
+              examples:
+                - "1232 2321 3332 2321"
+            expiryDate:
+              type: string
+              format: date
+              description: The card's expiry date.
+              examples:
+                - "12/25"
+            cardHolderName:
+              type: string
+              description: The name on the card.
+              examples:
+                - "Omkar"
+        cash:
+          type: number
+          description: The amount paid in cash (if applicable).
+          examples:
+            - 0
+      description: Payment details for the order.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+      required:
+        - code
+        - message
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the request was successful
+          examples:
+            - true
+            - false
+        data:
+          type: object
+          description: The data related to the request
+        message:
+          type: string
+          description: A message related to the request
+    ClientErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error summary
+        message:
+          type: string
+          description: Error description
+    ServerErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error summary
+        message:
+          type: string
+          description: Error description
