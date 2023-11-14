@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Course Search API
+  title: User Authentication APIs
   description: REST API to search courses offered.
   version: 'v1.0'
 servers: 
