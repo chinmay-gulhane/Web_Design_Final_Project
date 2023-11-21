@@ -3,9 +3,9 @@ import FoodItemModel from './FoodItem.js';
 import AddressModel from './Address.js';
 
 const restaurantSchema = new Schema({
-    id: {
+    name: {
         type: String,
-        required: false,
+        required: false
     },
     foodItems: {
         type: [FoodItemModel.schema],
