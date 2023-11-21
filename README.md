@@ -28,3 +28,9 @@ HuskyBites is a meal delivery site that allows customers to place orders from ne
 
 ### Delivery Executive
 [Delivery Executive OpenAPI Spec](/docs/openapi%20spec/delivery/openapi-delivery-executive.yml)
+
+
+# How to run server
+
+```bash
+npm start
