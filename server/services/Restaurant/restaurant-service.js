@@ -18,8 +18,16 @@ export const getAllRestaurants = async () => {
 
 // Get restaurant by id
 export const findRestaurantById = async (id) => {
-    console.log("search");
     const restaurant = await RestaurantModel.findById(id).exec();
-    console.log("search");
     return restaurant;
 };
+
+// Update restaurant
+export const updateRestaurant = async (id, restaurantUpdateData) => {
+    const restaurant = await RestaurantModel.findByIdAndUpdate(id, restaurantUpdateData).exec();
+    return restaurant;
+}
+// Delete restaurant
+export const deleteRestaurant = async (id) => {
+    return await RestaurantModel.findByIdAndDelete(id).exec();
+}
