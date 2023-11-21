@@ -3,7 +3,7 @@ info:
   title: Food Delivery API - Combined
   version: 1.0.0
 paths:
-  /deliveryexecutives/{executiveId}/create-profile:
+  /deliveryexecutives/create-profile:
     post:
       summary: Create Delivery Executive Profile (To add a new Delivery executive)
       description: Create the profile of a delivery executive.
