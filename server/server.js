@@ -29,11 +29,6 @@ app.use(morgan("dev"));
 //TODO: Initialize routes
 registerRouter(app);
 
-// allows app to use auth routes
-// app.use("/auth", userRouter);
-// app.use("/restaurant", restaurantRouter);
-// app.use("/orders", orderRouter);
-
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running successfully on ${PORT}`.bgGreen.white);
