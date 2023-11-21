@@ -21,3 +21,34 @@ export const findRestaurantById = async (request, response) => {
         setErrorResponse(response, error);
     }
 };
+
+export const getAllRestaurants = async (request, response) => {
+    try {
+        const allRestaurants = await restaurantService.getAllRestaurants();
+        setResponse(response, allRestaurants);
+    } catch (error) {
+        setErrorResponse(response, error);
+    }
+};
+
+export const updateRestaurant = async (request, response) => {
+    try {
+        const id = request.params.id;
+        const restaurantUpdateData = { ...request.body };
+        const updatedRestaurant = await restaurantService.updateRestaurant(id, restaurantUpdateData);
+        console.log(updateRestaurant);
+        setResponse(response, updatedRestaurant);
+    } catch (error) {
+        setErrorResponse(response, error);
+    }
+};
+
+export const deleteRestaurant = async (request, response) => {
+    try {
+        const id = request.params.id;
+        const course = await restaurantService.deleteRestaurant(id);
+        setResponse(response, {});
+    } catch (error) {
+        setErrorResponse(response, error);
+    }
+}
