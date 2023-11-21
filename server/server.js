@@ -3,7 +3,8 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv"
 import { connectDB } from "./database/connectDb.js";
-import userRouter from "./routes/userRoute.js"; 
+import userRouter from "./routes/userRoute.js";
+import restaurantRouter from "./routes/restaurantRoute.js";
 
 
 // Used to access variables from .env
@@ -28,6 +29,7 @@ app.use(morgan("dev"));
 
 // allows app to use auth routes
 app.use("/auth", userRouter);
+app.use("/restaurant", restaurantRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
