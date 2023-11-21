@@ -3,6 +3,8 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { connectDB } from "./database/connectDb.js";
+import userRouter from "./routes/userRoute.js"; 
+import deliveryRoutes from "./routes/deliveryRoutes.js";
 import registerRouter from "./routes/index.js";
 import models from "./model/index.js";
 
@@ -25,6 +27,10 @@ app.use(express.urlencoded());
 
 // to log requested api in console
 app.use(morgan("dev"));
+
+// allows app to use auth routes
+app.use("/auth", userRouter);
+app.use("/delivery", deliveryRoutes);
 
 //TODO: Initialize routes
 registerRouter(app);
