@@ -1,11 +1,12 @@
 import express, { json } from "express";
 import cors from "cors";
 import morgan from "morgan";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import { connectDB } from "./database/connectDb.js";
 import userRouter from "./routes/userRoute.js"; 
 import deliveryRoutes from "./routes/deliveryRoutes.js";
-
+import registerRouter from "./routes/index.js";
+import models from "./model/index.js";
 
 // Used to access variables from .env
 dotenv.config();
@@ -31,9 +32,10 @@ app.use(morgan("dev"));
 app.use("/auth", userRouter);
 app.use("/delivery", deliveryRoutes);
 
+//TODO: Initialize routes
+registerRouter(app);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running successfully on ${PORT}`.bgGreen.white);
 });
-
-
