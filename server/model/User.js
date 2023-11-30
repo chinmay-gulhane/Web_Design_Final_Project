@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import validator from "validator";
+import OrderModel from "./order.js";
 
 const userSchema = new Schema({
-  name: {
+  firstName: {
     type: String,
-    required: [true, "User name required"],
+    required: [true, "User first name required"],
+  },
+  lastName: {
+    type: String,
+    required: [true, "User last name required"],
   },
   email: {
     type: String,
@@ -32,7 +37,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         return regex.test(value);
       },
@@ -44,35 +49,35 @@ const userSchema = new Schema({
     type: String,
     required: false,
     validate: {
-        validator: function(value){ 
-            return validator.isURL(value);
-        },
-        message: "Please enter valid url"
+      validator: function (value) {
+        return validator.isURL(value);
+      },
+      message: "Please enter valid url"
     }
   },
-//   addresses: {
-//     type: [address],
-//     required: false
-//   },
-//   cards:{
-//     type: [card],
-//     required: false
-//   },
-//   orderHistory: {
-//     type: [order],
-//     required: false
-//   },
-//   favourites: {
-//     type: [restaurant],
-//     required: [false]
-//   },
-//   ongoingOrder: {
-//     type: order,
-//     required: false
-//   }
-},{
-    versionKey: false,
-    timestamps: true
+  //   addresses: {
+  //     type: [address],
+  //     required: false
+  //   },
+  //   cards:{
+  //     type: [card],
+  //     required: false
+  //   },
+  orderHistory: {
+    type: [OrderModel.Schema],
+    required: false
+  }
+  //   favourites: {
+  //     type: [restaurant],
+  //     required: [false]
+  //   },
+  //   ongoingOrder: {
+  //     type: order,
+  //     required: false
+  //   }
+}, {
+  versionKey: false,
+  timestamps: true
 });
 
 const User = mongoose.model("user", userSchema);
