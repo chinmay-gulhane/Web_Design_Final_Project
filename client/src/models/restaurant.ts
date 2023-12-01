@@ -1,6 +1,7 @@
-import { FoodItem } from "./foodItem";
+import Address from "./address";
+import FoodItem from "./foodItem";
 
-export interface Restaurant {
+interface Restaurant {
   _id: string;
   name: string;
   foodItems: FoodItem[];
@@ -13,17 +14,4 @@ export interface Restaurant {
   cuisine: string[];
   offers: string[];
   __v: number;
-}
-
-interface Address {
-  geolocation: {
-    latitude: string;
-    longitude: string;
-  };
-  addressLine: string;
-  city: string;
-  state: string;
-  country: string;
-  zipCode: string;
-  _id: string;
 }
