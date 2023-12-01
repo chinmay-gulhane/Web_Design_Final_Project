@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReduxProvider } from "@/redux/provider";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 export const metadata: Metadata = {
   title: "Husky Bites App",
