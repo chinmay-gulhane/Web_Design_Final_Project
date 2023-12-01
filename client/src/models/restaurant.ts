@@ -13,5 +13,6 @@ interface Restaurant {
   password: string;
   cuisine: string[];
   offers: string[];
-  __v: number;
 }
+
+export default Restaurant;

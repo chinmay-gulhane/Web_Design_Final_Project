@@ -6,30 +6,38 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FoodItem from "@/models/foodItem";
+import Title from "./Title";
+import AddToCartButton from "./Restaurant/AddToCartButton";
 
 const FoodCard: React.FC<{ foodItem: FoodItem }> = ({ foodItem }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={foodItem.foodImage}
-        title={foodItem.name}
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {foodItem.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Price: ${foodItem.price.toFixed(2)}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Rating: {foodItem.rating}
-        </Typography>
+    <Card className="border border-gray-200 shadow-md hover:shadow-lg transition duration-300">
+      <CardContent className="flex justify-between items-center">
+        <div className="flex flex-col">
+          <Title
+            title={foodItem.name}
+            variant="h5"
+            // className="text-xl font-semibold mb-2"
+          ></Title>
+          <Typography variant="body2" color="text.secondary" className="mb-1">
+            Price: ${foodItem.price.toFixed(2)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" className="mb-1">
+            Rating: {foodItem.rating}
+          </Typography>
+          <Typography variant="body2" className="text-gray-600">
+            Very nice food...
+          </Typography>
+        </div>
+        <div className="w-1/3">
+          <CardMedia
+            sx={{ height: 140 }}
+            image="/images/restaurant.jpg"
+            title={foodItem.name}
+          />
+          <AddToCartButton></AddToCartButton>
+        </div>
       </CardContent>
-      <CardActions>
-        <Button size="small">Add to Cart</Button>
-        <Button size="small">View Details</Button>
-      </CardActions>
     </Card>
   );
 };
