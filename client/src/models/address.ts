@@ -4,13 +4,13 @@ interface Geolocation {
 }
 
 interface Address {
-  geolocation: Geolocation;
+  _id?: string;
+  geolocation?: Geolocation;
   addressLine: string;
   city: string;
   state: string;
   country: string;
-  zipCode: string;
-  _id: string;
+  zipCode: number;
 }
 
 export default Address;
