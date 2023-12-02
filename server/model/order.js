@@ -41,6 +41,7 @@ const orderSchema = new mongoose.Schema({
   deliveredIn: { type: String },
   tip: { type: Number, format: "double" },
   deliveryExecutiveId: { type: String, format: "uuid" },
+  createdDateTime: { type: Date, default: Date.now },
 });
 
 const OrderModel = mongoose.model("order", orderSchema);

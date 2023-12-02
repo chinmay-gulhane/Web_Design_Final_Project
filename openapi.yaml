@@ -566,7 +566,43 @@ paths:
             application/json: 
               schema:
                 $ref: '#/components/schemas/ServerErrorResponse'
-  /user/orders:
+  /orders/all:
+    get:
+      summary: Get all orders in the system
+      tags:
+        - orders
+      responses:
+        2XX:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the request was successful.
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Order"
+                    description: List of orders
+                  message:
+                    type: string
+                    description: A message related to the success or failure of the request.
+        4XX:
+          description: Client error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErrorResponse'
+        5XX:
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+  /orders/search:
     get:
       summary: Get a list of orders with pagination and optional userId filtering
       tags:
@@ -618,6 +654,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerErrorResponse'
+  /orders:
     post:
       summary: Create a new order
       tags:
@@ -639,6 +676,47 @@ paths:
                 data:
                   id: "order1"
                 message: "Order created successfully"
+        4XX:
+          description: Client error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErrorResponse'
+        5XX:
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerErrorResponse'
+  /orders/{orderId}:
+    get:
+      summary: Get order by orderId
+      tags:
+        - orders
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          description: ID of the order to be updated
+          schema:
+            type: string
+      responses:
+        2XX:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+                properties:
+                  success: 
+                    type: boolean 
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Order"
+                  message:
+                    type: string
+                    examples: 
+                      - "Retrieved order successfully"
         4XX:
           description: Client error response
           content:

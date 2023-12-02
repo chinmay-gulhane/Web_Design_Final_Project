@@ -7,4 +7,5 @@ export default (app) => {
   app.use("/auth", userRouter);
   app.use("/restaurant", restaurantRouter);
   app.use("/orders", orderRouter);
+  app.use("/delivery", orderRouter);
 };

@@ -34,15 +34,21 @@ export const getAll = async (params = {}) => {
 // search orders
 export const search = async (params = {}, page = 1, pageSize = 10) => {
   try {
-    // Extract page and pageSize from the request query parameters
-    const { page: reqPage, pageSize: reqPageSize } = params;
+    // Extract userId from the params
+    const { userId, ...otherParams } = params;
+
+    // Calculate skip based on page and pageSize
+    const skip = Math.max(0, (page - 1) * pageSize);
+
+    // Build the query condition with userId if available
+    const queryCondition = userId
+      ? { ...otherParams, userId }
+      : { ...otherParams };
 
     // Use the extracted values or fallback to default values if not provided
-    const skip = ((reqPage || page) - 1) * (reqPageSize || pageSize);
-
-    const orders = await Order.find(params)
+    const orders = await Order.find(queryCondition)
       .skip(skip)
-      .limit(reqPageSize || pageSize)
+      .limit(pageSize)
       .exec();
 
     return orders;
