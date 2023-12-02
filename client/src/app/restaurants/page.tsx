@@ -7,11 +7,18 @@ import Restaurant from "@/models/restaurant";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
 import Header from "@/components/Header/Header";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/store";
+import { User } from "@/models/auth";
+
 
 const RestaurantPage: React.FC = () => {
   const [products, setProducts] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+
+  const user: User | null = useAppSelector(state => state.auth.user);
+
+  console.log("USer from state", user)
 
   useEffect(() => {
     const fetchData = async () => {
