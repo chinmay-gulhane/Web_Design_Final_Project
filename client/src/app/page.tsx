@@ -1,7 +1,10 @@
+import Title from "@/components/Title";
+
 export default function Home() {
   return (
     <>
-      <h1>Welcome to Husky Bites Application</h1>
+      <Title title="Welcome to Husky Bites Application" variant="h1"></Title>
+      {/* <h1>Welcome to Husky Bites Application</h1> */}
     </>
   );
 }

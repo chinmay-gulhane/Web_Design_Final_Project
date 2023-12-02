@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import {
   Avatar,
@@ -43,8 +43,7 @@ interface MyComponentProps {
 const CustomForm: React.FC<MyComponentProps> = ({ formType }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-
-  const loading = useAppSelector(state => state.auth.loading);
+  const loading = useAppSelector((state) => state.auth.loading);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
