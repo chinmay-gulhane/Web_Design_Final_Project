@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: User Authentication APIs
+  title: Husky Bites APIs
   description: REST API to search courses offered.
   version: 'v1.0'
 servers: 

@@ -1,4 +1,4 @@
-import { Restaurant } from "@/models/restaurant";
+import Restaurant from "@/models/restaurant";
 import axios, { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:8080";
