@@ -1,20 +1,9 @@
-<<<<<<< Updated upstream
-=======
 "use client";
-
 import Title from "@/components/Title";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
->>>>>>> Stashed changes
-import Title from "@/components/Title";
 
 export default function Home() {
   const router = useRouter();
-
-  useEffect(() => {
-    router.push("/login");
-  }, []);
 
   return (
     <>
