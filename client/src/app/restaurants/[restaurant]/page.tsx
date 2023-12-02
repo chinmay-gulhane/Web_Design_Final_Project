@@ -8,6 +8,7 @@ import Restaurant from "@/models/restaurant";
 import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
+import Header from "@/components/Header/Header";
 
 const baseUrl = "http://localhost:8080/restaurant";
 
@@ -44,25 +45,28 @@ const FoodList: React.FC = () => {
   }, [restaurant?.foodItems]);
 
   return (
-    <div>
-      {restaurant && (
-        <CoverImage
-          //   src={restaurant.profilePhoto}
-          src={"/images/restaurant.jpg"}
-          alt="Restaurant cover image"
-        />
-      )}
+    <>
+      <Header></Header>
       <div>
-        <Title
-          title={restaurant?.name + " | " + restaurant?.rating}
-          variant={"h2"}
-        ></Title>
-        <Title title="Menu" variant={"h4"}></Title>
-        {foodItems.map((foodItem) => (
-          <FoodCard key={foodItem._id} foodItem={foodItem} />
-        ))}
+        {restaurant && (
+          <CoverImage
+            //   src={restaurant.profilePhoto}
+            src={"/images/restaurant.jpg"}
+            alt="Restaurant cover image"
+          />
+        )}
+        <div>
+          <Title
+            title={restaurant?.name + " | " + restaurant?.rating}
+            variant={"h2"}
+          ></Title>
+          <Title title="Menu" variant={"h4"}></Title>
+          {foodItems.map((foodItem) => (
+            <FoodCard key={foodItem._id} foodItem={foodItem} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

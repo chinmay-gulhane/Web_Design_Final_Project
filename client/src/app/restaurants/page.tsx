@@ -39,7 +39,7 @@ const RestaurantPage: React.FC = () => {
         <Row>
           {products.map((restaurant: Restaurant) => (
             <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
-              <Link href={`/restaurant/${restaurant._id}`}>
+              <Link href={`/restaurants/${restaurant._id}`}>
                 <RestaurantCard restaurant={restaurant}></RestaurantCard>
               </Link>
             </Col>
