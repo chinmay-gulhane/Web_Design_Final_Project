@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { CardContent, CardMedia, Typography } from "@mui/material";
 import "./restaurant-card.scss";
-import { Restaurant } from "@/models/restaurant";
+import Restaurant from "@/models/restaurant";
 
 const Products: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
   return (
