@@ -20,7 +20,6 @@ const paymentDetailsSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-  id: { type: String, format: "uuid", required: true },
   userId: { type: String, format: "uuid", required: true },
   customerName: { type: String, required: true },
   customerPhoneNumber: { type: String, required: true },

@@ -1,0 +1,11 @@
+.checkout-container-div{
+    display: flex;
+    justify-content: center;
+    margin-top: 90px;
+
+    .checkout-card {
+        width: 100vh;
+        padding: 20px 30px;
+    }
+}
+
