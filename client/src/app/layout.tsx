@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ReduxProvider } from "@/redux/provider";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ToastifyContainer from "@/components/ToastifyContainer";
 
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
       </head>
       <body>
         <ReduxProvider>{children}</ReduxProvider>
+        <ToastifyContainer />
       </body>
     </html>
   );

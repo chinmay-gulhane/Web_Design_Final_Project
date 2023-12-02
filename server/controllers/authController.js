@@ -5,10 +5,13 @@ import { generateAuthToken, maskPassword } from "../services/authService.js";
 import bcryptjs from "bcryptjs";
 
 export const registerController = async (req, res) => {
-  const { name, email, password, phone, profilePhoto } = req.body;
+  const { firstName, lastName, email, password, phone, profilePhoto } = req.body;
   try {
-    if (!name) {
-      throw new Error("Please enter name");
+    if (!firstName) {
+      throw new Error("Please enter first name");
+    }
+    if (!lastName) {
+      throw new Error("Please enter last name");
     }
     if (!email) {
       throw new Error("Please enter email");
