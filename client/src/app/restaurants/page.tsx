@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import RestaurantCard from "../components/RestaurantCard/RestaurantCard";
 import { Row, Col } from "react-bootstrap";
 import "./restaurant.scss";
-import Header from "../components/Header/Header";
-import { Restaurant } from "@/models/restaurant";
 import * as restaurantService from "@/services/restaurant-service";
+import Restaurant from "@/models/restaurant";
+import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
+import Header from "@/components/Header/Header";
+import Link from "next/link";
 
 const RestaurantPage: React.FC = () => {
   const [products, setProducts] = useState<Restaurant[]>([]);
@@ -38,7 +39,9 @@ const RestaurantPage: React.FC = () => {
         <Row>
           {products.map((restaurant: Restaurant) => (
             <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
-              <RestaurantCard restaurant={restaurant}></RestaurantCard>
+              <Link href={`/restaurant/${restaurant._id}`}>
+                <RestaurantCard restaurant={restaurant}></RestaurantCard>
+              </Link>
             </Col>
           ))}
         </Row>
