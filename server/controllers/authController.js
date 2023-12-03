@@ -3,9 +3,11 @@ import validator from "validator";
 import User from "../model/User.js";
 import { generateAuthToken, maskPassword } from "../services/authService.js";
 import bcryptjs from "bcryptjs";
+import { sendEmail } from "../services/emailService.js";
 
 export const registerController = async (req, res) => {
-  const { firstName, lastName, email, password, phone, profilePhoto } = req.body;
+  const { firstName, lastName, email, password, phone, profilePhoto } =
+    req.body;
   try {
     if (!firstName) {
       throw new Error("Please enter first name");
@@ -49,6 +51,11 @@ export const registerController = async (req, res) => {
     user.password = await maskPassword(password);
     user = await user.save();
 
+    let subject = `Welcome to Husky Bites!`;
+    let text = `Hello ${user.firstName},  We are excited to have you aboard!`;
+    let content = `<h4>Hello ${user.firstName}, </ph4> <div><h6>We are excited to have you aboard<h6></div> <br> <br> <h6>From <br> Husky Bites </h6>`;
+    sendEmail(user.email, subject, text, content);
+
     res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -75,7 +82,7 @@ export const loginController = async (req, res) => {
     }
 
     if (!validator.isEmail(email)) {
-        throw new Error("Please enter valid email");
+      throw new Error("Please enter valid email");
     }
 
     const isExistingUser = await User.findOne({ email }).exec();
@@ -84,19 +91,18 @@ export const loginController = async (req, res) => {
     }
 
     const isMatch = await bcryptjs.compare(password, isExistingUser.password);
-    if(!isMatch){
-        throw new Error("Password not matching");
+    if (!isMatch) {
+      throw new Error("Password not matching");
     }
 
     const token = generateAuthToken(isExistingUser._id);
 
     res.status(200).json({
-        success: true,
-        message: "User logged successfully",
-        user: isExistingUser,
-        token: token
+      success: true,
+      message: "User logged successfully",
+      user: isExistingUser,
+      token: token,
     });
-
   } catch (error) {
     console.log("Error while logging user ", error);
     res.status(500).json({
@@ -108,15 +114,14 @@ export const loginController = async (req, res) => {
 };
 
 export const getCurrentUserController = (req, res) => {
-
-    try{
-        res.status(200).json({
-            success: true,
-            message: "User authenticated successfully",
-            user: req.user,
-            token: req.token
-        })
-    }catch (error) {
+  try {
+    res.status(200).json({
+      success: true,
+      message: "User authenticated successfully",
+      user: req.user,
+      token: req.token,
+    });
+  } catch (error) {
     console.log("Error while registering user. ", error);
     res.status(500).json({
       success: false,
@@ -124,4 +129,4 @@ export const getCurrentUserController = (req, res) => {
       error: error.message,
     });
   }
-}
+};

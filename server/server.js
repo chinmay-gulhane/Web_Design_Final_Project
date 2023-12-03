@@ -6,7 +6,6 @@ import { connectDB } from "./database/connectDb.js";
 import userRouter from "./routes/userRoute.js"; 
 import deliveryRoutes from "./routes/deliveryRoutes.js";
 import registerRouter from "./routes/index.js";
-import models from "./model/index.js";
 
 // Used to access variables from .env
 dotenv.config();
