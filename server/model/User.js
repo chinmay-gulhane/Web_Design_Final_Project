@@ -45,6 +45,11 @@ const userSchema = new Schema({
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long.",
     },
   },
+  otp: {
+    type: String,
+    required: false,
+    default: ""
+  },
   profilePhoto: {
     type: String,
     required: false,
