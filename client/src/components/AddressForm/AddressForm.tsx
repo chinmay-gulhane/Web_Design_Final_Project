@@ -186,9 +186,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onNext }) => {
             helperText={formErrors.country}
           />
         </Grid>
-        <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
+        <div className="action-btn-div">
           <Button
             variant="contained"
             onClick={handleNextClick}

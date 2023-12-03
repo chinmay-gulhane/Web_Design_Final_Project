@@ -9,6 +9,7 @@ import AddressForm from "../../components/AddressForm/AddressForm";
 import PaymentForm from "../../components/PaymentForm/PaymentForm";
 import "./checkout.scss";
 import Address from "@/models/address";
+import { CardDetails } from "@/models/order";
 
 const CenteredCard: React.FC = () => {
   const steps = ["Delivery address", "Payment details"];
@@ -19,6 +20,11 @@ const CenteredCard: React.FC = () => {
   const handleNext = (data: Address) => {
     setFormData(data);
     setActiveStep(activeStep + 1);
+  };
+
+  const onPlaceOrder = (formData: CardDetails) => {
+    // on place order
+    console.log("On Place Order - Payment form data:", formData);
   };
 
   const handleBack = () => {
@@ -42,7 +48,7 @@ const CenteredCard: React.FC = () => {
       case 0:
         return <AddressForm onNext={handleNext} />;
       case 1:
-        return <PaymentForm />;
+        return <PaymentForm onPlaceOrder={onPlaceOrder} onBack={handleBack} />;
       default:
         throw new Error("Unknown step");
     }
@@ -66,7 +72,7 @@ const CenteredCard: React.FC = () => {
             </Stepper>
             <React.Fragment>
               {getStepContent(activeStep)}
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              {/* <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     Back
@@ -81,7 +87,7 @@ const CenteredCard: React.FC = () => {
                     Place order
                   </Button>
                 )}
-              </Box>
+              </Box> */}
             </React.Fragment>
           </CardContent>
         </Card>

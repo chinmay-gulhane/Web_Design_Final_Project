@@ -21,11 +21,12 @@ export interface Order {
 
 export interface PaymentDetails {
   cardUsed: CardDetails;
-  cash: number;
+  cash?: number;
 }
 
 export interface CardDetails {
   cardNumber: string;
   expiryDate: string;
   cardHolderName: string;
+  cvv: string;
 }
