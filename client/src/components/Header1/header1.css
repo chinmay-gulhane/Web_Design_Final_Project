@@ -13,10 +13,10 @@
     }
 }
 
-.dark-mode{
+.dark-mode {
     float: right;
     
-}
+  }
 
 .cart{
     float: right;
@@ -24,3 +24,11 @@
     margin-right: 40px;
 }
 
+.drawer{
+    width: 250px;
+    padding-inline: 25px;
+    padding-top: 60px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    /* margin-top: 30px; */
+}
