@@ -9,10 +9,7 @@ import { Box, Button } from "@mui/material";
 import Address from "@/models/address";
 
 export interface FormData {
-  // firstName: string;
-  // lastName: string;
   addressLine: string;
-  // address2: string;
   city: string;
   state: string;
   zipCode: string;
@@ -77,34 +74,6 @@ const AddressForm: React.FC<AddressFormProps> = ({ onNext }) => {
         Delivery address
       </Typography>
       <Grid container spacing={3}>
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-            onChange={(e) => handleChange("firstName", e.target.value)}
-            error={!!formErrors.firstName}
-            helperText={formErrors.firstName}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-            onChange={(e) => handleChange("lastName", e.target.value)}
-            error={!!formErrors.lastName}
-            helperText={formErrors.lastName}
-          />
-        </Grid> */}
         <Grid item xs={12}>
           <TextField
             required
@@ -119,17 +88,6 @@ const AddressForm: React.FC<AddressFormProps> = ({ onNext }) => {
             helperText={formErrors.addressLine}
           />
         </Grid>
-        {/* <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-            onChange={(e) => handleChange("address2", e.target.value)}
-          />
-        </Grid> */}
         <Grid item xs={12} sm={6}>
           <TextField
             required

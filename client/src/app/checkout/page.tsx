@@ -15,7 +15,9 @@ const CenteredCard: React.FC = () => {
   const steps = ["Delivery address", "Payment details"];
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState<Address | null>(null);
+  const [AddressFormData, setFormData] = React.useState<Address | null>(null);
+  const [PaymentFormData, setPaymentFormData] =
+    React.useState<CardDetails | null>(null);
 
   const handleNext = (data: Address) => {
     setFormData(data);
@@ -24,7 +26,10 @@ const CenteredCard: React.FC = () => {
 
   const onPlaceOrder = (formData: CardDetails) => {
     // on place order
-    console.log("On Place Order - Payment form data:", formData);
+    setPaymentFormData(formData);
+    console.log("On Place Order");
+    console.log("AddressFormData", AddressFormData);
+    console.log("PaymentFormData", formData);
   };
 
   const handleBack = () => {
@@ -40,8 +45,8 @@ const CenteredCard: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("Address Form Data:", formData);
-  }, [formData]);
+    // console.log("Address Form Data:", AddressFormData);
+  }, [AddressFormData]);
 
   function getStepContent(step: number) {
     switch (step) {
