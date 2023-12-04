@@ -123,6 +123,11 @@ export const generateOtpController = async (req, res) => {
   const { email } = req.body;
 
   try {
+
+    if(!email){
+      throw new Error("Please enter email");
+    }
+
     const isExistingUser = await User.findOne({ email }).exec();
     if (!isExistingUser) {
       throw new Error("Email is not registered");

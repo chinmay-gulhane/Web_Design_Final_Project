@@ -13,6 +13,12 @@ export type registerData = {
     password: string
 }
 
+export type updatePasswordPayLoadType = {
+    email: string,
+    otp: string,
+    password: string
+}
+
 export type User = {
     _id: string
     firstName: string,
