@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loginAction, registerAction } from "../actions/auth-actions";
+import { generateOtpAction, loginAction, registerAction, updatePasswordAction } from "../actions/auth-actions";
 import { loginErrorResponse, loginSuccessResponse } from "@/models/auth";
 import { User } from "@/models/auth";
 
@@ -47,6 +47,32 @@ const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(registerAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || "Something went wrong";
+    });
+    builder.addCase(generateOtpAction.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(generateOtpAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.token = null;
+      state.error = null;
+    });
+    builder.addCase(generateOtpAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || "Something went wrong";
+    });
+    builder.addCase(updatePasswordAction.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updatePasswordAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.token = null;
+      state.error = null;
+    });
+    builder.addCase(updatePasswordAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message || "Something went wrong";
     });

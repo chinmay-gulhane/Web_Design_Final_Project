@@ -1,13 +1,13 @@
 import validator from "validator";
 
-import User from "../model/User.js";
+import User from "../../model/User.js";
 import {
   generateAuthToken,
   generateOTP,
   maskPassword,
-} from "../services/authService.js";
+} from "../../services/authService.js";
 import bcryptjs from "bcryptjs";
-import { sendEmail } from "../services/emailService.js";
+import { sendEmail } from "../../services/emailService.js";
 
 import crypto from "crypto";
 
@@ -123,6 +123,11 @@ export const generateOtpController = async (req, res) => {
   const { email } = req.body;
 
   try {
+
+    if(!email){
+      throw new Error("Please enter email");
+    }
+
     const isExistingUser = await User.findOne({ email }).exec();
     if (!isExistingUser) {
       throw new Error("Email is not registered");
@@ -156,12 +161,16 @@ export const createNewPasswordController = async (req, res) => {
   const { otp, password, email } = req.body;
 
   try {
-    if (!password) {
-      throw new Error("Please enter new password");
+    if (!email) {
+      throw new Error("Please enter email");
     }
     if (!otp) {
       throw new Error("Please enter otp");
     }
+    if (!password) {
+      throw new Error("Please enter new password");
+    }
+
 
     let user = await User.findOne({ email }).exec();
     if (!user) {
@@ -181,6 +190,7 @@ export const createNewPasswordController = async (req, res) => {
     }
 
     user.password = await maskPassword(password);
+    user.otp = "";
     user = await user.save();
 
     res.status(200).json({
