@@ -1,13 +1,13 @@
 import validator from "validator";
 
-import User from "../model/User.js";
+import User from "../../model/User.js";
 import {
   generateAuthToken,
   generateOTP,
   maskPassword,
-} from "../services/authService.js";
+} from "../../services/authService.js";
 import bcryptjs from "bcryptjs";
-import { sendEmail } from "../services/emailService.js";
+import { sendEmail } from "../../services/emailService.js";
 
 import crypto from "crypto";
 
@@ -190,6 +190,7 @@ export const createNewPasswordController = async (req, res) => {
     }
 
     user.password = await maskPassword(password);
+    user.otp = "";
     user = await user.save();
 
     res.status(200).json({

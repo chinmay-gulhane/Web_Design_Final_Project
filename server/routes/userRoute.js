@@ -5,7 +5,7 @@ import {
   getCurrentUserController,
   generateOtpController,
   createNewPasswordController
-} from "../controllers/authController.js";
+} from "../controllers/auth-controller/authController.js";
 import { userAuthenticationMiddleware } from "../middlewares/authMiddlerware.js";
 
 const router = express.Router();
