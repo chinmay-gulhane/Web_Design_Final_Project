@@ -161,12 +161,16 @@ export const createNewPasswordController = async (req, res) => {
   const { otp, password, email } = req.body;
 
   try {
-    if (!password) {
-      throw new Error("Please enter new password");
+    if (!email) {
+      throw new Error("Please enter email");
     }
     if (!otp) {
       throw new Error("Please enter otp");
     }
+    if (!password) {
+      throw new Error("Please enter new password");
+    }
+
 
     let user = await User.findOne({ email }).exec();
     if (!user) {
