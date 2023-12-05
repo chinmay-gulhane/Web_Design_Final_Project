@@ -3,7 +3,8 @@ import "./globals.css";
 import { ReduxProvider } from "@/redux/provider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ToastifyContainer from "@/components/ToastifyContainer";
-
+import Header1 from "@/components/Header1/Header1";
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Husky Bites App",
@@ -30,7 +31,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <Header1 />
+          {children}
+          <Footer />
+        </ReduxProvider>
         <ToastifyContainer />
       </body>
     </html>

@@ -17,10 +17,10 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./Footer.css";
 import logo from "./logo.jpg";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import TranslateIcon from '@mui/icons-material/Translate';
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import TranslateIcon from "@mui/icons-material/Translate";
 
 export default function Footer() {
   const [auth, setAuth] = React.useState(true);
@@ -39,44 +39,31 @@ export default function Footer() {
   };
 
   return (
-
-
-    
     <footer className="footer">
-        <div className="footer-content">
-            <div className="left-content">
-        <p className="footer-name">
-        <span className="first-name">Husky</span>
-        <span className="last-name">Bites</span>
-        
-        </p>
-        <img src = "/logo" alt="Hello" className="Logo"/>
-        
-        <div className="socials">
-            <span> 
-            
-            <FacebookIcon className="icon"/>
-            <InstagramIcon className="icon" />
-            <TwitterIcon className="icon" />
+      <div className="footer-content">
+        <div className="left-content">
+          <p className="footer-name">
+            <span className="first-name">Husky</span>
+            <span className="last-name">Bites</span>
+          </p>
+          {/* <img src="/logo" alt="Hello" className="Logo" /> */}
 
+          <div className="socials">
+            <span>
+              <FacebookIcon className="icon" />
+              <InstagramIcon className="icon" />
+              <TwitterIcon className="icon" />
             </span>
-            
-
-        </div>
-
+          </div>
         </div>
         <div className="right-content">
-            <p>Get Help</p>
-            <p>About Us</p>
-            <p><TranslateIcon /> English</p>
-
-
+          <p>Get Help</p>
+          <p>About Us</p>
+          <p>
+            <TranslateIcon /> English
+          </p>
         </div>
-
-        </div>
-
+      </div>
     </footer>
-    
-    
   );
 }

@@ -27,8 +27,6 @@ const AdminRestaurants: React.FC = () => {
 
   // const user: User | null = useAppSelector((state) => state.auth.user);
 
-  // console.log("USer from state", user);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
