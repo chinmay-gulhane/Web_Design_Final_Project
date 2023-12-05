@@ -16,6 +16,11 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./header1.css";
 import Drawer from "@mui/material/Drawer";
+// import { ThemeProvider } from "next-themes";
+import {useState, useEffect} from 'react';
+import { useTheme } from "next-themes";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDarkMode } from "../DarkModeContext";
 
 
 export default function MenuAppBar() {
@@ -23,6 +28,7 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -46,30 +52,60 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
-  const [darkMode, setDarkMode] = React.useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+  const commonThemeOptions = {
+    typography: {
+      fontFamily: 'Roboto, sans-serif', // Set your preferred font family
+    },
   };
+
+  const lightTheme = createTheme({
+    ...commonThemeOptions,
+    palette: {
+      mode: 'light', // Enable light mode
+      primary: {
+        main: 'rgb(245, 245, 245)', // Set your primary color for light mode
+      },
+      secondary: {
+        main: 'rgb(0, 255, 0)', // Set your secondary color for light mode
+      }
+      // You can customize other palette colors as needed
+    },
+  });
+  const darkTheme = createTheme({
+    ...commonThemeOptions,
+    palette: {
+      mode: 'dark', // Enable dark mode
+      primary: {
+        main: 'rgb(255,0,0)', // Set your primary color for dark mode
+      },
+      secondary: {
+        main: 'rgb(0,255,0)', // Set your secondary color for dark mode
+      }
+      // You can customize other palette colors as needed
+    },
+  });
+
+  const { theme,setTheme } = useTheme();
+
+  // const [darkMode, setDarkMode] = React.useState(false);
+
+  // const toggleDarkMode = () => {
   
+  //   setDarkMode(!darkMode);
+
+    
+  //   setTheme(theme === 'dark' ? 'light' : 'dark');
+  // };
+
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   return (
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
     <Box sx={{ flexGrow: 1 ,
-      backgroundColor: darkMode ? '#333' : 'inherit',
-      color: darkMode ? '#fff' : 'inherit',
+      // backgroundColor: darkMode? "rgb(255,0,0)" : "rgb(0,0,255)" , 
+      // color: darkMode ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)',
        }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup> */}
+      
       <AppBar position="fixed" color="default">
         <Toolbar>
           <IconButton
@@ -101,7 +137,7 @@ export default function MenuAppBar() {
             className="company-name"
           >
             <span className="company-first-word">Husky</span>
-            <span className="company-last-word">Bites 1</span>
+            <span className="company-last-word" style={{ color: 'inherit' }}>Bites</span>
             <span className="cart">
               <ShoppingCartIcon />
             </span>
@@ -110,40 +146,9 @@ export default function MenuAppBar() {
             </span>
             
           </Typography>
-          {/* {auth && (
-            <div className="Profile">
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )} */}
         </Toolbar>
       </AppBar>
     </Box>
+    </ThemeProvider>
   );
 }

@@ -32,3 +32,40 @@
     color: rgb(0, 0, 0);
     /* margin-top: 30px; */
 }
+
+@media screen and (max-width: 520px) {
+    .company-name {
+        font-size: 20px;
+        width: 320px;
+
+        .company-first-word {
+            font-weight: 400;
+            color: red;
+        }
+
+        .company-last-word {
+            color: black;
+            font-weight: 600;
+            margin-left: 4px;
+            margin-right: 90px;
+        }
+    }
+    
+
+    .dark-mode {
+        float: none; /* Remove float for better mobile layout */
+        margin-top: 10px; /* Adjust spacing */
+        margin: 15px;
+    }
+
+    .cart {
+        float: none; /* Remove float for better mobile layout */
+        margin: 15px 0; /* Adjust spacing */
+    }
+
+    .drawer {
+        width: 100%; /* Take full width on smaller screens */
+        padding-inline: 15px; /* Adjust padding */
+        padding-top: 30px; /* Adjust padding */
+    }
+}

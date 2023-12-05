@@ -12,6 +12,8 @@ import { User } from "@/models/auth";
 
 import Footer from "@/components/Footer/Footer";
 
+import { DarkModeProvider } from "@/components/DarkModeContext";
+
 const RestaurantPage: React.FC = () => {
   const [products, setProducts] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,6 +43,7 @@ const RestaurantPage: React.FC = () => {
   }, []);
 
   return (
+    <DarkModeProvider>
     <>
       <Header1></Header1>
       <div className="body">
@@ -56,6 +59,7 @@ const RestaurantPage: React.FC = () => {
       </div>
       <Footer></Footer>
     </>
+    </DarkModeProvider>
   );
 };
 
