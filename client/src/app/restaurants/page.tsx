@@ -5,21 +5,18 @@ import "./restaurant.scss";
 import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Header1 from "@/components/Header1/Header1";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
-
-import Footer from "@/components/Footer/Footer";
 
 const RestaurantPage: React.FC = () => {
   const [products, setProducts] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const user: User | null = useAppSelector(state => state.auth.user);
+  const user: User | null = useAppSelector((state) => state.auth.user);
 
-  console.log("USer from state", user)
+  console.log("USer from state", user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,19 +39,17 @@ const RestaurantPage: React.FC = () => {
 
   return (
     <>
-      <Header1></Header1>
-      <div className="body">
-        <Row>
-          {products.map((restaurant: Restaurant) => (
-            <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
-              <Link href={`/restaurants/${restaurant._id}`}>
-                <RestaurantCard restaurant={restaurant}></RestaurantCard>
-              </Link>
-            </Col>
-          ))}
-        </Row>
-      </div>
-      <Footer></Footer>
+        <div className="body">
+          <Row>
+            {products.map((restaurant: Restaurant) => (
+              <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
+                <Link href={`/restaurants/${restaurant._id}`}>
+                  <RestaurantCard restaurant={restaurant}></RestaurantCard>
+                </Link>
+              </Col>
+            ))}
+          </Row>
+        </div>
     </>
   );
 };
