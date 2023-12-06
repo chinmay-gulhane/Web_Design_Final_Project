@@ -5,7 +5,6 @@ import "./admin-restaurant.scss";
 import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Header from "@/components/Header/Header";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
@@ -18,7 +17,6 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import Header1 from "@/components/Header1/Header1";
 
 const AdminRestaurants: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -51,7 +49,6 @@ const AdminRestaurants: React.FC = () => {
 
   return (
     <>
-      <Header1></Header1>
       <div className="main-div">
         {/* navbar */}
         <div className="admin-side-nav">

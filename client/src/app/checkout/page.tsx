@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Stepper, Step, StepLabel, Box, Button } from "@mui/material";
-import Header from "@/components/Header/Header";
 import AddressForm from "../../components/AddressForm/AddressForm";
 import PaymentForm from "../../components/PaymentForm/PaymentForm";
 import "./checkout.scss";
@@ -61,7 +60,6 @@ const CenteredCard: React.FC = () => {
 
   return (
     <>
-      {/* <Header></Header> */}
       <div className="checkout-container-div">
         <Card className="checkout-card">
           <CardContent>

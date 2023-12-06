@@ -8,9 +8,6 @@ import Restaurant from "@/models/restaurant";
 import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
-import Header from "@/components/Header/Header";
-import Header1 from "@/components/Header1/Header1";
-import CartComponent from "@/components/Cart/CartComponent";
 
 const baseUrl = "http://localhost:8080/restaurant";
 

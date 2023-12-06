@@ -5,12 +5,9 @@ import "./restaurant.scss";
 import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Header1 from "@/components/Header1/Header1";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
-
-import Footer from "@/components/Footer/Footer";
 
 const RestaurantPage: React.FC = () => {
   const [products, setProducts] = useState<Restaurant[]>([]);
@@ -42,7 +39,6 @@ const RestaurantPage: React.FC = () => {
 
   return (
     <>
-      {/* <Header1></Header1> */}
       <div className="body">
         <Row>
           {products.map((restaurant: Restaurant) => (
@@ -54,7 +50,6 @@ const RestaurantPage: React.FC = () => {
           ))}
         </Row>
       </div>
-      {/* <Footer></Footer> */}
     </>
   );
 };
