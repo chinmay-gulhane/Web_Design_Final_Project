@@ -9,7 +9,10 @@ import FoodItem from "@/models/foodItem";
 import Title from "./Title";
 import AddToCartButton from "./Restaurant/AddToCartButton";
 
-const FoodCard: React.FC<{ foodItem: FoodItem }> = ({ foodItem }) => {
+const FoodCard: React.FC<{ foodItem: FoodItem; foodQuantity: number }> = ({
+  foodItem,
+  foodQuantity,
+}) => {
   return (
     <Card className="border border-gray-200 shadow-md hover:shadow-lg transition duration-300">
       <CardContent className="flex justify-between items-center">
@@ -35,7 +38,10 @@ const FoodCard: React.FC<{ foodItem: FoodItem }> = ({ foodItem }) => {
             image="/images/restaurant.jpg"
             title={foodItem.name}
           />
-          <AddToCartButton></AddToCartButton>
+          <AddToCartButton
+            foodItem={foodItem}
+            foodItemQuantity={foodQuantity}
+          />
         </div>
       </CardContent>
     </Card>

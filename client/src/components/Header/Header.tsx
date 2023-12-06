@@ -16,11 +16,14 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./header.css";
 import Drawer from "@mui/material/Drawer";
+import Cart from "../Cart/CartComponent";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/store";
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const cartItems = useAppSelector((state) => state.cart.items);
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -51,83 +54,57 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, backgroundColor: darkMode ? "#333" : "inherit", color: darkMode ? "#fff" : "inherit" }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup> */}
+    <Box
+      sx={{
+        flexGrow: 1,
+        backgroundColor: darkMode ? "#333" : "inherit",
+        color: darkMode ? "#fff" : "inherit",
+      }}
+    >
       <AppBar position="fixed" color="default">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleDrawerOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
-            <div className="drawer">
-              <MenuItem onClick={handleDrawerClose}>Manage Profile</MenuItem>
-              <MenuItem onClick={handleDrawerClose}>My Orders</MenuItem>
-              <MenuItem onClick={handleDrawerClose}>Help</MenuItem>
-            </div>
-          </Drawer>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <div className="flex">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: { sm: 0, md: 2 } }}
+              onClick={handleDrawerOpen}
+            >
+              <MenuIcon />
+            </IconButton>
 
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} className="company-name">
-            <span className="company-first-word">Husky</span>
-            <span className="company-last-word">Bites</span>
-            <span className="cart">
-              <Link href="/login">
-                <ShoppingCartIcon />
-              </Link>
-            </span>
+            <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
+              <div className="drawer">
+                <MenuItem onClick={handleDrawerClose}>Manage Profile</MenuItem>
+                <MenuItem onClick={handleDrawerClose}>My Orders</MenuItem>
+                <MenuItem onClick={handleDrawerClose}>Help</MenuItem>
+              </div>
+            </Drawer>
+
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              className="company-name"
+            >
+              <span className="company-first-word">Husky</span>
+              <span className="company-last-word">Bites</span>
+            </Typography>
+          </div>
+          <div className="user-actions">
             <span className="dark-mode" onClick={toggleDarkMode}>
               <DarkModeIcon />
             </span>
-          </Typography>
-          {/* {auth && (
-            <div className="Profile">
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )} */}
+            <span className="cart">
+              <Link href={`/cart`}>
+                <ShoppingCartIcon className="" />
+                <span className="cart-badge">{cartItems.length}</span>
+              </Link>
+              {/* <Cart /> */}
+            </span>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

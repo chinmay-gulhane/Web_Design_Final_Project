@@ -16,7 +16,7 @@ const RestaurantPage: React.FC = () => {
 
   const user: User | null = useAppSelector((state) => state.auth.user);
 
-  console.log("USer from state", user);
+  // console.log("USer from state", user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,17 +39,17 @@ const RestaurantPage: React.FC = () => {
 
   return (
     <>
-        <div className="body">
-          <Row>
-            {products.map((restaurant: Restaurant) => (
-              <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
-                <Link href={`/restaurants/${restaurant._id}`}>
-                  <RestaurantCard restaurant={restaurant}></RestaurantCard>
-                </Link>
-              </Col>
-            ))}
-          </Row>
-        </div>
+      <div className="body">
+        <Row>
+          {products.map((restaurant: Restaurant) => (
+            <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
+              <Link href={`/restaurants/${restaurant._id}`}>
+                <RestaurantCard restaurant={restaurant}></RestaurantCard>
+              </Link>
+            </Col>
+          ))}
+        </Row>
+      </div>
     </>
   );
 };
