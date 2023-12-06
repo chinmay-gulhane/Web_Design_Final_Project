@@ -4,7 +4,6 @@ import { Row, Col, Table } from "react-bootstrap";
 import "./admin-orders.scss";
 import * as orderService from "@/services/order-service";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Header from "@/components/Header/Header";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
@@ -18,7 +17,6 @@ import {
   TableBody,
 } from "@mui/material";
 import { Order } from "@/models/order";
-import Header1 from "@/components/Header1/Header1";
 
 const AdminRestaurants: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -51,7 +49,6 @@ const AdminRestaurants: React.FC = () => {
 
   return (
     <>
-      <Header1></Header1>
       <div className="main-div">
         {/* navbar */}
         <div className="admin-side-nav">
