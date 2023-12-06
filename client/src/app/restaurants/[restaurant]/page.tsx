@@ -49,7 +49,6 @@ const FoodList: React.FC = () => {
 
   return (
     <>
-      {/* <Header1 /> */}
       {isLoading ? (
         <div></div>
       ) : (
