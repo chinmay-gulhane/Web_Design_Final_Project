@@ -3,7 +3,7 @@ import "./globals.css";
 import { ReduxProvider } from "@/redux/provider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ToastifyContainer from "@/components/ToastifyContainer";
-
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Husky Bites App",
