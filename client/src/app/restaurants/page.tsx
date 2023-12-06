@@ -9,6 +9,10 @@ import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
 
+import Footer from "@/components/Footer/Footer";
+
+import { DarkModeProvider } from "@/components/DarkModeContext";
+
 const RestaurantPage: React.FC = () => {
   const [products, setProducts] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +42,7 @@ const RestaurantPage: React.FC = () => {
   }, []);
 
   return (
+    <DarkModeProvider>
     <>
       <div className="body">
         <Row>
@@ -51,6 +56,7 @@ const RestaurantPage: React.FC = () => {
         </Row>
       </div>
     </>
+    </DarkModeProvider>
   );
 };
 
