@@ -14,10 +14,8 @@ export default function Home() {
 
   return (
     <>
-      <Layout>
-        <Title title="Welcome to Husky Bites Application" variant="h1"></Title>
-        {/* <h1>Welcome to Husky Bites Application</h1> */}
-      </Layout>
+      <Title title="Welcome to Husky Bites Application" variant="h1"></Title>
+      {/* <h1>Welcome to Husky Bites Application</h1> */}
     </>
   );
 }

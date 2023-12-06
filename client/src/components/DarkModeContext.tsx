@@ -1,5 +1,4 @@
-// DarkModeContext.js
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface DarkModeContextProps {
   darkMode: boolean;
@@ -9,9 +8,13 @@ interface DarkModeProviderProps {
   children: ReactNode;
 }
 
-const DarkModeContext = createContext<DarkModeContextProps | undefined>(undefined);
+const DarkModeContext = createContext<DarkModeContextProps | undefined>(
+  undefined
+);
 
-export const DarkModeProvider: React.FC<DarkModeProviderProps> = ({ children }) => {
+export const DarkModeProvider: React.FC<DarkModeProviderProps> = ({
+  children,
+}) => {
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
@@ -35,7 +38,7 @@ export const useDarkMode = () => {
   const context = useContext(DarkModeContext);
 
   if (!context) {
-    throw new Error('useDarkMode must be used within a DarkModeProvider');
+    throw new Error("useDarkMode must be used within a DarkModeProvider");
   }
 
   return context;
