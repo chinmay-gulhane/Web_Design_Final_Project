@@ -47,7 +47,7 @@
             color: black;
             font-weight: 600;
             margin-left: 4px;
-            margin-right: 90px;
+            margin-right: 62px;
         }
     }
     
@@ -55,12 +55,12 @@
     .dark-mode {
         float: none; /* Remove float for better mobile layout */
         margin-top: 10px; /* Adjust spacing */
-        margin: 15px;
+        margin: 10px;
     }
 
     .cart {
         float: none; /* Remove float for better mobile layout */
-        margin: 15px 0; /* Adjust spacing */
+        margin: 10px 0; /* Adjust spacing */
     }
 
     .drawer {
