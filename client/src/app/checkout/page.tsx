@@ -61,7 +61,7 @@ const CenteredCard: React.FC = () => {
 
   return (
     <>
-      <Header></Header>
+      {/* <Header></Header> */}
       <div className="checkout-container-div">
         <Card className="checkout-card">
           <CardContent>
