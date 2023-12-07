@@ -39,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ bgcolor: "green" }}></Avatar>
+            <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
             <h2 style={headerStyle}>Sign In</h2>
           </Grid>
           <form onSubmit={formHandler}>

@@ -1,7 +1,7 @@
 export const paperStyle = {
   padding: "30px 20px",
-  width: 300,
-  margin: "20px auto",
+  margin: "0px auto",
+  width: "100%"
 };
 
 export const headerStyle = {

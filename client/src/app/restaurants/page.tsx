@@ -41,7 +41,7 @@ const RestaurantPage: React.FC = () => {
 
   return (
     <>
-      <div className="body">
+      <div>
         <Row>
           {products.map((restaurant: Restaurant) => (
             <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>

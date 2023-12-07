@@ -1,35 +1,24 @@
-.login_main_div {
-  height: 100vh;
-  width: 100%;
-  display: flex;
+.main_content{
+  /* height: 100vh; */
+  margin-top: 65px;
+  padding: 50px 50px;
 }
 
 .register_image{
-    background-image: url("../../public/images/registerImage.jpg");
+    /* background-image: url("../../public/images/registerImage.jpg"); */
 }
 
 .login_image{
-    background-image: url("../../public/images/loginImage.jpg");
+    /* background-image: url("../../public/images/loginImage.jpg"); */
 }
 
 .auth_page{
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100vh; /* Set height to 100% of the viewport height */
+    /* height: 100vh; Set height to 100% of the viewport height */
     background-size: cover; /* Cover the entire container */
 }
 
-.login_image_section {
-  width: 65%;
-  height: 100%;
-  background-color: aqua;
-}
-
-.login_form_section {
-    width: 35%;
-    height: 100%;
-}
 
 .login_form{
     display: flex;
@@ -40,6 +29,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 500px;
 }
 
 
