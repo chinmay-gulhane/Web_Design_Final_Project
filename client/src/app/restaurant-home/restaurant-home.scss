@@ -1,0 +1,12 @@
+.main-div {
+    display: flex;
+    flex-direction: row;
+    height: 91vh;
+    // width: 100vh;
+    background-color: white;
+    margin-top: 64px;
+}
+
+.admin-main-content{
+    flex-grow: 1;
+}

@@ -7,7 +7,7 @@ import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
-import AdminSideNav from "@/components/AdminSideNav/AdminSideNav";
+import AdminSideNav from "@/components/AdminSideNav/SideNav";
 import {
   TableContainer,
   Paper,
