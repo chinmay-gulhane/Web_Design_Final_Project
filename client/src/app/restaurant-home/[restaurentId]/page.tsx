@@ -2,7 +2,7 @@
 import AdminSideNav from "@/components/AdminSideNav/SideNav";
 import React, { useEffect, useState } from "react";
 import "./restaurant-home.scss";
-import { RestaurantSidebarData } from "../../components/AdminSideNav/RestaurantSideBarData";
+import { RestaurantSidebarData } from "../../../components/AdminSideNav/RestaurantSideBarData";
 import RestaurantDashboard from "@/components/RestaurantDashboard/RestaurantDashboard";
 import RestaurantOrders from "@/components/RestaurantOrders/RestaurantOrders";
 import RestaurantMenu from "@/components/RestautantMenu/RestaurantMenu";
