@@ -7,4 +7,9 @@ interface FoodItem {
   rating: number;
 }
 
+export interface CartItem {
+  foodItem: FoodItem;
+  quantity: number;
+}
+
 export default FoodItem;

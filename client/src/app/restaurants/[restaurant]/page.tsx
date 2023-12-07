@@ -8,7 +8,6 @@ import Restaurant from "@/models/restaurant";
 import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
-import Header from "@/components/Header/Header";
 
 const baseUrl = "http://localhost:8080/restaurant";
 
@@ -17,13 +16,17 @@ const FoodList: React.FC = () => {
 
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   const [restaurant, setRestaurant] = useState<Restaurant>();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(`${baseUrl}/${params.restaurant}`);
         const data = await response.json();
         setRestaurant(data);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.error("Error fetching data:", error);
       }
     };
@@ -46,26 +49,35 @@ const FoodList: React.FC = () => {
 
   return (
     <>
-      <Header></Header>
-      <div>
-        {restaurant && (
-          <CoverImage
-            //   src={restaurant.profilePhoto}
-            src={"/images/restaurant.jpg"}
-            alt="Restaurant cover image"
-          />
-        )}
+      {isLoading ? (
+        <div></div>
+      ) : (
         <div>
-          <Title
-            title={restaurant?.name + " | " + restaurant?.rating}
-            variant={"h2"}
-          ></Title>
-          <Title title="Menu" variant={"h4"}></Title>
-          {foodItems.map((foodItem) => (
-            <FoodCard key={foodItem._id} foodItem={foodItem} />
-          ))}
+          {restaurant && (
+            <CoverImage
+              //   src={restaurant.profilePhoto}
+              src={restaurant.profilePhoto}
+              alt="Restaurant cover image"
+            />
+          )}
+          <div>
+            {restaurant?.name && (
+              <Title
+                title={restaurant.name + " | " + restaurant?.rating}
+                variant={"h2"}
+              ></Title>
+            )}
+            <Title title="Menu" variant={"h4"}></Title>
+            {foodItems.map((foodItem) => (
+              <FoodCard
+                key={foodItem._id}
+                foodItem={foodItem}
+                foodQuantity={0}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

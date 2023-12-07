@@ -17,10 +17,15 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./Footer.css";
 import logo from "./logo.jpg";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import TranslateIcon from '@mui/icons-material/Translate';
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import TranslateIcon from "@mui/icons-material/Translate";
+import CopyrightIcon from "@mui/icons-material/Copyright";
+
+import Image from "next/image";
+
+import { useState, useEffect } from "react";
 
 export default function Footer() {
   const [auth, setAuth] = React.useState(true);
@@ -38,45 +43,65 @@ export default function Footer() {
     setAnchorEl(null);
   };
 
+  const commonThemeOptions = {
+    typography: {
+      fontFamily: "Roboto, sans-serif", // Set your preferred font family
+    },
+  };
   return (
-
-
-    
     <footer className="footer">
+      <Box
+        sx={{
+          flexGrow: 1,
+          backgroundColor: "whitesmoke",
+          color: "red",
+        }}
+      >
         <div className="footer-content">
-            <div className="left-content">
-        <p className="footer-name">
-        <span className="first-name">Husky</span>
-        <span className="last-name">Bites</span>
-        
-        </p>
-        <img src = "/logo" alt="Hello" className="Logo"/>
-        
-        <div className="socials">
-            <span> 
-            
-            <FacebookIcon className="icon"/>
-            <InstagramIcon className="icon" />
-            <TwitterIcon className="icon" />
+          <div className="left-content">
+            {/* <div className="Logo"> */}
+            <Image
+              src={logo}
+              width={150}
+              height={150}
+              alt="Eeuu"
+              className="image"
+            />
+            {/* </div> */}
+            <div className="footer-name">
+              <p>
+                <span className="first-name">Husky</span>
+                <span className="last-name" style={{ color: "black" }}>
+                  Bites
+                </span>
+              </p>
+              <div className="copyright">
+                <p>
+                  Copyright <CopyrightIcon className="copy-logo" /> 2023 - 2016
+                  HuskyBites
+                </p>
+                <p>Shree</p>
+              </div>
+            </div>
+          </div>
 
+          <div className="center-content">
+            <span>
+              <FacebookIcon className="icon" /> |
+              <InstagramIcon className="icon" /> |
+              <TwitterIcon className="icon" />
             </span>
-            
+          </div>
 
-        </div>
-
-        </div>
-        <div className="right-content">
+          <div className="right-content" style={{ color: "black" }}>
             <p>Get Help</p>
             <p>About Us</p>
-            <p><TranslateIcon /> English</p>
-
-
+            <p>
+              <TranslateIcon /> English
+            </p>
+          </div>
         </div>
-
-        </div>
-
+      </Box>
     </footer>
-    
-    
   );
 }

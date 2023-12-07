@@ -5,10 +5,22 @@ import "./restaurant-card.scss";
 import Restaurant from "@/models/restaurant";
 
 const Products: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
+  const commonThemeOptions = {
+    typography: {
+      fontFamily: "Roboto, sans-serif", // Set your preferred font family
+    },
+  };
+
   return (
     <>
       {/* <h1>Restaurent card</h1> */}
-      <Card className="restaurant-card">
+      <Card
+        className="restaurant-card"
+        style={{
+          color: "black",
+          backgroundColor: "white",
+        }}
+      >
         {/* Image Section */}
         <CardMedia
           component="img"
@@ -23,8 +35,19 @@ const Products: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
             {/* Restaureant Name */}
             <div className="restaurant-name">{restaurant.name}</div>
             {/* Restaurant Rating */}
-            <div className="restaurant-rating-div">
-              <div className="restaurant-rating-text">{restaurant.rating}</div>
+            <div
+              className="restaurant-rating-div"
+              style={{
+                color: "black",
+                backgroundColor: "black",
+              }}
+            >
+              <div
+                className="restaurant-rating-text"
+                style={{ color: "white" }}
+              >
+                {restaurant.rating}
+              </div>
             </div>
           </Typography>
           {/* <Typography variant="body2" color="text.secondary">
