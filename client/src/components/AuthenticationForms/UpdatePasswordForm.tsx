@@ -41,7 +41,7 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ bgcolor: "green" }}></Avatar>
+            <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
             <h2 style={headerStyle}>New Password</h2>
             <Typography variant="caption">Please verify your otp</Typography>
           </Grid>

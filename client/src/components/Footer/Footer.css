@@ -1,16 +1,15 @@
 .footer {
-  color: rgb(0, 0, 0);
-  height: 275px;
-  display: flex;
-  flex-wrap: wrap;
-  /* padding-top: 10px; */
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
 }
 
 .footer-content {
-  display: flex;
-  flex-wrap: wrap;
-  border-top: solid 1.5rem rgba(255, 0, 0, 10);
-  padding-inline: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: solid 1.5rem rgba(255, 0, 0, 10);
+    padding-inline: 5rem;
 }
 
 .first-name {

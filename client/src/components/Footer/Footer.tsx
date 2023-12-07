@@ -9,32 +9,10 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import TranslateIcon from "@mui/icons-material/Translate";
 import CopyrightIcon from "@mui/icons-material/Copyright";
-
 import Image from "next/image";
 
-import { useState, useEffect } from "react";
-
 export default function Footer() {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const commonThemeOptions = {
-    typography: {
-      fontFamily: "Roboto, sans-serif", // Set your preferred font family
-    },
-  };
   return (
     <footer className="footer">
       <Box
@@ -51,7 +29,7 @@ export default function Footer() {
               src={logo}
               width={150}
               height={150}
-              alt="Eeuu"
+              alt="husky"
               className="image"
             />
             {/* </div> */}
@@ -81,7 +59,7 @@ export default function Footer() {
           </div>
 
           <div className="right-content" style={{ color: "black" }}>
-            <p>Get Help</p>
+            <p>Contact Us</p>
             <p>About Us</p>
             <p>
               <TranslateIcon /> English

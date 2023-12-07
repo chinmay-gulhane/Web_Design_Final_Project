@@ -7,11 +7,23 @@ import { foodItemSchema } from "./order.js";
 const userSchema = new Schema({
   firstName: {
     type: String,
-    required: [true, "User first name required"],
+    required: [function () {
+      if(this.role ===  "USER"){
+        return true;
+      }else {
+        return false;
+      }
+    }, "User first name required"],
   },
   lastName: {
     type: String,
-    required: [true, "User last name required"],
+    required: [function () {
+      if(this.role ===  "USER"){
+        return true;
+      }else {
+        return false;
+      }
+    }, "User last name required"],
   },
   email: {
     type: String,
@@ -54,12 +66,12 @@ const userSchema = new Schema({
   profilePhoto: {
     type: String,
     required: false,
-    validate: {
-      validator: function (value) {
-        return validator.isURL(value);
-      },
-      message: "Please enter valid url"
-    }
+    // validate: {
+    //   validator: function (value) {
+    //     return validator.isURL(value);
+    //   },
+    //   message: "Please enter valid url"
+    // }
   },
   //   addresses: {
   //     type: [address],
@@ -82,6 +94,11 @@ const userSchema = new Schema({
     ],
     required: false
   },
+  role:{
+    type: String,
+    enum: ["USER", "RESTAURANT", "ADMIN"],
+    required: [true, "Role is required"]
+  }
   //   favourites: {
   //     type: [restaurant],
   //     required: [false]

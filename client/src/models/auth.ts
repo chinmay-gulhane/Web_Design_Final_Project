@@ -16,6 +16,7 @@ export type registerData = {
   email: string;
   phone: string;
   password: string;
+  role: string
 };
 
 export type updatePasswordPayLoadType = {
