@@ -49,46 +49,37 @@ const AdminRestaurants: React.FC = () => {
 
   return (
     <>
-      <div className="main-div">
-        {/* navbar */}
-        <div className="admin-side-nav">
-          {/* <AdminSideNav></AdminSideNav> */}
-        </div>
-        {/* components */}
-        <div className="admin-main-content">
-          <div className="body">
-            <h2>Restaurants</h2>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Restaurant Name</TableCell>
-                    <TableCell>Rating</TableCell>
-                    <TableCell>Address</TableCell>
-                    <TableCell>Phone Number</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Cuisine</TableCell>
-                    <TableCell>Offers</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {restaurants.map((restaurant) => (
-                    <TableRow key={restaurant._id}>
-                      <TableCell>{restaurant.name}</TableCell>
+      <div className="body">
+        <h2>Restaurants</h2>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Restaurant Name</TableCell>
+                <TableCell>Rating</TableCell>
+                <TableCell>Address</TableCell>
+                <TableCell>Phone Number</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Cuisine</TableCell>
+                <TableCell>Offers</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {restaurants.map((restaurant) => (
+                <TableRow key={restaurant._id}>
+                  <TableCell>{restaurant.name}</TableCell>
 
-                      <TableCell>{restaurant.rating}</TableCell>
-                      <TableCell>{restaurant.address.addressLine}</TableCell>
-                      <TableCell>{restaurant.phoneNumber}</TableCell>
-                      <TableCell>{restaurant.email}</TableCell>
-                      <TableCell>{restaurant.cuisine.join(", ")}</TableCell>
-                      <TableCell>{restaurant.offers.join(", ")}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </div>
+                  <TableCell>{restaurant.rating}</TableCell>
+                  <TableCell>{restaurant.address.addressLine}</TableCell>
+                  <TableCell>{restaurant.phoneNumber}</TableCell>
+                  <TableCell>{restaurant.email}</TableCell>
+                  <TableCell>{restaurant.cuisine.join(", ")}</TableCell>
+                  <TableCell>{restaurant.offers.join(", ")}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </>
   );
