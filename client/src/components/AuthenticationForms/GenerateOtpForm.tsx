@@ -29,7 +29,7 @@ const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ bgcolor: "green" }}></Avatar>
+            <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
             <h2 style={headerStyle}>OTP</h2>
             <Typography variant="caption">
               Please enter email to get otp

@@ -7,6 +7,8 @@ import RegisterForm from "./AuthenticationForms/RegisterForm";
 import GenerateOtpForm from "./AuthenticationForms/GenerateOtpForm";
 import UpdatePasswordForm from "./AuthenticationForms/UpdatePasswordForm";
 import { CustomFormProps } from "@/models/auth";
+import { Role } from "@/enums/constants";
+import RestaurantRegiserForm from "./AuthenticationForms/RestaurantRegisterForm";
 
 const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
   const [firstName, setFirstName] = useState("");
@@ -40,6 +42,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
         email,
         password,
         phone,
+        role: Role.USER,
       }).then((dispatchedResult: any) => {
         if (!dispatchedResult.error) {
           router.push("/login");
@@ -64,6 +67,24 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
     <>
       {formType === "register" && (
         <RegisterForm
+          formHandler={formHandler}
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          phone={phone}
+          setPhone={setPhone}
+          showPassword={showPassword}
+          handleClickShowPassword={handleClickShowPassword}
+        />
+      )}
+
+      {formType === "restaurant-register" && (
+        <RestaurantRegiserForm
           formHandler={formHandler}
           firstName={firstName}
           setFirstName={setFirstName}

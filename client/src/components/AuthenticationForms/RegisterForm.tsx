@@ -38,7 +38,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 }) => {
   return (
     <>
-      <Grid className={classes.gridContainer}>
+      <Grid className={classes.gridContainer} >
         <Paper elevation={20} style={paperStyle}>
           <Grid
             sx={{
@@ -47,7 +47,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ bgcolor: "green" }}></Avatar>
+            <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
             <h2 style={headerStyle}>Sign Up</h2>
             <Typography variant="caption">
               Please register to create an account

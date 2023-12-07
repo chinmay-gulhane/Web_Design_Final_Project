@@ -12,7 +12,7 @@ import { sendEmail } from "../../services/emailService.js";
 import crypto from "crypto";
 
 export const registerController = async (req, res) => {
-  const { firstName, lastName, email, password, phone, profilePhoto } =
+  const { firstName, lastName, email, password, phone, profilePhoto, role } =
     req.body;
   try {
     if (!firstName) {
@@ -29,6 +29,9 @@ export const registerController = async (req, res) => {
     }
     if (!phone) {
       throw new Error("Please enter phone no.");
+    }
+    if(!role){
+      throw new Error("Role is required");
     }
 
     if (!validator.isEmail(email)) {

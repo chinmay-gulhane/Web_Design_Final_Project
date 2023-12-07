@@ -43,6 +43,11 @@ const restaurantSchema = new Schema({
         type: [String],
         required: false,
     },
+    role: {
+        type: String,
+        enum: ["RESTAURANT"],
+        required: [true, "Role is required"]
+    }
 });
 
 const RestaurantModel = mongoose.model('Restaurant', restaurantSchema);
