@@ -12,7 +12,7 @@ import { User } from "@/models/auth";
 import Footer from "@/components/Footer/Footer";
 
 const RestaurantPage: React.FC = () => {
-  const [products, setProducts] = useState<Restaurant[]>([]);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -24,7 +24,7 @@ const RestaurantPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const data = await restaurantService.getRestaurants();
-        setProducts(data);
+        setRestaurants(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
@@ -43,7 +43,7 @@ const RestaurantPage: React.FC = () => {
     <>
       <div>
         <Row>
-          {products.map((restaurant: Restaurant) => (
+          {restaurants.map((restaurant: Restaurant) => (
             <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
               <Link href={`/restaurants/${restaurant._id}`}>
                 <RestaurantCard restaurant={restaurant}></RestaurantCard>
