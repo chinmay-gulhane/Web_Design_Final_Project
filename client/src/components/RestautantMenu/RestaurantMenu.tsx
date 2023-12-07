@@ -17,26 +17,12 @@ import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
 import { useParams } from "next/navigation";
 
-const initialFoodItems: FoodItem[] = [
-  {
-    _id: "",
-    name: "Pizza",
-    foodImage: "image1.jpg",
-    restaurantId: "1",
-    price: 10.99,
-    rating: 4.5,
-  },
-  {
-    _id: "",
-    name: "Burger",
-    foodImage: "image2.jpg",
-    restaurantId: "2",
-    price: 5.99,
-    rating: 4.0,
-  },
-];
+interface FoodItemsTableProps {
+  menuItems: FoodItem[]; // Assuming MenuItem is a type/interface representing your menu item
+}
 
-const FoodItemsTable: React.FC = () => {
+const FoodItemsTable: React.FC<FoodItemsTableProps> = ({ menuItems }) => {
+  const initialFoodItems = menuItems;
   // const [restaurant, setRestaurants] = useState<Restaurant>();
   const [foodItems, setFoodItems] = useState<FoodItem[]>(initialFoodItems);
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -50,27 +36,6 @@ const FoodItemsTable: React.FC = () => {
     price: 0,
     rating: 0,
   });
-
-  // const params = useParams();
-  // useEffect(() => {
-  // console.log("params", params);
-  // const fetchData = async () => {
-  // try {
-  //   const data = await restaurantService.getRestaurantById(params.restaurant);
-  //   setRestaurants(data);
-  // } catch (err: unknown) {
-  //   if (err instanceof Error) {
-  //     setError(err);
-  //   } else {
-  //     setError(new Error("An unknown error occurred"));
-  //   }
-  // } finally {
-  //   setLoading(false);
-  // }
-  // };
-
-  // fetchData();
-  // }, []);
 
   const handleAdd = () => {
     setFoodItems((prevItems) => [
