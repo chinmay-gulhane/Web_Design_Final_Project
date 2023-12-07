@@ -9,16 +9,19 @@ interface SidebarDataItem {
   // icon: React.ReactElement; // Use React.ReactElement
   link: string;
 }
+interface SidebarProps {
+  onSelect: (selected: string) => void;
+}
 
-const AdminSideNav: React.FC = () => {
+const AdminSideNav: React.FC<SidebarProps> = ({ onSelect }) => {
   return (
     <>
       <div className="side-nav">
-        <h2>Admin Dashboard</h2>
+        <h2>Admin</h2>
         <ul className="side-bar-list">
           {SidebarDataImported.map((val: SidebarDataItem, key: number) => {
             return (
-              <li className="row" key={key}>
+              <li className="row" key={key} onClick={() => onSelect(val.title)}>
                 {/* <Link href={`/${val.link}`}> */}
                 <div>{val.title}</div>
                 {/* </Link> */}
