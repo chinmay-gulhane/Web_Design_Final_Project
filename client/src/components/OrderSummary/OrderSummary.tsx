@@ -12,7 +12,7 @@ import { RootState } from "@/redux/store";
 
 const OrderSummary: React.FC = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItems = useSelector((state: RootState) => state.cart.cart);
   const orderTotal = useSelector((state: RootState) => state.order.orderTotal);
   const tax = useSelector((state: RootState) => state.order.tax);
   const delivery = useSelector((state: RootState) => state.order.delivery);
@@ -65,14 +65,19 @@ const OrderSummary: React.FC = () => {
   };
 
   return (
-    <div className="border h-100 border-gray-200 shadow-md hover:shadow-lg transition duration-300">
-      <h2>Order Summary</h2>
+    <div className="border rounded-5 p-5 h-100 border-gray-200 shadow-md hover:shadow-lg transition duration-300">
+      <h3>Order Summary</h3>
       <div>
         <p>Order Total: ${orderTotal.toFixed(2)}</p>
         <p>Tax: ${tax.toFixed(2)}</p>
         <p>Delivery: ${delivery.toFixed(2)}</p>
         <p>
           Tip:{" "}
+          <>
+            {"$"}
+            <span>{(orderTotal * (tipPercentage / 100)).toFixed(2)}</span>
+          </>
+          <br />
           <select
             value={tipPercentage}
             onChange={(e) => handleTipChange(Number(e.target.value))}
@@ -90,6 +95,7 @@ const OrderSummary: React.FC = () => {
                 placeholder="Enter custom tip"
                 value={customTip}
                 onChange={handleCustomTipChange}
+                className="w-10"
               />
               {"%"}
             </>

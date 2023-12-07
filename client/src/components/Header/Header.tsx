@@ -23,7 +23,7 @@ import { useAppSelector } from "@/redux/store";
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const cartItems = useAppSelector((state) => state.cart.items);
+  const cartItems = useAppSelector((state) => state.cart.cart);
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -59,6 +59,7 @@ export default function MenuAppBar() {
         flexGrow: 1,
         backgroundColor: darkMode ? "#333" : "inherit",
         color: darkMode ? "#fff" : "inherit",
+        marginBottom: "65px",
       }}
     >
       <AppBar position="fixed" color="default">

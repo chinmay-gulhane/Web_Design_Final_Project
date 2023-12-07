@@ -35,6 +35,7 @@ export type User = {
   orderHistory: Order[];
   createdAt: string;
   updatedAt: string;
+  currentOrder: Order;
 };
 
 export type loginSuccessResponse = {
@@ -93,4 +94,3 @@ export interface UpdatePasswordFormProps {
   showPassword: boolean;
   handleClickShowPassword: () => void;
 }
-

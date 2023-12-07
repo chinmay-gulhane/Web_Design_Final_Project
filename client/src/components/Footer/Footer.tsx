@@ -19,7 +19,7 @@ export default function Footer() {
         sx={{
           flexGrow: 1,
           backgroundColor: "whitesmoke",
-          color: "red",
+          color: "black",
         }}
       >
         <div className="footer-content">

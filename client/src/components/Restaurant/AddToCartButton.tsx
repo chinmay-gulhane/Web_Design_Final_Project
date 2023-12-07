@@ -9,6 +9,9 @@ import {
 import CartComponent from "../Cart/CartComponent";
 import { useDispatch } from "react-redux";
 import store, { useAppSelector } from "@/redux/store";
+import { Modal, Tooltip } from "react-bootstrap";
+import { IconButton } from "@mui/material";
+import { updateCartAction } from "@/redux/actions/cart-actions";
 
 interface AddToCartButtonProps {
   foodItem: FoodItem;
@@ -22,9 +25,10 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const buttonStateInitial = foodItemQuantity === 0 ? "add" : "quantity";
   const [buttonState, setButtonState] = useState(buttonStateInitial); // 'add', 'quantity'
   const [quantity, setQuantity] = useState(foodItemQuantity);
+  const [shouldShowPopup, setShouldShowPopup] = useState(false);
+  const user = useAppSelector((state) => state.auth.user);
+  const cart = useAppSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-
-  // console.log("check cart", quantity);
 
   const handleAddToCartButton = () => {
     if (buttonState === "add") {
@@ -70,13 +74,25 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       });
     } else {
       // If quantity is 1, revert to 'add' state
-      setButtonState("add");
-      dispatch(removeItemFromCart(foodItem._id));
+      setShouldShowPopup(true);
+      // setButtonState("add");
+      // dispatch(removeItemFromCart(foodItem._id));
     }
   };
 
+  const handlePopupClose = () => setShouldShowPopup(false);
+
+  const handleRemoveFromCart = () => {
+    setQuantity(0);
+    dispatch(removeItemFromCart(foodItem._id));
+    // dispatch(updateCartAction({ userId: user?._id, cart: cart }));
+    setShouldShowPopup(false);
+    setButtonState("add");
+  };
+
   return (
-    <div>
+    <>
+      {/* <div> */}
       {buttonState === "quantity" && (
         <button
           className="h-10 px-6 font-semibold rounded-full bg-black text-white"
@@ -99,7 +115,38 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
           +
         </button>
       )}
-    </div>
+      {/* </div> */}
+      <Modal
+        className="p-5 rounded-3 mt-2"
+        show={shouldShowPopup}
+        size="sm"
+        onHide={handlePopupClose}
+        backdrop={"static"}
+      >
+        <Modal.Header className="d-flex justify-content-between">
+          <h4 className="fw-bold">Remove from cart?</h4>
+          <span className="fs-3 cursor-pointer" onClick={handlePopupClose}>
+            &times;
+          </span>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="d-flex justify-content-center flex-row">
+            <button
+              className="btn btn-sm btn-danger p-2 m-2 w-25"
+              onClick={handleRemoveFromCart}
+            >
+              Yes
+            </button>
+            <button
+              className="btn btn-sm btn-success p-2 m-2 w-25"
+              onClick={handlePopupClose}
+            >
+              No
+            </button>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 
