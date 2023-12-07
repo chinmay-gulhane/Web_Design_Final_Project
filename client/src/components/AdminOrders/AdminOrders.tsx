@@ -47,42 +47,36 @@ const AdminOrders: React.FC = () => {
 
   return (
     <>
-      <div className="main-div">
-        {/* navbar */}
-        <div className="admin-side-nav">
-          {/* <AdminSideNav></AdminSideNav> */}
-        </div>
-        {/* components */}
-        <div className="admin-main-content">
-          <h2>Orders</h2>
-          <div className="body">
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Order ID</TableCell>
-                    <TableCell>Customer Name</TableCell>
-                    <TableCell>Customer Phone Number</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Restaurant Name</TableCell>
-                    <TableCell>Final Amount</TableCell>
+      {/* components */}
+      <div>
+        <h2>Orders</h2>
+        <div className="body">
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Order ID</TableCell>
+                  <TableCell>Customer Name</TableCell>
+                  <TableCell>Customer Phone Number</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Restaurant Name</TableCell>
+                  <TableCell>Final Amount</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orders.map((order) => (
+                  <TableRow key={order._id}>
+                    <TableCell>{order._id}</TableCell>
+                    <TableCell>{order.customerName}</TableCell>
+                    <TableCell>{order.customerPhoneNumber}</TableCell>
+                    <TableCell>{order.status}</TableCell>
+                    <TableCell>{order.restaurantName}</TableCell>
+                    <TableCell>{order.finalAmount}</TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {orders.map((order) => (
-                    <TableRow key={order._id}>
-                      <TableCell>{order._id}</TableCell>
-                      <TableCell>{order.customerName}</TableCell>
-                      <TableCell>{order.customerPhoneNumber}</TableCell>
-                      <TableCell>{order.status}</TableCell>
-                      <TableCell>{order.restaurantName}</TableCell>
-                      <TableCell>{order.finalAmount}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       </div>
     </>
