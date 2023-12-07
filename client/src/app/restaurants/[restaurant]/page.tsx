@@ -60,7 +60,7 @@ const FoodList: React.FC = () => {
               alt="Restaurant cover image"
             />
           )}
-          <div>
+          <div className="mx-lg-5">
             {restaurant?.name && (
               <Title
                 title={restaurant.name + " | " + restaurant?.rating}
@@ -68,13 +68,15 @@ const FoodList: React.FC = () => {
               ></Title>
             )}
             <Title title="Menu" variant={"h4"}></Title>
-            {foodItems.map((foodItem) => (
-              <FoodCard
-                key={foodItem._id}
-                foodItem={foodItem}
-                foodQuantity={0}
-              />
-            ))}
+            <div className="px-10">
+              {foodItems.map((foodItem) => (
+                <FoodCard
+                  key={foodItem._id}
+                  foodItem={foodItem}
+                  foodQuantity={0}
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}

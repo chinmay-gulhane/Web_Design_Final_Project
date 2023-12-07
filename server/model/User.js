@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import validator from "validator";
 import OrderModel from "./order.js";
+import { foodItemSchema } from "./order.js";
 
 const userSchema = new Schema({
   firstName: {
@@ -71,7 +72,16 @@ const userSchema = new Schema({
   orderHistory: {
     type: [OrderModel.Schema],
     required: false
-  }
+  },
+  cart: {
+    type: [
+      {
+        foodItem: foodItemSchema,
+        quantity: { type: Number, required: true },
+      },
+    ],
+    required: false
+  },
   //   favourites: {
   //     type: [restaurant],
   //     required: [false]

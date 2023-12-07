@@ -16,19 +16,21 @@ interface CartItem {
 
 const CartComponent: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const cartItems = useAppSelector((state: RootState) => state.cart.items);
+  const cartItems = useAppSelector((state: RootState) => state.cart.cart);
 
   return (
     <div>
       {/* Check if the cart is empty */}
       {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
+        <h1 className="text-center font-semibold mb-2 vh-100">
+          Your cart is empty
+        </h1>
       ) : (
         <>
           {/* Iterate over your food items and render FoodCard for each */}
-          <h1 className="text-xl font-semibold mb-2">Cart Summary</h1>
-          <div className="flex justify-between gap-lg-5">
-            <div className="vw-100">
+          <h1 className="text-center font-semibold mb-2">Cart Summary</h1>
+          <div className="flex justify-content-around flex-wrap gap-lg-5 m-5">
+            <div className="flex-grow-1">
               {cartItems.map((cartItem) => (
                 <FoodCard
                   key={cartItem.foodItem._id}
@@ -42,7 +44,7 @@ const CartComponent: React.FC = () => {
               ))}
             </div>
             {/* Order summary */}
-            <div className="">
+            <div className="flex-lg-shrink-0">
               <OrderSummary />
             </div>
           </div>
