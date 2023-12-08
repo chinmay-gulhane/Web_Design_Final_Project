@@ -141,7 +141,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       {user ? (
-        <>
+        <div>
           <MenuItem onClick={navigateToCartPage}>
             <IconButton size="large" color="inherit">
               <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
@@ -162,9 +162,9 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             <span>Sign Out</span>
           </MenuItem>
-        </>
+        </div>
       ) : (
-        <>
+        <div>
           <MenuItem onClick={navigateToLoginPage}>
             <IconButton size="large" color="inherit">
               <LoginIcon />
@@ -183,7 +183,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             <span>Register as restaurtant</span>
           </MenuItem>
-        </>
+        </div>
       )}
     </Menu>
   );
