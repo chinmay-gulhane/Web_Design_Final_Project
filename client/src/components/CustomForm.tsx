@@ -15,7 +15,6 @@ import UpdatePasswordForm from "./AuthenticationForms/UpdatePasswordForm";
 import { CustomFormProps } from "@/models/auth";
 import { Role } from "@/enums/constants";
 import RestaurantRegiserForm from "./AuthenticationForms/RestaurantRegisterForm";
-import { toast } from "react-toastify";
 
 const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
   const [firstName, setFirstName] = useState("");
@@ -50,7 +49,9 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
           if (dispatchedResult.payload.user.role === Role.USER) {
             router.push("/restaurants");
           }else if(dispatchedResult.payload.user.role === Role.RESTAURANT){
-            router.push("/restaurants");
+            router.push(`/restaurant-home/${dispatchedResult.payload.user._id}`);
+          }else if(dispatchedResult.payload.user.role === Role.ADMIN){
+            router.push("/admin-home");
           }
         }
       });
