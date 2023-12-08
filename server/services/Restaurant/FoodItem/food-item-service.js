@@ -4,17 +4,17 @@ import RestaurantModel from "../../../model/Restaurant.js";
 
 // Creates foodItem
 export const createFoodItem = async (newFoodItem, restaurantId) => {
-    const restaurant = await RestaurantModel.findById(restaurantId).exec();
-    if (!restaurant) {
-        throw new Error('Restaurant not found');
-    }
-    if (restaurant.id !== newFoodItem.restaurantId) {
-        throw new Error('food item is not linked with restaurant id');
-    }
-    const foodItem = new FoodItemModel(newFoodItem);
-    // restaurant.foodItems.push(foodItem);
-    // restaurant.save();
-    return await foodItem.save();
+  const restaurant = await RestaurantModel.findById(restaurantId).exec();
+  if (!restaurant) {
+    throw new Error("Restaurant not found");
+  }
+  if (restaurant.id !== newFoodItem.restaurantId) {
+    throw new Error("food item is not linked with restaurant id");
+  }
+  const foodItem = new FoodItemModel(newFoodItem);
+  // restaurant.foodItems.push(foodItem);
+  // restaurant.save();
+  return await foodItem.save();
 };
 
 // Fetches foodItems
@@ -50,7 +50,8 @@ export const findFoodItemById = async (foodItemId, restaurantId) => {
             }
         }
     }
-    return foodItem;
+  }
+  return foodItem;
 };
 
 // Update foodItem
@@ -63,4 +64,4 @@ export const updateFoodItem = async (id, foodItemUpdateData) => {
 export const deleteFoodItem = async (id) => {
     const foodItem = await FoodItemModel.findByIdAndDelete(id);
     return foodItem;
-}
+};
