@@ -8,6 +8,7 @@ import Restaurant from "@/models/restaurant";
 import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
+import Spinner from "@/components/Spinner/Spinner";
 
 const baseUrl = "http://localhost:8080/restaurant";
 
@@ -50,7 +51,7 @@ const FoodList: React.FC = () => {
   return (
     <>
       {isLoading ? (
-        <div></div>
+        <Spinner />
       ) : (
         <div>
           {restaurant && (
