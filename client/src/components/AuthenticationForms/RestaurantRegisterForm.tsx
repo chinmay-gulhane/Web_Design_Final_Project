@@ -1,5 +1,5 @@
 import React from "react";
-import { paperStyle, headerStyle, checkBoxStyle } from "./formStyles";
+import { paperStyle, headerStyle, checkBoxStyle, buttonStyle } from "./formStyles";
 import {
   Avatar,
   Grid,
@@ -199,7 +199,7 @@ const RestaurantRegiserForm: React.FC<RestaurantRegisterFormProps> = ({
               }
               className="text-sm"
             />
-            <Button fullWidth type="submit" variant="contained" sx={{ marginTop: "10px" }}>
+            <Button fullWidth type="submit" variant="contained" sx={{ marginTop: "10px" }} style={buttonStyle}>
               Sign Up
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>

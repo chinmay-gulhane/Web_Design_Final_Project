@@ -1,5 +1,5 @@
 import React from "react";
-import { paperStyle, headerStyle } from "./formStyles";
+import { paperStyle, headerStyle, buttonStyle } from "./formStyles";
 import {
   Avatar,
   Grid,
@@ -57,6 +57,7 @@ const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
               type="submit"
               variant="contained"
               sx={{ marginTop: "20px" }}
+              style={buttonStyle}
             >
               Send Otp
             </Button>
