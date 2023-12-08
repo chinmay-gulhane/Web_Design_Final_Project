@@ -19,38 +19,36 @@ export const createFoodItem = async (newFoodItem, restaurantId) => {
 
 // Fetches foodItems
 export const getAllFoodItems = async (restaurantId) => {
-  try {
-    let result = [];
-    // const restaurant = await RestaurantModel.findById(restaurantId).exec();
-    const foodItems = await FoodItemModel.find().exec();
-    foodItems.forEach((foodItem) => {
-      if (foodItem.restaurantId === restaurantId) {
-        result.push(foodItem);
-      }
-    });
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        // const restaurant = await RestaurantModel.findById(restaurantId).exec();
+        const foodItems = await FoodItemModel.find({ restaurantId: "655d0b832242b5a3bdc4879b" });
+        // foodItems.forEach(foodItem => {
+        //     if (foodItem.restaurantId === restaurantId) {
+        //         result.push(foodItem);
+        //     }
+        // });
+        return foodItems;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 // Get foodItem by id
 export const findFoodItemById = async (foodItemId, restaurantId) => {
-  console.log("Get foodItemById: " + foodItemId);
-  let foodItem = await FoodItemModel.findById(foodItemId).exec();
-  console.log(foodItem);
-  if (foodItem.restaurantId !== restaurantId) {
-    throw new Error(
-      "Database Error. Correct FoodItem Id to the correct restaurant"
-    );
-  }
-  if (!foodItem) {
-    const restaurant = await RestaurantModel.findById(restaurantId).exec();
-    for (let restaurantFoodItem of restaurant.foodItems) {
-      if (foodItemId === restaurantFoodItem.id) {
-        foodItem = restaurantFoodItem;
-        break;
-      }
+    console.log("Get foodItemById: " + foodItemId);
+    let foodItem = await FoodItemModel.findById(foodItemId);
+    console.log(foodItem);
+    if (foodItem.restaurantId !== restaurantId) {
+        throw new Error("Database Error. Correct FoodItem Id to the correct restaurant");
+    }
+    if (!foodItem) {
+        const restaurant = await RestaurantModel.findById(restaurantId);
+        for (let restaurantFoodItem of restaurant.foodItems) {
+            if (foodItemId === restaurantFoodItem.id) {
+                foodItem = restaurantFoodItem;
+                break;
+            }
+        }
     }
   }
   return foodItem;
@@ -58,18 +56,12 @@ export const findFoodItemById = async (foodItemId, restaurantId) => {
 
 // Update foodItem
 export const updateFoodItem = async (id, foodItemUpdateData) => {
-  console.log(id, foodItemUpdateData);
-  const foodItem = await FoodItemModel.findByIdAndUpdate(
-    id,
-    foodItemUpdateData,
-    {
-      new: true,
-    }
-  ).exec();
-  return foodItem;
-};
+    console.log(id, foodItemUpdateData);
+    const foodItem = await FoodItemModel.findByIdAndUpdate(id, foodItemUpdateData);
+    return foodItem;
+}
 // Delete foodItem
 export const deleteFoodItem = async (id) => {
-  const foodItem = await FoodItemModel.findByIdAndDelete(id).exec();
-  return foodItem;
+    const foodItem = await FoodItemModel.findByIdAndDelete(id);
+    return foodItem;
 };
