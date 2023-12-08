@@ -6,3 +6,11 @@ export interface FoodItem {
   rating: number;
   _id: string;
 }
+
+export interface FoodItemPayload {
+  name: string;
+  foodImage: string;
+  restaurantId: string;
+  price: number;
+  rating: number;
+}

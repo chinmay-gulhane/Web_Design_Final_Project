@@ -14,17 +14,25 @@ import "./restaurant-menu.scss";
 import FoodItemModal from "./MenuItemModal";
 import FoodItem from "@/models/foodItem";
 import * as restaurantService from "@/services/restaurant-service";
+import * as foodItemService from "@/services/fooditem-service";
 import Restaurant from "@/models/restaurant";
 import { useParams } from "next/navigation";
+import { FoodItemPayload } from "@/interfaces/interfaces";
 
 interface FoodItemsTableProps {
-  menuItems: FoodItem[]; // Assuming MenuItem is a type/interface representing your menu item
+  menuItems: FoodItem[];
+  restaurantId: string;
 }
 
-const FoodItemsTable: React.FC<FoodItemsTableProps> = ({ menuItems }) => {
+const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
+  menuItems,
+  restaurantId,
+}) => {
   const initialFoodItems = menuItems;
+
   // const [restaurant, setRestaurants] = useState<Restaurant>();
   const [foodItems, setFoodItems] = useState<FoodItem[]>(initialFoodItems);
+  // const [restaurantId, setRestaurantId] = useState<string>();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [editFormData, setEditFormData] = useState<FoodItem | null>(null);
@@ -32,29 +40,31 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({ menuItems }) => {
     _id: "",
     name: "",
     foodImage: "",
-    restaurantId: "",
+    restaurantId: restaurantId,
     price: 0,
     rating: 0,
   });
 
-  const handleAdd = () => {
-    setFoodItems((prevItems) => [
-      ...prevItems,
-      {
-        _id: "",
-        name: formData.name,
-        foodImage: formData.foodImage,
-        restaurantId: formData.restaurantId,
-        price: formData.price,
-        rating: formData.rating,
-      },
-    ]);
+  const handleAdd = async () => {
+    const payload: FoodItemPayload = {
+      name: formData.name,
+      foodImage: formData.foodImage,
+      restaurantId: restaurantId,
+      price: formData.price,
+      rating: formData.rating,
+    };
+
+    const newFoodItem = await foodItemService.createFoodItem(
+      restaurantId,
+      payload
+    );
+    setFoodItems((prevItems) => [...prevItems, newFoodItem]);
     setOpenAddModal(false);
     setFormData({
       _id: "",
       name: "",
       foodImage: "",
-      restaurantId: "",
+      restaurantId: restaurantId,
       price: 0,
       rating: 0,
     });
@@ -77,7 +87,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({ menuItems }) => {
       _id: "",
       name: "",
       foodImage: "",
-      restaurantId: "",
+      restaurantId: restaurantId,
       price: 0,
       rating: 0,
     });

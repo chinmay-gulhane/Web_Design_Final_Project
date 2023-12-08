@@ -53,7 +53,9 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
       case "Home":
         return <RestaurantDashboard />;
       case "Menu":
-        return <RestaurantMenu menuItems={menuItems} />;
+        return (
+          <RestaurantMenu menuItems={menuItems} restaurantId={restaurantId} />
+        );
       case "Orders":
         return <RestaurantOrders />;
       default:

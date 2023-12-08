@@ -1,4 +1,4 @@
-import { FoodItem } from "@/interfaces/interfaces";
+import { FoodItem, FoodItemPayload } from "@/interfaces/interfaces";
 import axios, { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:8080";
@@ -8,11 +8,11 @@ const baseURL = "http://localhost:8080";
  */
 export const createFoodItem = async (
   restaurantId: string,
-  foodItem: FoodItem
+  foodItem: FoodItemPayload
 ): Promise<FoodItem> => {
   try {
     const response: AxiosResponse<FoodItem> = await axios.post(
-      `${baseURL}/restaurants/${restaurantId}/foodItems/add`,
+      `${baseURL}/restaurant/${restaurantId}/foodItems/add`,
       foodItem
     );
     return response.data;
@@ -29,7 +29,7 @@ export const getFoodItems = async (
 ): Promise<FoodItem[]> => {
   try {
     const response: AxiosResponse<FoodItem[]> = await axios.get(
-      `${baseURL}/restaurants/${restaurantId}/foodItems`
+      `${baseURL}/restaurant/${restaurantId}/foodItems`
     );
     return response.data;
   } catch (error) {
@@ -46,7 +46,7 @@ export const deleteFoodItem = async (
 ): Promise<void> => {
   try {
     await axios.delete(
-      `${baseURL}/restaurants/${restaurantId}/foodItems/${foodItemId}`
+      `${baseURL}/restaurant/${restaurantId}/foodItems/${foodItemId}`
     );
   } catch (error) {
     throw error;
@@ -63,7 +63,7 @@ export const updateFoodItem = async (
 ): Promise<FoodItem> => {
   try {
     const response: AxiosResponse<FoodItem> = await axios.put(
-      `${baseURL}/restaurants/${restaurantId}/foodItems/${foodItemId}`,
+      `${baseURL}/restaurant/${restaurantId}/foodItems/${foodItemId}`,
       updatedFoodItemData
     );
     return response.data;
