@@ -29,7 +29,7 @@ export const getFoodItems = async (
 ): Promise<FoodItem[]> => {
   try {
     const response: AxiosResponse<FoodItem[]> = await axios.get(
-      `${baseURL}/restaurant/${restaurantId}/foodItems`
+      `${baseURL}/restaurant/${restaurantId}/foodItems/all`
     );
     return response.data;
   } catch (error) {

@@ -1,5 +1,5 @@
 // FoodItemsTable.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Table,
@@ -8,16 +8,20 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import "./restaurant-menu.scss";
 import FoodItemModal from "./MenuItemModal";
 import FoodItem from "@/models/foodItem";
-import * as restaurantService from "@/services/restaurant-service";
 import * as foodItemService from "@/services/fooditem-service";
-import Restaurant from "@/models/restaurant";
-import { useParams } from "next/navigation";
 import { FoodItemPayload } from "@/interfaces/interfaces";
+import Paper from "@mui/material/Paper";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 interface FoodItemsTableProps {
   menuItems: FoodItem[];
@@ -28,13 +32,12 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
   menuItems,
   restaurantId,
 }) => {
+  // Initial state setup
   const initialFoodItems = menuItems;
-
-  // const [restaurant, setRestaurants] = useState<Restaurant>();
   const [foodItems, setFoodItems] = useState<FoodItem[]>(initialFoodItems);
-  // const [restaurantId, setRestaurantId] = useState<string>();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editFormData, setEditFormData] = useState<FoodItem | null>(null);
   const [formData, setFormData] = useState<FoodItem>({
     _id: "",
@@ -45,6 +48,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     rating: 0,
   });
 
+  // Add a new food item
   const handleAdd = async () => {
     const payload: FoodItemPayload = {
       name: formData.name,
@@ -54,12 +58,17 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
       rating: formData.rating,
     };
 
+    // Call API to create a new food item
     const newFoodItem = await foodItemService.createFoodItem(
       restaurantId,
       payload
     );
+
+    // Update local state with the new food item
     setFoodItems((prevItems) => [...prevItems, newFoodItem]);
     setOpenAddModal(false);
+
+    // Reset the form data
     setFormData({
       _id: "",
       name: "",
@@ -70,39 +79,86 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     });
   };
 
-  const handleEdit = () => {
-    setFoodItems((prevItems) =>
-      prevItems.map((item) =>
-        item.name === editFormData?.name
-          ? {
-              ...item,
-              ...formData,
-            }
-          : item
-      )
-    );
-    setOpenEditModal(false);
-    setEditFormData(null);
-    setFormData({
-      _id: "",
-      name: "",
-      foodImage: "",
-      restaurantId: restaurantId,
-      price: 0,
-      rating: 0,
-    });
+  // Edit an existing food item
+  const handleEdit = async () => {
+    try {
+      if (editFormData) {
+        // Call API to update the existing food item
+        const updatedFoodItem = await foodItemService.updateFoodItem(
+          restaurantId,
+          editFormData._id,
+          formData
+        );
+
+        console.log("editFormData", updatedFoodItem);
+        console.log("editFormData", editFormData);
+
+        // Update local state with the updated food item
+        setFoodItems((prevItems) =>
+          prevItems.map((item) =>
+            item._id === updatedFoodItem._id ? updatedFoodItem : item
+          )
+        );
+
+        setOpenEditModal(false);
+        setEditFormData(null);
+
+        // Reset the form data
+        setFormData({
+          _id: "",
+          name: "",
+          foodImage: "",
+          restaurantId: restaurantId,
+          price: 0,
+          rating: 0,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating food item:", error);
+      // Handle error, e.g., display an error message
+    }
   };
 
-  const handleDelete = (name: string) => {
-    setFoodItems((prevItems) => prevItems.filter((item) => item.name !== name));
+  // Initiate the delete process
+  const handleDeleteClick = (name: string) => {
+    // Set the item to be deleted and open the delete confirmation modal
+    setEditFormData(foodItems.find((item) => item.name === name) || null);
+    setOpenDeleteModal(true);
   };
 
+  // Confirm the delete action
+  const handleDeleteConfirm = async () => {
+    if (editFormData) {
+      try {
+        // Call API to delete the selected food item
+        await foodItemService.deleteFoodItem(restaurantId, editFormData._id);
+
+        // Update local state after deletion
+        setFoodItems((prevItems) =>
+          prevItems.filter((item) => item._id !== editFormData._id)
+        );
+
+        setOpenDeleteModal(false);
+      } catch (error) {
+        console.error("Error deleting food item:", error);
+        // Handle error, e.g., display an error message
+      }
+    }
+  };
+
+  // Cancel the delete action
+  const handleDeleteCancel = () => {
+    setOpenDeleteModal(false);
+  };
+
+  // Edit an existing food item
   const handleEditClick = (item: FoodItem) => {
     setEditFormData(item);
     setFormData(item);
     setOpenEditModal(true);
   };
 
+  // Handle input changes in the form
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -112,56 +168,76 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
 
   return (
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setOpenAddModal(true)}
-      >
-        Add Food Item
-      </Button>
+      {/* Header */}
+      <div className="header-div">
+        <div className="title-div w-50">
+          <span className="page-header">Menu</span>
+        </div>
+        <div className="add-food-item-btn-div w-50">
+          {/* Add Food Item button */}
+          <Button
+            className="add-food-item-btn"
+            variant="contained"
+            color="primary"
+            onClick={() => setOpenAddModal(true)}
+          >
+            Add Food Item
+          </Button>
+        </div>
+      </div>
 
-      {/* Table */}
-      <TableContainer>
-        <Table className="food-items-table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Food Item Name</TableCell>
-              <TableCell>Food Image URL</TableCell>
-              <TableCell>Food Item Price</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {foodItems.map((item) => (
-              <TableRow key={item.name}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.foodImage}</TableCell>
-                <TableCell>{item.price}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleEditClick(item)}
-                    startIcon={<AiFillEdit />}
-                  >
-                    Edit
-                  </Button>{" "}
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleDelete(item.name)}
-                    startIcon={<AiOutlineDelete />}
-                  >
-                    Delete
-                  </Button>
+      {/* Table Container */}
+      <div className="tbl-container">
+        {/* Table */}
+        <TableContainer component={Paper}>
+          <Table className="food-items-table">
+            {/* Table Header */}
+            <TableHead>
+              <TableRow>
+                <TableCell className="table-header">Food Item Name</TableCell>
+                <TableCell className="table-header">Food Image URL</TableCell>
+                <TableCell className="table-header" align="center">
+                  Food Item Price
+                </TableCell>
+                <TableCell className="table-header" align="center">
+                  Actions
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            {/* Table Body */}
+            <TableBody>
+              {foodItems.map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.foodImage}</TableCell>
+                  <TableCell align="center">{item.price} $</TableCell>
+                  {/* Edit and Delete buttons */}
+                  <TableCell align="center">
+                    <Button
+                      className="edit-btn"
+                      variant="contained"
+                      onClick={() => handleEditClick(item)}
+                    >
+                      <FaEdit />
+                    </Button>{" "}
+                    <Button
+                      className="delete-btn"
+                      variant="contained"
+                      // color="secondary"
+                      onClick={() => handleDeleteClick(item.name)}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
 
       {/* Modals */}
+      {/* Add Food Item Modal */}
       <FoodItemModal
         open={openAddModal}
         onClose={() => setOpenAddModal(false)}
@@ -171,6 +247,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         onSubmit={handleAdd}
       />
 
+      {/* Edit Food Item Modal */}
       <FoodItemModal
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
@@ -179,6 +256,25 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         onInputChange={handleInputChange}
         onSubmit={handleEdit}
       />
+
+      {/* Delete Confirmation Modal */}
+      <Dialog open={openDeleteModal} onClose={handleDeleteCancel}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this food item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          {/* Cancel and Delete buttons */}
+          <Button onClick={handleDeleteCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="secondary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

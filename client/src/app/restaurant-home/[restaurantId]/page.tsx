@@ -8,12 +8,12 @@ import RestaurantOrders from "@/components/RestaurantOrders/RestaurantOrders";
 import RestaurantMenu from "@/components/RestautantMenu/RestaurantMenu";
 import Restaurant from "@/models/restaurant";
 import * as restaurantService from "@/services/restaurant-service";
+import * as foodItemService from "@/services/fooditem-service";
 import { FoodItem } from "@/interfaces/interfaces";
 
 interface PageProps {
   params: {
     restaurantId: string;
-    // Add other properties if needed
   };
 }
 
@@ -25,15 +25,16 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
   const [error, setError] = useState<Error | null>(null);
 
   const restaurantId = params.restaurantId;
-  console.log("restaurantId", restaurantId);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await restaurantService.getRestaurantById(restaurantId);
-        console.log(data);
+        const foodData = await foodItemService.getFoodItems(restaurantId);
+        // console.log(data);
+        // console.log(foodData);
         setRestaurant(data);
-        setFoodItems(data.foodItems);
+        setFoodItems(foodData);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
