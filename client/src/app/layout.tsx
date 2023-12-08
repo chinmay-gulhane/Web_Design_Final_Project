@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ReduxProvider } from "@/redux/provider";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,8 +7,13 @@ import Layout from "@/components/Layout/Layout";
 import classes from "../styles/styles.module.css";
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "Husky Bites App",
   description: "A food delivery application",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
