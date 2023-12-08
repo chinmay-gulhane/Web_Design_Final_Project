@@ -50,7 +50,7 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                marginTop: "15px",
+                marginTop: "25px",
                 rowGap: "15px",
               }}
             >

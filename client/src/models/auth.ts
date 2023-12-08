@@ -1,3 +1,4 @@
+import Address from "./address";
 import { Order } from "./order";
 import { FormEvent, Dispatch, SetStateAction } from "react";
 
@@ -16,7 +17,18 @@ export type registerData = {
   email: string;
   phone: string;
   password: string;
-  role: string
+  role: string;
+};
+
+export type registerRestaurantData = {
+  name: string;
+  firstName: string,
+  lastName: string,
+  address: Address;
+  email: string;
+  phone: string;
+  password: string;
+  role: string;
 };
 
 export type updatePasswordPayLoadType = {
@@ -67,6 +79,34 @@ export interface RegisterFormProps {
   setFirstName: Dispatch<SetStateAction<string>>;
   lastName: string;
   setLastName: Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
+  password: string;
+  setPassword: Dispatch<SetStateAction<string>>;
+  phone: string;
+  setPhone: Dispatch<SetStateAction<string>>;
+  showPassword: boolean;
+  handleClickShowPassword: () => void;
+}
+
+export interface RestaurantRegisterFormProps {
+  formHandler: (e: FormEvent<HTMLFormElement>) => void;
+  restaurantName: string;
+  setRestaurantName: Dispatch<SetStateAction<string>>;
+  firstName: string;
+  setFirstName: Dispatch<SetStateAction<string>>;
+  lastName: string;
+  setLastName: Dispatch<SetStateAction<string>>;
+  addressLine: string;
+  setAddressLine: Dispatch<SetStateAction<string>>;
+  city: string;
+  setCity: Dispatch<SetStateAction<string>>;
+  state: string;
+  setState: Dispatch<SetStateAction<string>>;
+  zipCode: string;
+  setZipCode: Dispatch<SetStateAction<string>>;
+  country: string;
+  setCountry: Dispatch<SetStateAction<string>>;
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   password: string;

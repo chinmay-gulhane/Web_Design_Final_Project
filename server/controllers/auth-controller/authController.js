@@ -1,19 +1,16 @@
 import validator from "validator";
 
 import User from "../../model/User.js";
-import {
-  generateAuthToken,
-  generateOTP,
-  maskPassword,
-} from "../../services/authService.js";
+import { generateAuthToken, generateOTP, maskPassword } from "../../services/authService.js";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "../../services/emailService.js";
 
 import crypto from "crypto";
+import RestaurantModel from "../../model/Restaurant.js";
+
 
 export const registerController = async (req, res) => {
-  const { firstName, lastName, email, password, phone, profilePhoto, role } =
-    req.body;
+  const { firstName, lastName, email, password, phone, profilePhoto, role } = req.body;
   try {
     if (!firstName) {
       throw new Error("Please enter first name");
@@ -30,7 +27,7 @@ export const registerController = async (req, res) => {
     if (!phone) {
       throw new Error("Please enter phone no.");
     }
-    if(!role){
+    if (!role) {
       throw new Error("Role is required");
     }
 
@@ -94,9 +91,9 @@ export const loginController = async (req, res) => {
       throw new Error("Please enter valid email");
     }
 
-    const isExistingUser = await User.findOne({ email }).exec();
+    let isExistingUser = await User.findOne({ email }).exec();
     if (!isExistingUser) {
-      throw new Error("Email is not registered");
+      throw new Error("Account not found");
     }
 
     const isMatch = await bcryptjs.compare(password, isExistingUser.password);
@@ -106,9 +103,13 @@ export const loginController = async (req, res) => {
 
     const token = generateAuthToken(isExistingUser._id);
 
+    if(isExistingUser.role === "RESTAURANT"){
+      isExistingUser = await RestaurantModel.findOne({ email }).exec();
+    }
+
     res.status(200).json({
       success: true,
-      message: "User logged successfully",
+      message: `Login successful`,
       user: isExistingUser,
       token: token,
     });
@@ -126,8 +127,7 @@ export const generateOtpController = async (req, res) => {
   const { email } = req.body;
 
   try {
-
-    if(!email){
+    if (!email) {
       throw new Error("Please enter email");
     }
 
@@ -174,13 +174,12 @@ export const createNewPasswordController = async (req, res) => {
       throw new Error("Please enter new password");
     }
 
-
     let user = await User.findOne({ email }).exec();
     if (!user) {
       throw new Error("Something went wrong");
     }
 
-    if(otp !== user.otp){
+    if (otp !== user.otp) {
       throw new Error("Invalid Otp");
     }
 
@@ -201,7 +200,6 @@ export const createNewPasswordController = async (req, res) => {
       message: "Password updated successfully",
       user: user,
     });
-
   } catch (error) {
     console.log("Error while creating new password", error);
     res.status(500).json({

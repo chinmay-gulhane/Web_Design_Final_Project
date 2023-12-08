@@ -8,7 +8,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-} from "@material-ui/core";
+} from "@mui/material";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import "./restaurant-menu.scss";
 import FoodItemModal from "./MenuItemModal";

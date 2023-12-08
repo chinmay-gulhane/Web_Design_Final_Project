@@ -1,5 +1,5 @@
-import { loginData, registerData, updatePasswordPayLoadType } from "@/models/auth";
-import { loginAction, registerAction, generateOtpAction, updatePasswordAction } from "@/redux/actions/auth-actions";
+import { loginData, registerData, registerRestaurantData, updatePasswordPayLoadType } from "@/models/auth";
+import { loginAction, registerAction, registerRestaurantAction, generateOtpAction, updatePasswordAction } from "@/redux/actions/auth-actions";
 import store from "@/redux/store"
 
 export const loginService = (loginData : loginData) => {
@@ -9,6 +9,11 @@ export const loginService = (loginData : loginData) => {
 
 export const registerService = async (registerData: registerData) => {
     const dispatchedResult = await store.dispatch(registerAction(registerData));
+    return dispatchedResult;
+}
+
+export const registerRestaurantService = async (registerRestaurantData: registerRestaurantData) => {
+    const dispatchedResult = await store.dispatch(registerRestaurantAction(registerRestaurantData));
     return dispatchedResult;
 }
 
