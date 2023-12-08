@@ -10,7 +10,7 @@ const RestaurantRegister = () => {
   
     return (
       <div className={`${classes.register_image} ${classes.auth_page}`}>
-        <CustomForm formType={"restaurant-register"} />
+        <CustomForm formType={"register-restaurant"} />
         {loading && <Spinner />}
       </div>
     );

@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axiosInstance from "@/services/axios-service";
-import { loginData, loginErrorResponse, registerData, updatePasswordPayLoadType } from "@/models/auth";
+import { loginData, loginErrorResponse, registerData, registerRestaurantData, updatePasswordPayLoadType } from "@/models/auth";
 import { loginSuccessResponse } from "@/models/auth";
+import { Role } from "@/enums/constants";
 
 export const loginAction = createAsyncThunk(
   "auth/login",
@@ -37,6 +38,33 @@ export const registerAction = createAsyncThunk(
       const response = await axiosInstance.post("/auth/register", registerData);
       const data = await response.data;
       if (data.success) {
+        if(registerData.role !== Role.RESTAURANT){
+          toast.success(data.message, {
+            autoClose: 900,
+          });
+        }
+        // window.location.replace("/login");
+      }
+      return data;
+    } catch (error: any) {
+      if(registerData.role !== Role.RESTAURANT){
+        toast.error(error.response.data.error, {
+          autoClose: 900,
+        });
+      }
+      throw new Error(error.response.data.error);
+    }
+  }
+);
+
+export const registerRestaurantAction = createAsyncThunk(
+  "auth/register-restaurant",
+  async (registerRestaurantData: registerRestaurantData) => {
+    toast.dismiss();
+    try {
+      const responseRestaurant = await axiosInstance.post("/restaurant/register", registerRestaurantData);
+      const data = await responseRestaurant.data;
+      if (data.success) {
         toast.success(data.message, {
           autoClose: 900,
         });
@@ -51,6 +79,8 @@ export const registerAction = createAsyncThunk(
     }
   }
 );
+
+
 
 export const generateOtpAction = createAsyncThunk(
   "auth/generateOtp",
