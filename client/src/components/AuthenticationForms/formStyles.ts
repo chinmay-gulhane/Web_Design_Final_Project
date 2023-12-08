@@ -11,3 +11,11 @@ export const headerStyle = {
 export const checkBoxStyle = {
   color: "#6f6f6f",
 };
+
+export const buttonStyle = {
+  backgroundColor: "black",
+  color: "white",
+  "&:hover": {
+    backgroundColor: "red",
+  },
+};

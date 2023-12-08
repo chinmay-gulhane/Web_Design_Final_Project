@@ -1,16 +1,19 @@
 .company-name {
-  font-size: 28px;
+  display: flex;
+  align-items: center;
   justify-self: left;
 }
 
 .company-first-word {
   font-weight: 400;
   color: red;
+  font-size: 28px;
 }
 
 .company-last-word {
   color: black;
   font-weight: 600;
+  font-size: 28px;
 }
 
 .dark-mode {
@@ -21,9 +24,6 @@
   float: right;
   margin-left: 20px;
   margin-right: 40px;
-}
-
-.cart {
 }
 
 .drawer {

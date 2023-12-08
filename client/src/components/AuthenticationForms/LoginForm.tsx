@@ -1,5 +1,5 @@
 import React from "react";
-import { paperStyle, headerStyle } from "./formStyles";
+import { paperStyle, headerStyle, buttonStyle } from "./formStyles";
 import {
   Avatar,
   Grid,
@@ -92,7 +92,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               </Link>
             </Typography>
 
-            <Button fullWidth type="submit" variant="contained" sx={{ marginTop: "15px" }}>
+            <Button fullWidth type="submit" variant="contained" sx={{ marginTop: "15px" }} style={buttonStyle}>
               Sign In
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>
