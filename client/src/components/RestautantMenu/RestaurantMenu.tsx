@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  TextField, // Import TextField for the search bar
 } from "@mui/material";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import "./restaurant-menu.scss";
@@ -47,6 +48,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     price: 0,
     rating: 0,
   });
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   // Add a new food item
   const handleAdd = async () => {
@@ -89,9 +91,6 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
           editFormData._id,
           formData
         );
-
-        console.log("editFormData", updatedFoodItem);
-        console.log("editFormData", editFormData);
 
         // Update local state with the updated food item
         setFoodItems((prevItems) =>
@@ -166,14 +165,33 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     }));
   };
 
+  // Handle search input changes
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+  };
+
+  // Filter food items based on search term
+  const filteredFoodItems = foodItems.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       {/* Header */}
       <div className="header-div">
-        <div className="title-div w-50">
+        <div className="title-div w-30">
           <span className="page-header">Menu</span>
         </div>
-        <div className="add-food-item-btn-div w-50">
+        {/* Search Bar */}
+        <div className="search-bar w-40">
+          <TextField
+            label="Search Food Items"
+            variant="outlined"
+            className="w-80"
+            onChange={(e) => handleSearchChange(e.target.value)}
+          />
+        </div>
+        <div className="add-food-item-btn-div w-30">
           {/* Add Food Item button */}
           <Button
             className="add-food-item-btn"
@@ -206,7 +224,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
             </TableHead>
             {/* Table Body */}
             <TableBody>
-              {foodItems.map((item) => (
+              {filteredFoodItems.map((item) => (
                 <TableRow key={item._id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.foodImage}</TableCell>
@@ -223,7 +241,6 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
                     <Button
                       className="delete-btn"
                       variant="contained"
-                      // color="secondary"
                       onClick={() => handleDeleteClick(item.name)}
                     >
                       <FaTrash />

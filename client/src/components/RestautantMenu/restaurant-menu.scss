@@ -47,14 +47,6 @@
   justify-content: center;
 }
 
-.w-100 {
-  width: 100%;
-}
-
-.w-80 {
-  width: 80%;
-}
-
 .action-btns-div {
   margin-top: 25px;
 }
@@ -69,10 +61,9 @@
   height: 38px;
 }
 
-/* restaurant-menu.scss */
 .table-header {
-  background-color: black; // Set background color for table header
-  color: white; // Set text color for table header
+  background-color: black; 
+  color: white; 
 }
 
 /* Add hover effect for each row */
@@ -88,4 +79,27 @@
 .delete-btn {
   background-color: #ff0000 !important;
   font-size: larger;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+}
+
+
+// width classes
+.w-100 {
+  width: 100%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-60 {
+  width: 60%;
 }
