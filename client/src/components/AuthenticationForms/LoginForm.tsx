@@ -55,30 +55,20 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 type="email"
                 label="Email"
                 variant="outlined"
-                sx={{ marginTop: "15px" }}
+                sx={{ marginTop: "25px" }}
                 error={false}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></TextField>
-              <FormControl
-                sx={{ width: "100%" }}
-                variant="outlined"
-                error={false}
-              >
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
+              <FormControl sx={{ width: "100%" }} variant="outlined" error={false}>
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        edge="end"
-                      >
+                      <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} edge="end">
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
@@ -102,12 +92,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               </Link>
             </Typography>
 
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              sx={{ marginTop: "15px" }}
-            >
+            <Button fullWidth type="submit" variant="contained" sx={{ marginTop: "15px" }}>
               Sign In
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>
