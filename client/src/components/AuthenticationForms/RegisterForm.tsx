@@ -1,5 +1,5 @@
 import React from "react";
-import { paperStyle, headerStyle, checkBoxStyle } from "./formStyles";
+import { paperStyle, headerStyle, checkBoxStyle, buttonStyle } from "./formStyles";
 import {
   Avatar,
   Grid,
@@ -137,6 +137,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               type="submit"
               variant="contained"
               sx={{ marginTop: "10px" }}
+              style={buttonStyle}
             >
               Sign Up
             </Button>

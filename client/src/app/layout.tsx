@@ -4,7 +4,7 @@ import { ReduxProvider } from "@/redux/provider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ToastifyContainer from "@/components/ToastifyContainer";
 import Layout from "@/components/Layout/Layout";
-import classes from "../styles/styles.module.css"
+import classes from "../styles/styles.module.css";
 
 export const metadata: Metadata = {
   title: "Husky Bites App",

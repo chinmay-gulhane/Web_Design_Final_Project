@@ -1,5 +1,5 @@
 import React from "react";
-import { paperStyle, headerStyle } from "./formStyles";
+import { paperStyle, headerStyle, buttonStyle } from "./formStyles";
 import {
   Avatar,
   Grid,
@@ -102,6 +102,7 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
               type="submit"
               variant="contained"
               sx={{ marginTop: "20px" }}
+              style={buttonStyle}
             >
               Update Password
             </Button>
