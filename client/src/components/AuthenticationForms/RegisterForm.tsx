@@ -66,7 +66,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 type="text"
                 label="First Name"
                 variant="outlined"
-                sx={{ marginTop: "15px" }}
+                sx={{ marginTop: "25px" }}
                 onChange={(e) => setFirstName(e.target.value)}
                 value={firstName}
               ></TextField>

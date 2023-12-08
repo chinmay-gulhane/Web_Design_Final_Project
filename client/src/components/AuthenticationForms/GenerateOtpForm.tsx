@@ -40,7 +40,7 @@ const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                marginTop: "15px",
+                marginTop: "25px",
               }}
             >
               <TextField

@@ -14,18 +14,20 @@ const restaurantSchema = new Schema({
     rating: {
         type: Number,
         required: false,
+        default: "1"
     },
     address: {
         type: AddressModel.schema,
         required: false,
     },
-    phoneNumber: {
+    phone: {
         type: String,
         required: false,
     },
     profilePhoto: {
         type: String,
         required: false,
+        default: "/images/restaurants/r-4.webp"
     },
     email: {
         type: String,
