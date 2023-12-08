@@ -36,9 +36,10 @@ export const getAllfoodItems = async (request, response) => {
 
 export const updatefoodItem = async (request, response) => {
     try {
-        const id = request.params.id;
+        const id = request.params.foodItemId;
+        // console.log(request.params);
         const foodItemUpdateData = { ...request.body };
-        const updatedfoodItem = await foodItemService.updatefoodItem(id, foodItemUpdateData);
+        const updatedfoodItem = await foodItemService.updateFoodItem(id, foodItemUpdateData);
         setResponse(response, updatedfoodItem);
     } catch (error) {
         setErrorResponse(response, error);
@@ -46,10 +47,11 @@ export const updatefoodItem = async (request, response) => {
 };
 
 export const deletefoodItem = async (request, response) => {
+    console.log("delete food item requested");
     try {
-        const id = request.params.id;
-        const course = await foodItemService.deletefoodItem(id);
-        setResponse(response, {});
+        const id = request.params.foodItemId;
+        const deleted = await foodItemService.deleteFoodItem(id);
+        setResponse(response, deleted);
     } catch (error) {
         setErrorResponse(response, error);
     }

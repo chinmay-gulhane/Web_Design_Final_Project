@@ -8,18 +8,27 @@ export const createFoodItem = async (newFoodItem, restaurantId) => {
     if (!restaurant) {
         throw new Error('Restaurant not found');
     }
+    if (restaurant.id !== newFoodItem.restaurantId) {
+        throw new Error('food item is not linked with restaurant id');
+    }
     const foodItem = new FoodItemModel(newFoodItem);
-    restaurant.foodItems.push(foodItem);
-    restaurant.save();
+    // restaurant.foodItems.push(foodItem);
+    // restaurant.save();
     return await foodItem.save();
 };
 
 // Fetches foodItems
 export const getAllFoodItems = async (restaurantId) => {
     try {
-        const restaurant = await RestaurantModel.findById(restaurantId).exec();
-        const foodItems = restaurant.foodItems;
-        return foodItems
+        let result = [];
+        // const restaurant = await RestaurantModel.findById(restaurantId).exec();
+        const foodItems = await FoodItemModel.find().exec();
+        foodItems.forEach(foodItem => {
+            if (foodItem.restaurantId === restaurantId) {
+                result.push(foodItem);
+            }
+        });
+        return result;
     } catch (error) {
         console.error(error);
     }
@@ -27,7 +36,12 @@ export const getAllFoodItems = async (restaurantId) => {
 
 // Get foodItem by id
 export const findFoodItemById = async (foodItemId, restaurantId) => {
+    console.log("Get foodItemById: " + foodItemId);
     let foodItem = await FoodItemModel.findById(foodItemId).exec();
+    console.log(foodItem);
+    if (foodItem.restaurantId !== restaurantId) {
+        throw new Error("Database Error. Correct FoodItem Id to the correct restaurant");
+    }
     if (!foodItem) {
         const restaurant = await RestaurantModel.findById(restaurantId).exec();
         for (let restaurantFoodItem of restaurant.foodItems) {
@@ -42,10 +56,12 @@ export const findFoodItemById = async (foodItemId, restaurantId) => {
 
 // Update foodItem
 export const updateFoodItem = async (id, foodItemUpdateData) => {
+    console.log(id, foodItemUpdateData);
     const foodItem = await FoodItemModel.findByIdAndUpdate(id, foodItemUpdateData).exec();
     return foodItem;
 }
 // Delete foodItem
 export const deleteFoodItem = async (id) => {
-    return await FoodItemModel.findByIdAndDelete(id).exec();
+    const foodItem = await FoodItemModel.findByIdAndDelete(id).exec();
+    return foodItem;
 }
