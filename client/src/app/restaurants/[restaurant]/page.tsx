@@ -49,39 +49,44 @@ const FoodList: React.FC = () => {
   }, [restaurant?.foodItems]);
 
   return (
-    <>
+    <div className="flex justify-center w-full">
       {isLoading ? (
         <Spinner />
       ) : (
-        <div>
-          {restaurant && (
-            <CoverImage
-              //   src={restaurant.profilePhoto}
-              src={restaurant.profilePhoto}
-              alt="Restaurant cover image"
-            />
-          )}
-          <div className="mx-lg-5">
+        <div className="flex flex-col items-center w-full">
+          <div className="w-full">
+            {restaurant && (
+              <CoverImage
+                src={restaurant.profilePhoto}
+                alt="Restaurant cover image"
+              />
+            )}
+          </div>
+          <div className="flex flex-col w-full p-10">
             {restaurant?.name && (
               <Title
                 title={restaurant.name + " | " + restaurant?.rating}
                 variant={"h2"}
               ></Title>
             )}
-            <Title title="Menu" variant={"h4"}></Title>
-            <div className="px-10">
-              {foodItems.map((foodItem) => (
-                <FoodCard
-                  key={foodItem._id}
-                  foodItem={foodItem}
-                  foodQuantity={0}
-                />
-              ))}
-            </div>
+              <div className="flex flex-col md:flex-row">
+                <div className="w-1/5 border-r-2">
+                <Title title="Menu" variant={"h5"}></Title>
+                </div>
+                <div className="flex flex-wrap justify-start w-4/5">
+                  {foodItems.map((foodItem) => (
+                    <FoodCard
+                      key={foodItem._id}
+                      foodItem={foodItem}
+                      foodQuantity={0}
+                    />
+                  ))}
+                </div>
+              </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -51,8 +51,8 @@ export const findFoodItemById = async (foodItemId, restaurantId) => {
         }
     }
   }
-  return foodItem;
-};
+//   return foodItem;
+// };
 
 // Update foodItem
 export const updateFoodItem = async (id, foodItemUpdateData) => {

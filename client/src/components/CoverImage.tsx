@@ -10,7 +10,7 @@ const CoverImage: React.FC<{ src: string; alt: string }> = ({ src, alt }) => {
           alt={alt}
           height="400"
           image={src}
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", width : '100%' }}
         />
       </Card>
       {/* <Image
