@@ -1,6 +1,5 @@
-// FoodItemModal.tsx
-import React, { useState } from "react";
-import { Modal, TextField, Button } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, TextField, Button, Typography } from "@mui/material";
 import "./restaurant-menu.scss";
 import FoodItem from "@/models/foodItem";
 
@@ -9,7 +8,7 @@ interface FoodItemModalProps {
   onClose: () => void;
   title: string;
   formData: FoodItem;
-  onInputChange: (field: string, value: string | number) => void;
+  onInputChange: (field: string, value: string | number | File | null) => void;
   onSubmit: () => void;
 }
 
@@ -24,31 +23,66 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleInputChange = (field: string, value: string | number) => {
-    onInputChange(field, value);
+  useEffect(() => {
+    if (!open) {
+      setSelectedImage(null);
+      onInputChange("name", "");
+      onInputChange("foodImage", "");
+      onInputChange("price", 0);
+    }
+  }, [open]);
 
-    // Clear validation errors when the user starts typing
+  const handleInputChange = (
+    field: string,
+    value: string | number | File | null
+  ) => {
+    if (field === "foodImage") {
+      setSelectedImage(value as File);
+
+      // Map the file to the base64 representation and update the formData
+      if (value instanceof File) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          onInputChange("foodImage", value.name);
+          onInputChange("image", reader.result as string); // Update the image field with base64 representation
+        };
+        reader.readAsDataURL(value);
+      }
+    } else {
+      onInputChange(field, value);
+    }
+
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
       [field]: "",
     }));
   };
 
+  const handleImageUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    handleInputChange("foodImage", file);
+  };
+
   const validateForm = () => {
     const errors: Record<string, string> = {};
 
-    // Basic validation for Food Item Name (required)
     if (!formData.name.trim()) {
       errors.name = "Food Item Name is required";
     }
 
-    // Basic validation for Food Image URL (required)
-    if (!formData.foodImage.trim()) {
-      errors.foodImage = "Food Image URL is required";
+    if (!selectedImage && !formData.foodImage) {
+      errors.foodImage = "Food Image is required";
     }
 
-    // Basic validation for Food Item Price (required and must be a positive number)
     if (
       formData.price === undefined ||
       isNaN(formData.price) ||
@@ -59,26 +93,55 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({
 
     setValidationErrors(errors);
 
-    // Return true if there are no errors, indicating that the form is valid
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = () => {
-    // Validate the form before submitting
     if (validateForm()) {
-      // Call the onSubmit callback if the form is valid
       onSubmit();
     }
   };
 
   return (
-    <>
-      <Modal open={open} onClose={onClose}>
-        <div className="modal-content">
-          <div className="modal-header">
-            <h2>{title}</h2>
+    <Modal open={open} onClose={onClose}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <Typography variant="h4">{title}</Typography>
+        </div>
+        <div className="modal-body">
+          <div className="left-side">
+            <div className="image-preview" onClick={handleImageUpload}>
+              {selectedImage ? (
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt="Food Item Preview"
+                  className="preview-image"
+                />
+              ) : (
+                <div className="upload-box">
+                  <Typography variant="subtitle2">
+                    Upload Menu Item Image
+                  </Typography>
+                </div>
+              )}
+            </div>
+            <input
+              ref={fileInputRef}
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            <Button
+              className="upload-btn"
+              variant="outlined"
+              onClick={handleImageUpload}
+            >
+              Upload Image
+            </Button>
           </div>
-          <div className="modal-body">
+          <div className="right-side">
             <div className="field-div">
               <TextField
                 className="w-80"
@@ -87,16 +150,6 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({
                 error={!!validationErrors.name}
                 helperText={validationErrors.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-              />
-            </div>
-            <div className="field-div">
-              <TextField
-                className="w-80"
-                label="Food Image URL"
-                value={formData.foodImage}
-                error={!!validationErrors.foodImage}
-                helperText={validationErrors.foodImage}
-                onChange={(e) => handleInputChange("foodImage", e.target.value)}
               />
             </div>
             <div className="field-div">
@@ -136,8 +189,8 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({
             </div>
           </div>
         </div>
-      </Modal>
-    </>
+      </div>
+    </Modal>
   );
 };
 
