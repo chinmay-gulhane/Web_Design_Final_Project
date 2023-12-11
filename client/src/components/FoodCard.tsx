@@ -14,7 +14,7 @@ const FoodCard: React.FC<{ foodItem: FoodItem; foodQuantity: number }> = ({
   foodQuantity,
 }) => {
   return (
-    <Card className="border rounded-5 py-3 px-2 my-4 border-gray-200 shadow-md hover:shadow-lg transition duration-300">
+    <Card className="border rounded-5 py-3 px-2 m-3 border-gray-200 shadow-md hover:shadow-lg transition duration-300">
       <CardContent className="flex justify-content-around items-center">
         <div className="flex height:5rem">
           <CardMedia

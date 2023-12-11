@@ -4,24 +4,24 @@ import RestaurantModel from "../../../model/Restaurant.js";
 
 // Creates foodItem
 export const createFoodItem = async (newFoodItem, restaurantId) => {
-  const restaurant = await RestaurantModel.findById(restaurantId).exec();
-  if (!restaurant) {
-    throw new Error("Restaurant not found");
-  }
-  if (restaurant.id !== newFoodItem.restaurantId) {
-    throw new Error("food item is not linked with restaurant id");
-  }
-  const foodItem = new FoodItemModel(newFoodItem);
-  // restaurant.foodItems.push(foodItem);
-  // restaurant.save();
-  return await foodItem.save();
+    const restaurant = await RestaurantModel.findById(restaurantId).exec();
+    if (!restaurant) {
+        throw new Error("Restaurant not found");
+    }
+    if (restaurant.id !== newFoodItem.restaurantId) {
+        throw new Error("food item is not linked with restaurant id");
+    }
+    const foodItem = new FoodItemModel(newFoodItem);
+    // restaurant.foodItems.push(foodItem);
+    // restaurant.save();
+    return await foodItem.save();
 };
 
 // Fetches foodItems
 export const getAllFoodItems = async (restaurantId) => {
     try {
         // const restaurant = await RestaurantModel.findById(restaurantId).exec();
-        const foodItems = await FoodItemModel.find({ restaurantId: "655d0b832242b5a3bdc4879b" });
+        const foodItems = await FoodItemModel.find({ restaurantId });
         // foodItems.forEach(foodItem => {
         //     if (foodItem.restaurantId === restaurantId) {
         //         result.push(foodItem);
@@ -50,9 +50,9 @@ export const findFoodItemById = async (foodItemId, restaurantId) => {
             }
         }
     }
-  }
-  return foodItem;
-};
+}
+//   return foodItem;
+// };
 
 // Update foodItem
 export const updateFoodItem = async (id, foodItemUpdateData) => {

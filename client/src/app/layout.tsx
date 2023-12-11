@@ -4,7 +4,6 @@ import { ReduxProvider } from "@/redux/provider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ToastifyContainer from "@/components/ToastifyContainer";
 import Layout from "@/components/Layout/Layout";
-import classes from "../styles/styles.module.css";
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
@@ -30,7 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ReduxProvider>
           <Layout>
-            <div className={classes.main_content}>{children}</div>
+            {/* <div className={classes.main_content}> */}
+              {children}
+              {/* </div> */}
           </Layout>
         </ReduxProvider>
         <ToastifyContainer />

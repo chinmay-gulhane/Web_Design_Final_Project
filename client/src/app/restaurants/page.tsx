@@ -39,9 +39,18 @@ const RestaurantPage: React.FC = () => {
     fetchData();
   }, []);
 
+  console.log(user)
   return (
     <>
-      <div>
+      <div className="flex flex-col p-10">
+        <div className="flex flex-col items-center text-center">
+          <div className="font-bold text-3xl my-2">
+            Hi {user?.firstName}👋,
+          </div>
+          <div className="text-xl mt-2 mb-10">
+            Which restaurant will you try today?
+          </div>
+        </div>
         <Row>
           {restaurants.map((restaurant: Restaurant) => (
             <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
