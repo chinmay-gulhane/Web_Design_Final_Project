@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  TextField, // Import TextField for the search bar
+  TextField,
 } from "@mui/material";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import "./restaurant-menu.scss";
@@ -20,6 +20,8 @@ import FoodItemModal from "./MenuItemModal";
 import FoodItem, { FoodItemPayload } from "@/models/foodItem";
 import * as foodItemService from "@/services/fooditem-service";
 import Paper from "@mui/material/Paper";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FoodItemsTableProps {
   menuItems: FoodItem[];
@@ -47,33 +49,39 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleAdd = async () => {
-    const payload: FoodItemPayload = {
-      name: formData.name,
-      foodImage: formData.foodImage,
-      image: formData.image,
-      restaurantId: restaurantId,
-      price: formData.price,
-      rating: formData.rating,
-    };
+    try {
+      const payload: FoodItemPayload = {
+        name: formData.name,
+        foodImage: formData.foodImage,
+        image: formData.image,
+        restaurantId: restaurantId,
+        price: formData.price,
+        rating: formData.rating,
+      };
 
-    console.log("payload", payload);
+      const newFoodItem = await foodItemService.createFoodItem(
+        restaurantId,
+        payload
+      );
 
-    const newFoodItem = await foodItemService.createFoodItem(
-      restaurantId,
-      payload
-    );
+      setFoodItems((prevItems) => [...prevItems, newFoodItem]);
+      setOpenAddModal(false);
 
-    setFoodItems((prevItems) => [...prevItems, newFoodItem]);
-    setOpenAddModal(false);
+      setFormData({
+        _id: "",
+        name: "",
+        foodImage: "",
 
-    setFormData({
-      _id: "",
-      name: "",
-      foodImage: "",
-      restaurantId: restaurantId,
-      price: 0,
-      rating: 0,
-    });
+        restaurantId: restaurantId,
+        price: 0,
+        rating: 0,
+      });
+
+      toast.success("Food item added successfully!");
+    } catch (error) {
+      console.error("Error adding food item:", error);
+      toast.error("Error adding food item. Please try again.");
+    }
   };
 
   const handleEdit = async () => {
@@ -102,9 +110,12 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
           price: 0,
           rating: 0,
         });
+
+        toast.success("Food item updated successfully!");
       }
     } catch (error) {
       console.error("Error updating food item:", error);
+      toast.error("Error updating food item. Please try again.");
     }
   };
 
@@ -114,8 +125,8 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
   };
 
   const handleDeleteConfirm = async () => {
-    if (editFormData) {
-      try {
+    try {
+      if (editFormData) {
         await foodItemService.deleteFoodItem(restaurantId, editFormData._id);
 
         setFoodItems((prevItems) =>
@@ -123,9 +134,12 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         );
 
         setOpenDeleteModal(false);
-      } catch (error) {
-        console.error("Error deleting food item:", error);
+
+        toast.success("Food item deleted successfully!");
       }
+    } catch (error) {
+      console.error("Error deleting food item:", error);
+      toast.error("Error deleting food item. Please try again.");
     }
   };
 
