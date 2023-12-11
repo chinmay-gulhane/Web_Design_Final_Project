@@ -38,7 +38,13 @@ const FoodList: React.FC = () => {
     // Fetch data from your API
     const fetchData = async () => {
       try {
-        setFoodItems(restaurant?.foodItems || []);
+        setIsLoading(true);
+        const response = await fetch(
+          `${baseUrl}/${params.restaurant}/foodItems/all`
+        );
+        const data = await response.json();
+        setFoodItems(data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -69,20 +75,20 @@ const FoodList: React.FC = () => {
                 variant={"h2"}
               ></Title>
             )}
-              <div className="flex flex-col md:flex-row">
-                <div className="w-1/5 border-r-2">
+            <div className="flex flex-col md:flex-row">
+              <div className="w-1/5 border-r-2">
                 <Title title="Menu" variant={"h5"}></Title>
-                </div>
-                <div className="flex flex-wrap justify-start w-4/5">
-                  {foodItems.map((foodItem) => (
-                    <FoodCard
-                      key={foodItem._id}
-                      foodItem={foodItem}
-                      foodQuantity={0}
-                    />
-                  ))}
-                </div>
               </div>
+              <div className="flex flex-wrap justify-start w-4/5">
+                {foodItems.map((foodItem) => (
+                  <FoodCard
+                    key={foodItem._id}
+                    foodItem={foodItem}
+                    foodQuantity={0}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
