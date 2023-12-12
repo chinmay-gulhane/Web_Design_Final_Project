@@ -62,8 +62,7 @@ export default function PrimarySearchAppBar() {
   };
 
   const navigateToOrdersPage = () => {
-    // for now routing to home page
-    router.push("/restaurants");
+    router.push("/myorder");
     handleMenuClose();
     handleMobileMenuClose();
   };

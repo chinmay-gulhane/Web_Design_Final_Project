@@ -1,13 +1,12 @@
 // pages/checkout.tsx
+import { clearCart } from "@/redux/reducers/cartSlice";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 const CheckoutPage: React.FC = () => {
-  return (
-    <div>
-      <h1>Checkout Page</h1>
-      {/* <CenteredCard /> */}
-    </div>
-  );
+  // const dispatch = useDispatch();
+  // dispatch(clearCart());
+  return <div>Order is placed</div>;
 };
 
 export default CheckoutPage;

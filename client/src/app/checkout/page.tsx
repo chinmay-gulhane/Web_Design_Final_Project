@@ -15,8 +15,12 @@ import { RootState, useAppSelector } from "@/redux/store";
 import { toast } from "react-toastify";
 import FoodItem from "@/models/foodItem";
 import Restaurant from "@/models/restaurant";
+import OrderState from "@/models/orderSummary";
+import { useDispatch } from "react-redux";
+import { clearCart } from "@/redux/reducers/cartSlice";
 
 const CenteredCard: React.FC = () => {
+  const dispatch = useDispatch();
   const steps = ["Delivery address", "Payment details"];
   const [activeStep, setActiveStep] = React.useState(0);
   const [AddressFormData, setFormData] = React.useState<Address | null>(null);
@@ -27,10 +31,15 @@ const CenteredCard: React.FC = () => {
 
   const user: User | null = useAppSelector((state) => state.auth.user);
   const cartItems = useAppSelector((state: RootState) => state.cart.cart);
-  const restaurant: Restaurant | undefined = useAppSelector((state) =>
-    state.restaurant.restaurants.find(
-      (r) => r._id === cartItems[0].foodItem.restaurantId
-    )
+  const restaurant: Restaurant | undefined = useAppSelector((state) => {
+    return cartItems.length !== 0
+      ? state.restaurant.restaurants.find(
+          (r) => r._id === cartItems[0].foodItem.restaurantId
+        )
+      : undefined;
+  });
+  const orderSummary: OrderState = useAppSelector(
+    (state: RootState) => state.order
   );
   const router = useRouter();
 
@@ -75,6 +84,11 @@ const CenteredCard: React.FC = () => {
         };
       });
 
+      const orderFinalAmount = (
+        orderSummary.orderTotal +
+        orderSummary.tax +
+        orderSummary.delivery
+      ).toFixed(2);
       currentOrder = {
         userId: user._id,
         customerName: `${user.firstName} ${user.lastName}`,
@@ -84,12 +98,12 @@ const CenteredCard: React.FC = () => {
         status: "Pending",
         restaurantId: restaurant ? restaurant._id : "",
         paymentDetails: paymentDetail,
-        finalAmount: 0,
+        finalAmount: parseFloat(orderFinalAmount),
         restaurantName: restaurant ? restaurant.name : "",
         specialInstructions: "none",
         ETA: "2023-11-20T08:30:00.000+00:00",
         deliveredIn: "",
-        tip: 0,
+        tip: 0.05 * parseFloat(orderFinalAmount),
         deliveryExecutiveId: "",
       };
 
@@ -111,8 +125,7 @@ const CenteredCard: React.FC = () => {
         const responseData = await response.json();
 
         setNewOrder(currentOrder);
-
-        router.push("/myorder/current");
+        dispatch(clearCart());
       } catch (error) {
         console.error("Error placing order:", error);
       }

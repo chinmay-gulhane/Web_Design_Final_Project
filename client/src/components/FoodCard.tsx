@@ -21,7 +21,11 @@ const FoodCard: React.FC<{
           <CardMedia
             sx={{ height: 100, width: 100 }}
             className="rounded-md mx-3 transform transition-transform hover:scale-110"
-            image="/images/restaurant.jpg"
+            image={
+              typeof foodItem?.image === "string"
+                ? foodItem.image
+                : "/default-image.jpg"
+            }
             title={foodItem.name}
           />
           <div className="flex flex-col">

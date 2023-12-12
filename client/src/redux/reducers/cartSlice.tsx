@@ -1,5 +1,5 @@
 // cartSlice.ts
-import { FoodItem } from "@/interfaces/interfaces";
+// import { FoodItem } from "@/interfaces/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, useAppSelector } from "./../store";
 import { CartItem } from "@/models/foodItem";
@@ -14,18 +14,18 @@ interface CartState {
 
 const localStorageKey = "cart"; // Key for local storage
 
+const isBrowser = () => typeof window !== "undefined";
+
 // Load cart state from local storage
 const loadCartFromLocalStorage = (): CartState => {
-  const selectUserId = (state: RootState) => state.auth.user?._id;
-
-  const storedCart = localStorage.getItem(localStorageKey);
-
-  let storedCartData = storedCart ? JSON.parse(storedCart) : { cart: [] };
-
-  if (selectUserId !== storedCartData.userId) {
-    storedCartData = { cart: [] };
+  if (isBrowser()) {
+    const storedCart = localStorage.getItem(localStorageKey);
+    let storedCartData = storedCart ? JSON.parse(storedCart) : { cart: [] };
+    return storedCartData;
+  } else {
+    // Return a default initial state when not in a browser environment
+    return { cart: [], userId: "", loading: false, error: null };
   }
-  return storedCartData;
 };
 
 const initialState: CartState = loadCartFromLocalStorage();
@@ -52,7 +52,9 @@ const cartSlice = createSlice({
       }
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     updateCartItemQuantity: (
       state,
@@ -68,7 +70,9 @@ const cartSlice = createSlice({
       }
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     removeItemFromCart: (state, action: PayloadAction<string>) => {
       state.cart = state.cart.filter(
@@ -76,17 +80,23 @@ const cartSlice = createSlice({
       );
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     clearCart: (state) => {
       state.cart = [];
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     attachUserToCart: (state, action: PayloadAction<string>) => {
       state.userId = action.payload;
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
   },
 });
