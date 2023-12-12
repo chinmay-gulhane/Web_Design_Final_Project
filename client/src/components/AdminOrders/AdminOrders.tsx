@@ -32,12 +32,14 @@ interface AdminOrdersProps {
 // Main component
 const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
   // State for orders, loading, error, search query, sorting, and pagination
-  const [orders, setOrders] = useState<Order[]>(ordersData);
+  const [orders, setOrders] = useState<Order[]>([...ordersData]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("createdDateTime");
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const availablePageSizes = [5, 10, 20];
   const itemsPerPage = 10;
 
   // Fetch orders on component mount
@@ -62,7 +64,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
 
   // Sort orders by latest createdDateTime
   useEffect(() => {
-    const sortedOrders = [...orders].sort((a, b) => {
+    const sortedOrders = [...ordersData].sort((a, b) => {
       const dateA = a.createdDateTime ? new Date(a.createdDateTime) : null;
       const dateB = b.createdDateTime ? new Date(b.createdDateTime) : null;
 
@@ -78,7 +80,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
     });
 
     setOrders(sortedOrders);
-  }, [orders]);
+  }, [ordersData]);
 
   // Handle search form submission
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,10 +110,18 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
     setPage(newPage);
   };
 
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const newSize = event.target.value as number;
+    setPageSize(newSize);
+    setPage(1); // Reset to the first page when changing page size
+  };
+
   return (
     <>
-      <div>
-        <div className="header-div">
+      <div className="body">
+        <div className="admin-header-div">
           <div className="page-header">Orders</div>
           <div>
             <div className="search-bar">
@@ -174,7 +184,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
             </Table>
           </TableContainer>
         </div>
-        {/* <div className="pagination">
+        <div className="pagination">
           <Stack spacing={2}>
             <Pagination
               count={Math.ceil(filteredOrders.length / itemsPerPage)}
@@ -182,7 +192,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
               onChange={handleChangePage}
             />
           </Stack>
-        </div> */}
+        </div>
       </div>
     </>
   );

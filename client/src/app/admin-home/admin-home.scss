@@ -8,10 +8,22 @@
 .admin-main-content{
     flex-grow: 1;
     height: 91vh;
-    padding: 30px 50px 0px 50px;
+    padding: 20px 50px 0px 50px;
 }
 
 .table-header {
     background-color: #28282B;
     color: white;
 }
+
+.pagination {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .admin-header-div {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+  }

@@ -1,6 +1,7 @@
 .tbl-container {
+    height: 73vh;
     max-height: 73vh;
-    margin-top: 20px;
+    margin-top: 10px;
     overflow: auto;
           
       .orders-tbl tbody tr:hover {
@@ -12,14 +13,3 @@
     font-size: 38px;
     font-weight: 500;
   }
-
-  // .container {
-  //   position: relative;
-  // }
-  
-  // .pagination {
-  //   position: fixed;
-  //   bottom: 20px;  /* Adjust the distance from the bottom as needed */
-  //   left: 50%;
-  //   transform: translateX(-50%);
-  // }
