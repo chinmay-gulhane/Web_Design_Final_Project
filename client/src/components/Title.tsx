@@ -6,7 +6,7 @@ const Title: React.FC<{
 }> = ({ title, variant }) => {
   return (
     <>
-      <Typography variant={variant} gutterBottom>
+      <Typography variant={variant}>
         {title}
       </Typography>
     </>
