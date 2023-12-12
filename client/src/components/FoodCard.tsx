@@ -9,10 +9,11 @@ import FoodItem from "@/models/foodItem";
 import Title from "./Title";
 import AddToCartButton from "./Restaurant/AddToCartButton";
 
-const FoodCard: React.FC<{ foodItem: FoodItem; foodQuantity: number }> = ({
-  foodItem,
-  foodQuantity,
-}) => {
+const FoodCard: React.FC<{
+  foodItem: FoodItem;
+  foodQuantity: number;
+  addButtonIsVisible: boolean;
+}> = ({ foodItem, foodQuantity, addButtonIsVisible }) => {
   return (
     <Card className="border rounded-5 py-3 px-2 m-3 border-gray-200 shadow-md hover:shadow-lg transition duration-300">
       <CardContent className="flex justify-content-around items-center">
@@ -40,12 +41,16 @@ const FoodCard: React.FC<{ foodItem: FoodItem; foodQuantity: number }> = ({
             </Typography>
           </div>
         </div>
-        <div className="">
-          <AddToCartButton
-            foodItem={foodItem}
-            foodItemQuantity={foodQuantity}
-          />
-        </div>
+        {addButtonIsVisible ? (
+          <div className="">
+            <AddToCartButton
+              foodItem={foodItem}
+              foodItemQuantity={foodQuantity}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
       </CardContent>
     </Card>
   );

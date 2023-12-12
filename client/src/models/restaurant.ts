@@ -13,6 +13,7 @@ interface Restaurant {
   password: string;
   cuisine: string[];
   offers: string[];
+  role: string;
 }
 
 export default Restaurant;

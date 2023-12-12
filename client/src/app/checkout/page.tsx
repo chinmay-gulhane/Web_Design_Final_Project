@@ -26,6 +26,7 @@ const CenteredCard: React.FC = () => {
   const onPlaceOrder = (formData: CardDetails) => {
     // on place order
     setPaymentFormData(formData);
+
     console.log("On Place Order");
     console.log("AddressFormData", AddressFormData);
     console.log("PaymentFormData", formData);

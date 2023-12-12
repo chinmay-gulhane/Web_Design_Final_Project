@@ -9,30 +9,20 @@ import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Spinner/Spinner";
+import restaurant from "@/models/restaurant";
+import { useAppSelector } from "@/redux/store";
 
 const baseUrl = "http://localhost:8080/restaurant";
-
 const FoodList: React.FC = () => {
   const params = useParams();
-
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
-  const [restaurant, setRestaurant] = useState<Restaurant>();
+  const restaurant: Restaurant | undefined = useAppSelector((state) =>
+    state.restaurant.restaurants.find((r) => r._id === params.restaurant)
+  );
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`${baseUrl}/${params.restaurant}`);
-        const data = await response.json();
-        setRestaurant(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [params.restaurant]);
+  const user = useAppSelector((state) => state.auth.user);
+
+  const addButtonIsVisible = user ? true : false;
 
   useEffect(() => {
     // Fetch data from your API
@@ -85,6 +75,7 @@ const FoodList: React.FC = () => {
                     key={foodItem._id}
                     foodItem={foodItem}
                     foodQuantity={0}
+                    addButtonIsVisible={addButtonIsVisible}
                   />
                 ))}
               </div>

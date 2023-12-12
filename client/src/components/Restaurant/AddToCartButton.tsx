@@ -5,6 +5,7 @@ import {
   updateCartItemQuantity,
   removeItemFromCart,
   clearCart,
+  attachUserToCart,
 } from "@/redux/reducers/cartSlice";
 import CartComponent from "../Cart/CartComponent";
 import { useDispatch } from "react-redux";
@@ -28,6 +29,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const [shouldShowPopup, setShouldShowPopup] = useState(false);
   const user = useAppSelector((state) => state.auth.user);
   const cart = useAppSelector((state) => state.cart.cart);
+  const cartUserId = useAppSelector((state) => state.cart.userId);
   const dispatch = useDispatch();
 
   const handleAddToCartButton = () => {

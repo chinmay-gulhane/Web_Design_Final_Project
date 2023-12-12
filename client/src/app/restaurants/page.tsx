@@ -1,66 +1,61 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import "./restaurant.scss";
 import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
 import Link from "next/link";
-import { useAppSelector } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
-
+import { useDispatch } from "react-redux";
+import { getRestaurants } from "@/redux/actions/restaurant-actions";
 import Footer from "@/components/Footer/Footer";
 
 const RestaurantPage: React.FC = () => {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  // const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<Error | null>(null);
 
   const user: User | null = useAppSelector((state) => state.auth.user);
 
-  // console.log("USer from state", user);
+  const dispatch: AppDispatch = useDispatch();
+  const restaurants = useAppSelector((state) => state.restaurant.restaurants);
+  const loading = useAppSelector((state) => state.restaurant.loading);
+  const error = useAppSelector((state) => state.restaurant.error);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await restaurantService.getRestaurants();
-        setRestaurants(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("An unknown error occurred"));
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (restaurants.length === 0) {
+      dispatch(getRestaurants());
+    }
+  }, [restaurants, dispatch]);
 
-    fetchData();
-  }, []);
-
-  console.log(user)
+  // console.log(restaurants);
   return (
     <>
-      <div className="flex flex-col p-10">
-        <div className="flex flex-col items-center text-center">
-          <div className="font-bold text-3xl my-2">
-            Hi {user?.firstName}👋,
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="flex flex-col p-10">
+          <div className="flex flex-col items-center text-center">
+            <div className="font-bold text-3xl my-2">
+              Hi {user?.firstName}👋,
+            </div>
+            <div className="text-xl mt-2 mb-10">
+              Which restaurant will you try today?
+            </div>
           </div>
-          <div className="text-xl mt-2 mb-10">
-            Which restaurant will you try today?
-          </div>
+          <Row>
+            {restaurants.map((restaurant: Restaurant) => (
+              <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
+                <Link href={`/restaurants/${restaurant._id}`}>
+                  <RestaurantCard restaurant={restaurant}></RestaurantCard>
+                </Link>
+              </Col>
+            ))}
+          </Row>
         </div>
-        <Row>
-          {restaurants.map((restaurant: Restaurant) => (
-            <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
-              <Link href={`/restaurants/${restaurant._id}`}>
-                <RestaurantCard restaurant={restaurant}></RestaurantCard>
-              </Link>
-            </Col>
-          ))}
-        </Row>
-      </div>
+      )}
     </>
   );
 };
