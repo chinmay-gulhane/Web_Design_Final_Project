@@ -18,6 +18,7 @@ interface CartItem {
 const CartComponent: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const cartItems = useAppSelector((state: RootState) => state.cart.cart);
+  const cartUserId = useAppSelector((state) => state.cart.userId);
   const cartItemsLoading = useAppSelector(
     (state: RootState) => state.cart.loading
   );
@@ -44,6 +45,7 @@ const CartComponent: React.FC = () => {
                       key={cartItem.foodItem._id}
                       foodItem={cartItem.foodItem}
                       foodQuantity={cartItem.quantity}
+                      addButtonIsVisible={true}
                     />
                     // <div key={cartItem.foodItem._id} className="mb-2">
                     //   <h3 className="text-lg font-semibold">{cartItem.foodItem.name}</h3>

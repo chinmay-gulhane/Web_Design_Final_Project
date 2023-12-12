@@ -9,30 +9,20 @@ import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Spinner/Spinner";
+import restaurant from "@/models/restaurant";
+import { useAppSelector } from "@/redux/store";
 
 const baseUrl = "http://localhost:8080/restaurant";
-
 const FoodList: React.FC = () => {
   const params = useParams();
-
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
-  const [restaurant, setRestaurant] = useState<Restaurant>();
+  const restaurant: Restaurant | undefined = useAppSelector((state) =>
+    state.restaurant.restaurants.find((r) => r._id === params.restaurant)
+  );
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`${baseUrl}/${params.restaurant}`);
-        const data = await response.json();
-        setRestaurant(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [params.restaurant]);
+  const user = useAppSelector((state) => state.auth.user);
+
+  const addButtonIsVisible = user ? true : false;
 
   useEffect(() => {
     // Fetch data from your API
@@ -57,9 +47,11 @@ const FoodList: React.FC = () => {
   return (
     <div className="flex justify-center w-full">
       {isLoading ? (
-        <Spinner />
+        <div className="h-[70vh]">
+          <Spinner />
+        </div>
       ) : (
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full -m-14">
           <div className="w-full">
             {restaurant && (
               <CoverImage
@@ -68,23 +60,32 @@ const FoodList: React.FC = () => {
               />
             )}
           </div>
-          <div className="flex flex-col w-full p-10">
+          <div className="flex flex-col w-full lg:p-10">
             {restaurant?.name && (
-              <Title
-                title={restaurant.name + " | " + restaurant?.rating}
-                variant={"h2"}
-              ></Title>
+              <div className="flex justify-content-between items-center py-2">
+                <Title title={restaurant.name + " "} variant={"h2"}></Title>
+                <div className="flex">
+                  <Image
+                    width={40}
+                    height={40}
+                    src="https://img.icons8.com/color/48/rating-circled.png"
+                    alt="rating-circled"
+                  />
+                  <Title title={restaurant?.rating.toString()} variant={"h4"} />
+                </div>
+              </div>
             )}
             <div className="flex flex-col md:flex-row">
-              <div className="w-1/5 border-r-2">
+              <div className="w-full md:w-1/5 border-r-2">
                 <Title title="Menu" variant={"h5"}></Title>
               </div>
-              <div className="flex flex-wrap justify-start w-4/5">
+              <div className="flex flex-wrap md:px-10 justify-start w-full md:w-4/5">
                 {foodItems.map((foodItem) => (
                   <FoodCard
                     key={foodItem._id}
                     foodItem={foodItem}
                     foodQuantity={0}
+                    addButtonIsVisible={addButtonIsVisible}
                   />
                 ))}
               </div>
