@@ -114,7 +114,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
 
   return (
     <div>
-      <div className="header-div">
+      <div className="restaurant-header-div">
         <div className="page-header">Orders</div>
         <div>
           <div className="search-bar">
@@ -148,9 +148,6 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
               <TableRow>
                 <TableCell className="table-header">Order ID</TableCell>
                 <TableCell className="table-header">Customer Name</TableCell>
-                <TableCell className="table-header">
-                  Customer Phone Number
-                </TableCell>
                 <TableCell className="table-header" align="center">
                   Final Amount
                 </TableCell>
@@ -171,7 +168,6 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                 <TableRow key={order._id}>
                   <TableCell>{order._id}</TableCell>
                   <TableCell>{order.customerName}</TableCell>
-                  <TableCell>{order.customerPhoneNumber}</TableCell>
                   <TableCell align="center">{order.finalAmount}</TableCell>
                   <TableCell>
                     <Select
@@ -234,11 +230,9 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                   <TableBody>
                     {selectedOrder.orderItems.map((item: OrderItem) => (
                       <TableRow key={item._id}>
+                        <TableCell>{item.foodItem.name}</TableCell>
                         <TableCell align="center">
-                          {item.foodItem.name}
-                        </TableCell>
-                        <TableCell align="center">
-                          {item.foodItem.price}
+                          {item.foodItem.price} $
                         </TableCell>
                         <TableCell align="center">{item.quantity}</TableCell>
                       </TableRow>
