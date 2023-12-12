@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axiosInstance from "@/services/axios-service";
 import { loginData, loginErrorResponse, registerData, registerRestaurantData, updatePasswordPayLoadType } from "@/models/auth";
-import { loginSuccessResponse } from "@/models/auth";
 import { Role } from "@/enums/constants";
 
 export const loginAction = createAsyncThunk(

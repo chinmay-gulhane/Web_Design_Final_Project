@@ -1,4 +1,4 @@
-import { FoodItem, FoodItemPayload } from "@/interfaces/interfaces";
+import FoodItem, { FoodItemPayload } from "@/models/foodItem";
 import axios, { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:8080";

@@ -16,7 +16,7 @@ import { CustomFormProps } from "@/models/auth";
 import { Role } from "@/enums/constants";
 import RestaurantRegiserForm from "./AuthenticationForms/RestaurantRegisterForm";
 
-const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
+const CustomForm: React.FC<CustomFormProps> = ({ formType, params }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -46,6 +46,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
     if (formType === "login") {
       loginService({ email, password }).then((dispatchedResult: any) => {
         if (!dispatchedResult.error) {
+          
           if (dispatchedResult.payload.user.role === Role.USER) {
             router.push("/restaurants");
           }else if(dispatchedResult.payload.user.role === Role.RESTAURANT){
@@ -130,6 +131,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
           setPhone={setPhone}
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
+          params={params}
         />
       )}
 
@@ -160,6 +162,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
           setPhone={setPhone}
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
+          params={params}
         />
       )}
 
@@ -172,11 +175,12 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
           setPassword={setPassword}
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
+          params={params}
         />
       )}
 
       {formType === "forgot-password" && hidePasswordUpdationForm && (
-        <GenerateOtpForm formHandler={formHandler} email={email} setEmail={setEmail} />
+        <GenerateOtpForm formHandler={formHandler} email={email} setEmail={setEmail} params={params}/>
       )}
 
       {formType === "forgot-password" && !hidePasswordUpdationForm && (
@@ -190,6 +194,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ formType }) => {
           setPassword={setPassword}
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
+          params={params}
         />
       )}
     </>

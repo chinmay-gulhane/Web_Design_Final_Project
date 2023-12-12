@@ -36,7 +36,7 @@ const RestaurantPage: React.FC = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col p-10">
+        <div className="flex flex-col">
           <div className="flex flex-col items-center text-center">
             <div className="font-bold text-3xl my-2">
               Hi {user?.firstName}👋,

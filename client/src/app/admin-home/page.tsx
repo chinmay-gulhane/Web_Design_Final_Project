@@ -6,7 +6,8 @@ import AdminDashboard from "@/components/AdminDashboard/AdminDashboard";
 import AdminOrders from "@/components/AdminOrders/AdminOrders";
 import AdminUsers from "@/components/AdminUsers/AdminUsers";
 import AdminRestaurants from "@/components/AdminRestaurants/AdminRestaurants";
-import { AdminSidebarData } from "../../components/AdminSideNav/AdminSidebarData";
+import AdminSidebarData from "../../components/AdminSideNav/AdminSidebarData";
+
 
 const AdminHomePage = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");

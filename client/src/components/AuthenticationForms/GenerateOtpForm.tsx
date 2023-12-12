@@ -12,11 +12,13 @@ import {
 import classes from "../../styles/styles.module.css";
 import Link from "next/link";
 import { GenerateOtpFormProps } from "@/models/auth";
+import { dictionary } from '../../../translation';
 
 const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
   formHandler,
   email,
-  setEmail
+  setEmail,
+  params
 }) => {
   return (
     <>
@@ -32,7 +34,7 @@ const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
             <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
             <h2 style={headerStyle}>OTP</h2>
             <Typography variant="caption">
-              Please enter email to get otp
+            {dictionary[params.lang]?.otp_form_text || "Please enter email to get otp"}
             </Typography>
           </Grid>
           <form onSubmit={formHandler}>
@@ -46,7 +48,7 @@ const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
               <TextField
                 fullWidth
                 type="email"
-                label="Email"
+                label= {dictionary[params.lang]?.email || "Email"}
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
@@ -59,12 +61,12 @@ const GenerateOtpForm: React.FC<GenerateOtpFormProps> = ({
               sx={{ marginTop: "20px" }}
               style={buttonStyle}
             >
-              Send Otp
+              {dictionary[params.lang]?.send_otp || "Send Otp"}
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>
               <Typography sx={{ fontSize: "14px" }}>
                 <Link href="/login" className="no-underline text-gray-500">
-                  {`<< Back to Login`}
+                  {`<< ${dictionary[params.lang]?.back_to_login || "Back to Login"}`}
                 </Link>
               </Typography>
             </Box>

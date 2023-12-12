@@ -4,6 +4,9 @@ import { FormEvent, Dispatch, SetStateAction } from "react";
 
 export interface CustomFormProps {
   formType: string;
+  params: {
+    lang: string
+  }
 }
 
 export type loginData = {
@@ -48,6 +51,7 @@ export type User = {
   createdAt: string;
   updatedAt: string;
   currentOrder: Order;
+  role: string
 };
 
 export type loginSuccessResponse = {
@@ -71,6 +75,9 @@ export interface LoginFormProps {
   setPassword: Dispatch<SetStateAction<string>>;
   showPassword: boolean;
   handleClickShowPassword: () => void;
+  params: {
+    lang: string
+  }
 }
 
 export interface RegisterFormProps {
@@ -87,6 +94,9 @@ export interface RegisterFormProps {
   setPhone: Dispatch<SetStateAction<string>>;
   showPassword: boolean;
   handleClickShowPassword: () => void;
+  params: {
+    lang: string
+  }
 }
 
 export interface RestaurantRegisterFormProps {
@@ -115,12 +125,18 @@ export interface RestaurantRegisterFormProps {
   setPhone: Dispatch<SetStateAction<string>>;
   showPassword: boolean;
   handleClickShowPassword: () => void;
+  params: {
+    lang: string
+  }
 }
 
 export interface GenerateOtpFormProps {
   formHandler: (e: FormEvent<HTMLFormElement>) => void;
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
+  params: {
+    lang: string
+  }
 }
 
 export interface UpdatePasswordFormProps {
@@ -133,4 +149,7 @@ export interface UpdatePasswordFormProps {
   setPassword: Dispatch<SetStateAction<string>>;
   showPassword: boolean;
   handleClickShowPassword: () => void;
+  params: {
+    lang: string
+  }
 }
