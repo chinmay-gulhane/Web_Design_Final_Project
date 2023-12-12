@@ -17,6 +17,7 @@ export interface Order {
   deliveredIn: string;
   tip: number;
   deliveryExecutiveId: string;
+  createdDateTime?: string;
 }
 
 export interface OrderItem {

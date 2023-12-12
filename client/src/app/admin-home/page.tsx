@@ -1,27 +1,64 @@
 "use client";
 import AdminSideNav from "@/components/AdminSideNav/SideNav";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./admin-home.scss";
 import AdminDashboard from "@/components/AdminDashboard/AdminDashboard";
 import AdminOrders from "@/components/AdminOrders/AdminOrders";
 import AdminUsers from "@/components/AdminUsers/AdminUsers";
 import AdminRestaurants from "@/components/AdminRestaurants/AdminRestaurants";
-import AdminSidebarData from "../../components/AdminSideNav/AdminSidebarData";
-
+import { Order } from "@/models/order";
+import * as orderService from "@/services/order-service";
+import * as restaurantService from "@/services/restaurant-service";
+import Restaurant from "@/models/restaurant";
+import { User } from "@/models/auth";
+import AdminSidebarData from "@/components/AdminSideNav/AdminSidebarData";
 
 const AdminHomePage = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");
+  const [restaurantsData, setRestaurantsData] = useState<Restaurant[]>([]);
+  const [usersData, setUsersData] = useState<User[]>([]);
+  const [ordersData, setOrdersData] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // get all orders
+        const data = await orderService.getAllOrders();
+        setOrdersData(data);
+
+        // get all restaurants
+        const restaurantData = await restaurantService.getRestaurants();
+        setRestaurantsData(restaurantData);
+
+        // get all users
+        const userData = await orderService.getAllUsers();
+        setUsersData(userData);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("An unknown error occurred"));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const renderSelectedComponent = () => {
     switch (selectedComponent) {
       case "Home":
         return <AdminDashboard />;
       case "Users":
-        return <AdminUsers />;
+        return <AdminUsers usersData={usersData} />;
       case "Restaurants":
-        return <AdminRestaurants />;
+        return <AdminRestaurants restaurantsData={restaurantsData} />;
       case "Orders":
-        return <AdminOrders />;
+        return <AdminOrders ordersData={ordersData} />;
       default:
         return null;
     }

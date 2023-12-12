@@ -1,4 +1,6 @@
+import { User } from "@/models/auth";
 import { Order } from "@/models/order";
+import { UserResponse } from "@/models/types";
 import axios, { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:8080";
@@ -57,6 +59,17 @@ export const searchOrders = async (
       }
     );
     return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllUsers = async (): Promise<User[]> => {
+  try {
+    const response: AxiosResponse<UserResponse> = await axios.get(
+      `${baseURL}/user/getUsers`
+    );
+    return response.data.users;
   } catch (error) {
     throw error;
   }

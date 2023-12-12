@@ -12,14 +12,16 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  TextField,
+  Paper,
+  InputBase,
+  IconButton,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import "./restaurant-menu.scss";
 import FoodItemModal from "./MenuItemModal";
 import FoodItem, { FoodItemPayload } from "@/models/foodItem";
 import * as foodItemService from "@/services/fooditem-service";
-import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -46,7 +48,8 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     price: 0,
     rating: 0,
   });
-  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleAdd = async () => {
     try {
@@ -71,7 +74,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         _id: "",
         name: "",
         foodImage: "",
-
+        image: null,
         restaurantId: restaurantId,
         price: 0,
         rating: 0,
@@ -109,6 +112,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
           restaurantId: restaurantId,
           price: 0,
           rating: 0,
+          image: null,
         });
 
         toast.success("Food item updated successfully!");
@@ -163,27 +167,42 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     }));
   };
 
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // You can add additional logic if needed
   };
 
   const filteredFoodItems = foodItems.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div>
-      <div className="header-div">
+      <div className="restaurant-header-div">
         <div className="title-div w-30">
           <span className="page-header">Menu</span>
         </div>
         <div className="search-bar w-40">
-          <TextField
-            label="Search Food Items"
-            variant="outlined"
-            className="w-80"
-            onChange={(e) => handleSearchChange(e.target.value)}
-          />
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 400,
+            }}
+            onSubmit={handleSearchSubmit}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search Food Items"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
         </div>
         <div className="add-food-item-btn-div w-30">
           <Button
@@ -203,7 +222,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
             <TableHead>
               <TableRow>
                 <TableCell className="table-header">Food Item Name</TableCell>
-                <TableCell className="table-header">Food Image URL</TableCell>
+                <TableCell className="table-header">Food Image</TableCell>
                 <TableCell className="table-header" align="center">
                   Food Item Price
                 </TableCell>
