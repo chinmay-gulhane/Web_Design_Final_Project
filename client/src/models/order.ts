@@ -5,7 +5,7 @@ export interface Order {
   userId: string;
   customerName: string;
   customerPhoneNumber: string;
-  orderItems: FoodItem[];
+  orderItems: OrderItem[];
   promoCode: string;
   status: string;
   restaurantId: string;
@@ -17,6 +17,12 @@ export interface Order {
   deliveredIn: string;
   tip: number;
   deliveryExecutiveId: string;
+}
+
+export interface OrderItem {
+  foodItem: FoodItem;
+  quantity: number;
+  _id: string;
 }
 
 export interface PaymentDetails {
