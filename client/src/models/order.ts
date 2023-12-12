@@ -1,7 +1,7 @@
 import FoodItem from "./foodItem";
 
 export interface Order {
-  _id: string;
+  _id?: string;
   userId: string;
   customerName: string;
   customerPhoneNumber: string;
@@ -22,7 +22,7 @@ export interface Order {
 export interface OrderItem {
   foodItem: FoodItem;
   quantity: number;
-  _id: string;
+  _id?: string;
 }
 
 export interface PaymentDetails {
