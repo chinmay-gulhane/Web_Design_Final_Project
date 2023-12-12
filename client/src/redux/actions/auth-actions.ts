@@ -3,8 +3,6 @@ import { toast } from "react-toastify";
 import axiosInstance from "@/services/axios-service";
 import { loginData, loginErrorResponse, registerData, registerRestaurantData, updatePasswordPayLoadType } from "@/models/auth";
 import { Role } from "@/enums/constants";
-import Cookies from "js-cookie"
-
 
 export const loginAction = createAsyncThunk(
   "auth/login",
@@ -15,7 +13,6 @@ export const loginAction = createAsyncThunk(
       const data = await response.data;
       if (data.success) {
         localStorage.setItem("token", `${data.token}`);
-        Cookies.set("token");
       }
       toast.success(data.message, {
         autoClose: 900,
