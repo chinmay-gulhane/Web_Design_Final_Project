@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./restaurant-orders.scss";
 
 import * as orderService from "@/services/order-service";
-import { Order } from "@/models/order";
+import { Order, OrderItem } from "@/models/order";
 import {
   Paper,
   Table,
@@ -14,7 +14,14 @@ import {
   MenuItem,
   Select,
   Button,
+  Modal,
+  Backdrop,
+  Fade,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
+import { toast } from "react-toastify";
 
 interface RestaurantOrdersProps {
   restaurantId: string;
@@ -27,6 +34,8 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
 }) => {
   const initialOrders = ordersData;
   const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleStatusChange = (event: any, orderId: string) => {
     const updatedOrders = orders.map((order) =>
@@ -39,51 +48,59 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
 
   const handleUpdateStatus = async (orderId: string) => {
     try {
-      // Call your order update service method here
-      // For example: await orderService.updateOrderStatus(orderId, updatedStatus);
-      console.log(`Update status for order ${orderId}`);
+      const orderToUpdate = orders.find((order) => order._id === orderId);
+
+      if (orderToUpdate) {
+        const updatedOrder = await orderService.updateOrder(orderId, {
+          status: orderToUpdate.status,
+        });
+
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order._id === updatedOrder._id ? updatedOrder : order
+          )
+        );
+        toast.success("Order status updated successfully");
+      }
     } catch (error) {
-      console.error("Error updating order status:", error);
+      toast.error("Error updating order status");
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await orderService.searchOrders(
-          0,
-          50,
-          undefined,
-          restaurantId
-        );
-        setOrders(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error("Error fetching orders:", err);
-        } else {
-          console.error("An unknown error occurred");
-        }
-      }
-    };
+  const handleViewOrderItems = (order: Order) => {
+    setSelectedOrder(order);
+    setModalOpen(true);
+  };
 
-    fetchData();
-  }, [restaurantId]);
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div>
       <h2>Orders</h2>
-      <div className="body">
+      <div className="tbl-container">
         <TableContainer component={Paper}>
-          <Table>
+          <Table className="orders-tbl">
             <TableHead>
               <TableRow>
-                <TableCell>Order ID</TableCell>
-                <TableCell>Customer Name</TableCell>
-                <TableCell>Customer Phone Number</TableCell>
-                <TableCell>Restaurant Name</TableCell>
-                <TableCell>Final Amount</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell className="table-header">Order ID</TableCell>
+                <TableCell className="table-header">Customer Name</TableCell>
+                <TableCell className="table-header">
+                  Customer Phone Number
+                </TableCell>
+                <TableCell className="table-header" align="center">
+                  Final Amount
+                </TableCell>
+                <TableCell className="table-header" align="center">
+                  Status
+                </TableCell>
+                <TableCell className="table-header" align="center">
+                  Order Items
+                </TableCell>
+                <TableCell className="table-header" align="center">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -93,8 +110,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                     <TableCell>{order._id}</TableCell>
                     <TableCell>{order.customerName}</TableCell>
                     <TableCell>{order.customerPhoneNumber}</TableCell>
-                    <TableCell>{order.restaurantName}</TableCell>
-                    <TableCell>{order.finalAmount}</TableCell>
+                    <TableCell align="center">{order.finalAmount}</TableCell>
                     <TableCell>
                       <Select
                         className="status-dropdown"
@@ -108,7 +124,16 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                         <MenuItem value="Delivered">Delivered</MenuItem>
                       </Select>
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleViewOrderItems(order)}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                    <TableCell align="center">
                       <Button
                         variant="contained"
                         color="primary"
@@ -121,13 +146,56 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7}>Loading...</TableCell>
+                  <TableCell colSpan={8}>Loading...</TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
+      {/* Modal for Order Items */}
+      <Modal open={isModalOpen} onClose={handleCloseModal} closeAfterTransition>
+        <Fade in={isModalOpen}>
+          <div className="order-modal-content">
+            <h2>Order Items</h2>
+            {selectedOrder && (
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="center">Price</TableCell>
+                      <TableCell align="center">Quantity</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {selectedOrder.orderItems.map((item: OrderItem) => (
+                      <TableRow key={item._id}>
+                        <TableCell align="center">
+                          {item.foodItem.name}
+                        </TableCell>
+                        <TableCell align="center">
+                          {item.foodItem.price}
+                        </TableCell>
+                        <TableCell align="center">{item.quantity}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+            <div className="action-btn-div">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCloseModal}
+              >
+                Okay
+              </Button>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
     </div>
   );
 };
