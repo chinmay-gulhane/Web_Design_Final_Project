@@ -189,7 +189,7 @@ export default function PrimarySearchAppBar() {
       <AppBar position="fixed" color="default">
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            <Link href={user ? "/restaurants" : "/login"} className="no-underline">
+            <Link href={user ? "/restaurants" : "/"} className="no-underline">
               <span className="company-first-word">Husky</span>
               <span className="company-last-word">Bites</span>
             </Link>
