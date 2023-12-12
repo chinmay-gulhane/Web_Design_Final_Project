@@ -18,27 +18,18 @@ function getLocale(request: Request): string {
 }
 
 export function middleware(request: NextRequest) {
+  if (
+    request.nextUrl.pathname.includes("login") ||
+    request.nextUrl.pathname.includes("register") ||
+    request.nextUrl.pathname.includes("forgot")
+  ) {
+    let locale = getLocale(request) ?? defaultLocale;
+    const pathname = request.nextUrl.pathname;
+    const newUrl = new URL(`/${locale}${pathname}`, request.url);
+    return NextResponse.rewrite(newUrl);
+  }
 
-    // let isLoggedIn = request.cookies.get("token");
-    // let url = request.url;
-
-    // if(!isLoggedIn && (!url.includes("login") || !url.includes("register"))){
-    //   console.log(isLoggedIn)
-    //   return NextResponse.rewrite("http://localhost:3000/login");
-    // }
-
-    // if(isLoggedIn && (url.includes("login") || url.includes("register"))){
-    //   return NextResponse.redirect("http://localhost:3000/restaurants");
-    // }
-
-
-  let locale = getLocale(request) ?? defaultLocale;
-  const pathname = request.nextUrl.pathname;
-
-  const newUrl = new URL(`/${locale}${pathname}`, request.url);
-  // e.g. incoming request is /products
-  // The new URL is now /en/products
-  return NextResponse.rewrite(newUrl);
+  return NextResponse.next();
 }
 
 export const config = {

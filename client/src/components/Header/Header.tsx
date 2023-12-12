@@ -1,20 +1,14 @@
 "use client";
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Link from "next/link";
 import "./header.css";
@@ -117,7 +111,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>
+      {user?.role.includes("USER") && <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>}
       <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
     </Menu>
   );
@@ -141,20 +135,23 @@ export default function PrimarySearchAppBar() {
     >
       {user ? (
         <div>
-          <MenuItem onClick={navigateToCartPage}>
-            <IconButton size="large" color="inherit">
-              <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <span>Cart</span>
-          </MenuItem>
-          <MenuItem onClick={navigateToOrdersPage}>
-            <IconButton size="large" color="inherit">
-              <ListIcon />
-            </IconButton>
-            <span>My Orders</span>
-          </MenuItem>
+          {user?.role.includes("USER") && (
+              <MenuItem onClick={navigateToCartPage}>
+                <IconButton size="large" color="inherit">
+                  <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+                <span>Cart</span>
+              </MenuItem>
+            ) && (
+              <MenuItem onClick={navigateToOrdersPage}>
+                <IconButton size="large" color="inherit">
+                  <ListIcon />
+                </IconButton>
+                <span>My Orders</span>
+              </MenuItem>
+            )}
           <MenuItem onClick={handleSignOut}>
             <IconButton size="large" color="inherit">
               <LogoutIcon />
@@ -199,7 +196,7 @@ export default function PrimarySearchAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" }, marginRight: "20px", columnGap: "15px" }}>
-            {user && (
+            {user?.role.includes("USER") && (
               <>
                 <Link href="/cart" className="text-black">
                   <IconButton size="large" color="inherit">
@@ -224,7 +221,7 @@ export default function PrimarySearchAppBar() {
               </IconButton>
             )}
           </Box>
-          <Box sx={{ display: { xs: "flex", md: `${user ? "none" : "flex"}`  } }}>
+          <Box sx={{ display: { xs: "flex", md: `${user ? "none" : "flex"}` } }}>
             <IconButton
               size="large"
               aria-label="show more"
