@@ -8,28 +8,121 @@ import AddressForm from "../../components/AddressForm/AddressForm";
 import PaymentForm from "../../components/PaymentForm/PaymentForm";
 import "./checkout.scss";
 import Address from "@/models/address";
-import { CardDetails } from "@/models/order";
+import { CardDetails, Order, PaymentDetails } from "@/models/order";
+import { useRouter } from "next/navigation";
+import { User } from "@/models/auth";
+import { RootState, useAppSelector } from "@/redux/store";
+import { toast } from "react-toastify";
+import FoodItem from "@/models/foodItem";
+import Restaurant from "@/models/restaurant";
 
 const CenteredCard: React.FC = () => {
   const steps = ["Delivery address", "Payment details"];
-
   const [activeStep, setActiveStep] = React.useState(0);
   const [AddressFormData, setFormData] = React.useState<Address | null>(null);
   const [PaymentFormData, setPaymentFormData] =
     React.useState<CardDetails | null>(null);
+
+  const [newOrder, setNewOrder] = React.useState<Order | null>(null);
+
+  const user: User | null = useAppSelector((state) => state.auth.user);
+  const cartItems = useAppSelector((state: RootState) => state.cart.cart);
+  const restaurant: Restaurant | undefined = useAppSelector((state) =>
+    state.restaurant.restaurants.find(
+      (r) => r._id === cartItems[0].foodItem.restaurantId
+    )
+  );
+  const router = useRouter();
 
   const handleNext = (data: Address) => {
     setFormData(data);
     setActiveStep(activeStep + 1);
   };
 
-  const onPlaceOrder = (formData: CardDetails) => {
+  const onPlaceOrder = async (formData: CardDetails) => {
     // on place order
     setPaymentFormData(formData);
 
-    console.log("On Place Order");
-    console.log("AddressFormData", AddressFormData);
-    console.log("PaymentFormData", formData);
+    let addressDetails: Address;
+    let cardDetails: CardDetails;
+    let paymentDetail: PaymentDetails;
+    let currentOrder: Order;
+    if (AddressFormData && formData && user) {
+      addressDetails = {
+        addressLine: AddressFormData.addressLine,
+        city: AddressFormData.city,
+        state: AddressFormData.state,
+        country: AddressFormData.country,
+        zipCode: AddressFormData.zipCode,
+      };
+
+      cardDetails = {
+        cardNumber: formData.cardNumber,
+        expiryDate: formData.expiryDate,
+        cardHolderName: formData.cardHolderName,
+        cvv: formData.cvv,
+      };
+
+      paymentDetail = {
+        cardUsed: cardDetails,
+        cash: 0,
+      };
+
+      const orderItems = cartItems.map((cartItem) => {
+        return {
+          foodItem: cartItem.foodItem,
+          quantity: cartItem.quantity, // Assuming cartItem has a quantity property
+        };
+      });
+
+      currentOrder = {
+        userId: user._id,
+        customerName: `${user.firstName} ${user.lastName}`,
+        customerPhoneNumber: user.phone,
+        orderItems: orderItems,
+        promoCode: "",
+        status: "Pending",
+        restaurantId: restaurant ? restaurant._id : "",
+        paymentDetails: paymentDetail,
+        finalAmount: 0,
+        restaurantName: restaurant ? restaurant.name : "",
+        specialInstructions: "none",
+        ETA: "2023-11-20T08:30:00.000+00:00",
+        deliveredIn: "",
+        tip: 0,
+        deliveryExecutiveId: "",
+      };
+
+      try {
+        const response = await fetch("http://localhost:8080/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(currentOrder),
+        });
+
+        if (response.ok) {
+          console.log("Order placed successfully:", response);
+        } else {
+          console.log("Order :Failed", response);
+        }
+
+        const responseData = await response.json();
+
+        setNewOrder(currentOrder);
+
+        router.push("/myorder/current");
+      } catch (error) {
+        console.error("Error placing order:", error);
+      }
+    }
+
+    const orderStatus = null;
+
+    if (typeof window !== "undefined") {
+      router.push("/myorder/current");
+    }
   };
 
   const handleBack = () => {
