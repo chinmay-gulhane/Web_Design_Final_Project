@@ -178,7 +178,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
 
   return (
     <div>
-      <div className="header-div">
+      <div className="restaurant-header-div">
         <div className="title-div w-30">
           <span className="page-header">Menu</span>
         </div>
@@ -222,7 +222,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
             <TableHead>
               <TableRow>
                 <TableCell className="table-header">Food Item Name</TableCell>
-                <TableCell className="table-header">Food Image URL</TableCell>
+                <TableCell className="table-header">Food Image</TableCell>
                 <TableCell className="table-header" align="center">
                   Food Item Price
                 </TableCell>

@@ -1,29 +1,40 @@
 // cartSlice.ts
-import { FoodItem } from "@/interfaces/interfaces";
+// import { FoodItem } from "@/interfaces/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./../store";
+import { RootState, useAppSelector } from "./../store";
 import { CartItem } from "@/models/foodItem";
 import { updateCartAction } from "../actions/cart-actions";
 
 interface CartState {
   cart: CartItem[];
+  userId: string;
   loading: boolean;
   error: null | string;
 }
 
 const localStorageKey = "cart"; // Key for local storage
 
+const isBrowser = () => typeof window !== "undefined";
+
 // Load cart state from local storage
 const loadCartFromLocalStorage = (): CartState => {
-  const storedCart = localStorage.getItem(localStorageKey);
-  return storedCart ? JSON.parse(storedCart) : { cart: [] };
+  if (isBrowser()) {
+    const storedCart = localStorage.getItem(localStorageKey);
+    let storedCartData = storedCart ? JSON.parse(storedCart) : { cart: [] };
+    return storedCartData;
+  } else {
+    // Return a default initial state when not in a browser environment
+    return { cart: [], userId: "", loading: false, error: null };
+  }
 };
 
-const initialState: CartState = {
-  cart: [],
-  loading: false,
-  error: null,
-};
+const initialState: CartState = loadCartFromLocalStorage();
+
+// const initialState: CartState = {
+//   cart: [],
+//   loading: false,
+//   error: null,
+// };
 
 const cartSlice = createSlice({
   name: "cart",
@@ -41,7 +52,9 @@ const cartSlice = createSlice({
       }
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     updateCartItemQuantity: (
       state,
@@ -57,7 +70,9 @@ const cartSlice = createSlice({
       }
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     removeItemFromCart: (state, action: PayloadAction<string>) => {
       state.cart = state.cart.filter(
@@ -65,30 +80,24 @@ const cartSlice = createSlice({
       );
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
     clearCart: (state) => {
       state.cart = [];
 
       // Save to local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(updateCartAction.pending, (state, action) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(updateCartAction.fulfilled, (state, action) => {
-      state.loading = false;
-      state.cart = action.payload.cart;
-      // state.user = action.payload.user;
-      // state.token = action.payload.token;
-    });
-    builder.addCase(updateCartAction.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "Something went wrong";
-    });
+    attachUserToCart: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
+      if (isBrowser()) {
+        localStorage.setItem(localStorageKey, JSON.stringify(state));
+      }
+    },
   },
 });
 
@@ -97,6 +106,7 @@ export const {
   updateCartItemQuantity,
   removeItemFromCart,
   clearCart,
+  attachUserToCart,
 } = cartSlice.actions;
 
 export const selectCartItems = (state: RootState) => state.cart.cart;

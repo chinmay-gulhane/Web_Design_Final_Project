@@ -11,6 +11,8 @@ import {
   Paper,
   InputBase,
   IconButton,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -20,6 +22,9 @@ interface AdminUsersProps {
 
 const AdminUsers: React.FC<AdminUsersProps> = ({ usersData }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const itemsPerPage = 10;
 
   // Filter users based on search query
   const filteredUsers = usersData.filter((user) => {
@@ -32,9 +37,30 @@ const AdminUsers: React.FC<AdminUsersProps> = ({ usersData }) => {
     );
   });
 
+  // Calculate the range of users to display on the current page
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedUsers = filteredUsers.slice(startIndex, endIndex);
+
+  // Handle page change in pagination
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const newSize = event.target.value as number;
+    setPageSize(newSize);
+    setPage(1); // Reset to the first page when changing page size
+  };
+
   return (
     <div>
-      <div className="header-div">
+      <div className="admin-header-div">
         <div className="page-header">Users</div>
         <div className="search-bar">
           <Paper
@@ -73,7 +99,7 @@ const AdminUsers: React.FC<AdminUsersProps> = ({ usersData }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredUsers.map((user) => (
+              {displayedUsers.map((user) => (
                 <TableRow key={user._id}>
                   <TableCell>{user._id}</TableCell>
                   <TableCell>{user.firstName}</TableCell>
@@ -86,6 +112,15 @@ const AdminUsers: React.FC<AdminUsersProps> = ({ usersData }) => {
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(filteredUsers.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+          />
+        </Stack>
       </div>
     </div>
   );
