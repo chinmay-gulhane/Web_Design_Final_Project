@@ -33,9 +33,13 @@ export const get = async (request, response) => {
 };
 
 export const search = async (request, response) => {
-  const { page, pageSize, userId } = request.query;
+  const { page, pageSize, userId, restaurantId } = request.query;
   try {
-    const orders = await orderService.search({ userId }, page, pageSize);
+    const orders = await orderService.search(
+      { userId, restaurantId },
+      page,
+      pageSize
+    );
     setResponse(response, orders);
   } catch (error) {
     console.error(error);
