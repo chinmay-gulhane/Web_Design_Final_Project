@@ -18,6 +18,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import classes from "../../styles/styles.module.css";
 import Link from "next/link";
 import { LoginFormProps } from "@/models/auth";
+import { dictionary } from '../../../translation';
 
 const LoginForm: React.FC<LoginFormProps> = ({
   formHandler,
@@ -27,6 +28,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   setPassword,
   showPassword,
   handleClickShowPassword,
+  params
 }) => {
   return (
     <>
@@ -40,7 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             }}
           >
             <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
-            <h2 style={headerStyle}>Sign In</h2>
+            <h2 style={headerStyle}>{dictionary[params.lang]?.login_form_header || "Sign In"}</h2>
           </Grid>
           <form onSubmit={formHandler}>
             <Box
@@ -53,7 +55,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               <TextField
                 fullWidth
                 type="email"
-                label="Email"
+                label={dictionary[params.lang]?.email || "Email"}
                 variant="outlined"
                 sx={{ marginTop: "25px" }}
                 error={false}
@@ -61,7 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
               ></TextField>
               <FormControl sx={{ width: "100%" }} variant="outlined" error={false}>
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">{dictionary[params.lang]?.password || "Password"}</InputLabel>
                 <OutlinedInput
                   type={showPassword ? "text" : "password"}
                   value={password}
@@ -88,20 +90,20 @@ const LoginForm: React.FC<LoginFormProps> = ({
             >
               <Link href="forgot-password" className="text-decoration-none">
                 {" "}
-                Forgot Password?
+                {dictionary[params.lang]?.forgot_password_text || "Forgot Password?"}
               </Link>
             </Typography>
 
             <Button fullWidth type="submit" variant="contained" sx={{ marginTop: "15px" }} style={buttonStyle}>
-              Sign In
+            {dictionary[params.lang]?.login_form_header || "Sign In"}
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>
               <Typography sx={{ fontSize: "14px" }}>
                 {" "}
-                Not Registered?{" "}
+                {dictionary[params.lang]?.not_registered_text || "Not registered?"}
                 <Link href="/register" className="no-underline text-blue-600">
                   {" "}
-                  SignUp Here
+                  {dictionary[params.lang]?.sign_up_here || "SignUp Here"}
                 </Link>
               </Typography>
             </Box>

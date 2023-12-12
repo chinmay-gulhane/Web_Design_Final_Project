@@ -20,6 +20,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import classes from "../../styles/styles.module.css";
 import Link from "next/link";
 import { RegisterFormProps } from "@/models/auth";
+import { dictionary } from '../../../translation';
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
   formHandler,
@@ -35,6 +36,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   setPhone,
   showPassword,
   handleClickShowPassword,
+  params
 }) => {
   return (
     <>
@@ -48,9 +50,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             }}
           >
             <Avatar sx={{ bgcolor: "rgba(3,193,103,255)" }}></Avatar>
-            <h2 style={headerStyle}>Sign Up</h2>
+            <h2 style={headerStyle}>{dictionary[params.lang]?.sign_up_form_header|| "Sign Up"}</h2>
             <Typography variant="caption">
-              Please register to create an account
+            {dictionary[params.lang]?.sign_up_text || "Sign Up"}
             </Typography>
           </Grid>
           <form onSubmit={formHandler}>
@@ -81,7 +83,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               <TextField
                 fullWidth
                 type="email"
-                label="Email"
+                label={dictionary[params.lang]?.email || "Email"}
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
@@ -92,7 +94,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 error={false}
               >
                 <InputLabel htmlFor="outlined-adornment-password">
-                  Password
+                {dictionary[params.lang]?.password || "Password"}
                 </InputLabel>
                 <OutlinedInput
                   type={showPassword ? "text" : "password"}
@@ -127,7 +129,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               control={<Checkbox />}
               label={
                 <Typography variant="caption" style={checkBoxStyle}>
-                  I accept all terms & conditions
+                  {dictionary[params.lang]?.term_and_condition || "I accept all terms & conditions"}
                 </Typography>
               }
               className="text-sm"
@@ -139,15 +141,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               sx={{ marginTop: "10px" }}
               style={buttonStyle}
             >
-              Sign Up
+             {dictionary[params.lang]?.sign_up_form_header || "Sign Up"}
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>
               <Typography sx={{ fontSize: "14px" }}>
                 {" "}
-                Already have an account?{" "}
+                {dictionary[params.lang]?.already_have_account || "Already have an account?"}
                 <Link href="/login" className="no-underline text-blue-600">
                   {" "}
-                  Login Now
+                  {dictionary[params.lang]?.login_in_here || "Login Now"}
                 </Link>
               </Typography>
             </Box>

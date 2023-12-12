@@ -28,6 +28,7 @@ import ListIcon from "@mui/icons-material/List";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { authActions } from "@/redux/reducers/authSlice";
+import Cookies from "js-cookie"
 
 
 export default function PrimarySearchAppBar() {
@@ -94,6 +95,7 @@ export default function PrimarySearchAppBar() {
     let token = localStorage.getItem("token");
     if (token) {
       localStorage.removeItem("token");
+      Cookies.remove("token");
     }
     dispatch(authActions.logout());
     router.replace("/login");

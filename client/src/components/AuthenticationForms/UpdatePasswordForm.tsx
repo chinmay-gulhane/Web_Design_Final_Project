@@ -28,7 +28,8 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
   password,
   setPassword,
   showPassword,
-  handleClickShowPassword
+  handleClickShowPassword,
+  params
 }) => {
   return (
     <>
