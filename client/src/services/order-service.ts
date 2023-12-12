@@ -14,3 +14,50 @@ export const getAllOrders = async (): Promise<Order[]> => {
     throw error;
   }
 };
+
+export const updateOrder = async (
+  orderId: string,
+  updateData: Partial<Order>
+): Promise<Order> => {
+  try {
+    const response = await axios.put(
+      `${baseURL}${API_URL}/${orderId}`,
+      updateData
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const searchOrders = async (
+  page: number = 1,
+  pageSize: number = 10,
+  userId?: string,
+  restaurantId?: string
+): Promise<Order[]> => {
+  try {
+    const params: Record<string, string | number | undefined> = {
+      page,
+      pageSize,
+    };
+
+    if (userId) {
+      params.userId = userId;
+    }
+
+    if (restaurantId) {
+      params.restaurantId = restaurantId;
+    }
+
+    const response: AxiosResponse<Order[]> = await axios.get(
+      `${baseURL}${API_URL}/search`,
+      {
+        params,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
