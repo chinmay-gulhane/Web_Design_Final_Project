@@ -23,17 +23,27 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null | string>(
+    null
+  );
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      // If in edit mode and formData has an image, set the selected image
+      if (formData.image) {
+        setSelectedImage(formData.image);
+        onInputChange("name", formData.name);
+        onInputChange("foodImage", formData.foodImage);
+        onInputChange("price", formData.price);
+      }
+    } else {
       setSelectedImage(null);
       onInputChange("name", "");
       onInputChange("foodImage", "");
       onInputChange("price", 0);
     }
-  }, [open]);
+  }, [open, formData.image]);
 
   const handleInputChange = (
     field: string,
@@ -112,11 +122,19 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({
           <div className="left-side">
             <div className="image-preview" onClick={handleImageUpload}>
               {selectedImage ? (
-                <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Food Item Preview"
-                  className="preview-image"
-                />
+                selectedImage instanceof File ? (
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Food Item Preview"
+                    className="preview-image"
+                  />
+                ) : (
+                  <img
+                    src={selectedImage}
+                    alt="Food Item Preview"
+                    className="preview-image"
+                  />
+                )
               ) : (
                 <div className="upload-box">
                   <Typography variant="subtitle2">
