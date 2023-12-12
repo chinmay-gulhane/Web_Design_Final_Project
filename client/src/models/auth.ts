@@ -51,6 +51,7 @@ export type User = {
   createdAt: string;
   updatedAt: string;
   currentOrder: Order;
+  role: string
 };
 
 export type loginSuccessResponse = {
