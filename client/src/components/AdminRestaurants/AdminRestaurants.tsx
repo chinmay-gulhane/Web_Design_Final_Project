@@ -1,14 +1,6 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import React, { useState } from "react";
 import "./admin-restaurant.scss";
-import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
-import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Link from "next/link";
-import { useAppSelector } from "@/redux/store";
-import { User } from "@/models/auth";
-import AdminSideNav from "@/components/AdminSideNav/SideNav";
 import {
   TableContainer,
   Paper,
@@ -16,70 +8,129 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Table,
+  InputBase,
+  IconButton,
+  Stack,
+  Pagination,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
-const AdminRestaurants: React.FC = () => {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+interface AdminRestaurantsProps {
+  restaurantsData: Restaurant[];
+}
 
-  // const user: User | null = useAppSelector((state) => state.auth.user);
+const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({
+  restaurantsData,
+}) => {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>(restaurantsData);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const itemsPerPage = 10;
 
-  // console.log("USer from state", user);
+  // Filter restaurants based on search query
+  const filteredRestaurants = restaurants.filter((restaurant) => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    return (
+      restaurant._id?.toLowerCase().includes(lowerCaseSearchQuery) ||
+      restaurant.name.toLowerCase().includes(lowerCaseSearchQuery) ||
+      restaurant.email.toLowerCase().includes(lowerCaseSearchQuery)
+    );
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await restaurantService.getRestaurants();
-        setRestaurants(data);
-        console.log(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("An unknown error occurred"));
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Calculate the range of restaurants to display on the current page
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedRestaurants = filteredRestaurants.slice(startIndex, endIndex);
 
-    fetchData();
-  }, []);
+  // Handle page change in pagination
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const newSize = event.target.value as number;
+    setPageSize(newSize);
+    setPage(1);
+  };
 
   return (
     <>
       <div className="body">
-        <h2>Restaurants</h2>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Restaurant Name</TableCell>
-                <TableCell>Rating</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>Phone Number</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Cuisine</TableCell>
-                <TableCell>Offers</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {restaurants.map((restaurant) => (
-                <TableRow key={restaurant._id}>
-                  <TableCell>{restaurant.name}</TableCell>
-
-                  <TableCell>{restaurant.rating}</TableCell>
-                  <TableCell>{restaurant.address.addressLine}</TableCell>
-                  <TableCell>{restaurant.phoneNumber}</TableCell>
-                  <TableCell>{restaurant.email}</TableCell>
-                  <TableCell>{restaurant.cuisine.join(", ")}</TableCell>
-                  <TableCell>{restaurant.offers.join(", ")}</TableCell>
+        <div className="admin-header-div">
+          <div className="page-header">Restaurants</div>
+          <div className="search-bar">
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: 400,
+                marginBottom: "16px",
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search for a restaurant"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </div>
+        </div>
+        <div className="tbl-container">
+          <TableContainer component={Paper}>
+            <Table className="restaurant-tbl">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="table-header">
+                    Restaurant Name
+                  </TableCell>
+                  <TableCell className="table-header">Rating</TableCell>
+                  <TableCell className="table-header">Phone Number</TableCell>
+                  <TableCell className="table-header">Email</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {displayedRestaurants.map((restaurant) => (
+                  <TableRow key={restaurant._id} className="table-row">
+                    <TableCell className="table-cell">
+                      {restaurant.name}
+                    </TableCell>
+                    <TableCell className="table-cell">
+                      {restaurant.rating}
+                    </TableCell>
+                    <TableCell className="table-cell">
+                      {restaurant.phoneNumber}
+                    </TableCell>
+                    <TableCell className="table-cell">
+                      {restaurant.email}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        <div className="pagination">
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(filteredRestaurants.length / itemsPerPage)}
+              page={page}
+              onChange={handleChangePage}
+            />
+          </Stack>
+        </div>
       </div>
     </>
   );

@@ -1,11 +1,11 @@
 import FoodItem from "./foodItem";
 
 export interface Order {
-  _id: string;
+  _id?: string;
   userId: string;
   customerName: string;
   customerPhoneNumber: string;
-  orderItems: FoodItem[];
+  orderItems: OrderItem[];
   promoCode: string;
   status: string;
   restaurantId: string;
@@ -17,6 +17,13 @@ export interface Order {
   deliveredIn: string;
   tip: number;
   deliveryExecutiveId: string;
+  createdDateTime?: string;
+}
+
+export interface OrderItem {
+  foodItem: FoodItem;
+  quantity: number;
+  _id?: string;
 }
 
 export interface PaymentDetails {

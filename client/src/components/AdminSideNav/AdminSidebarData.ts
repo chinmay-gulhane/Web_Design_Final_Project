@@ -7,7 +7,7 @@ import SidebarDataItem from "@/models/types";
 
 
 // SidebarData in SidebarData file
-export const AdminSidebarData: SidebarDataItem[] = [
+const AdminSidebarData: SidebarDataItem[] = [
   {
     title: "Home",
     link: "/home",
@@ -28,3 +28,5 @@ export const AdminSidebarData: SidebarDataItem[] = [
     link: "/orders",
   },
 ];
+
+export default AdminSidebarData;

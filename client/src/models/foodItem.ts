@@ -5,6 +5,16 @@ interface FoodItem {
   restaurantId: string;
   price: number;
   rating: number;
+  image?: File | null | string;
+}
+
+export interface FoodItemPayload {
+  name: string;
+  foodImage: string;
+  restaurantId: string;
+  price: number;
+  rating: number;
+  image?: File | null | string;
 }
 
 export interface CartItem {

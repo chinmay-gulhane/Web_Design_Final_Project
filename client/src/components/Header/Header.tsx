@@ -1,20 +1,14 @@
 "use client";
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Link from "next/link";
 import "./header.css";
@@ -28,17 +22,19 @@ import ListIcon from "@mui/icons-material/List";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { authActions } from "@/redux/reducers/authSlice";
-
+import { attachUserToCart, clearCart } from "@/redux/reducers/cartSlice";
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null);
 
   const dispatch: AppDispatch = useDispatch();
 
   const user = useAppSelector((state) => state.auth.user);
   const cartItems = useAppSelector((state) => state.cart.cart);
   const router = useRouter();
+  if (user) dispatch(attachUserToCart(user?._id));
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -66,8 +62,7 @@ export default function PrimarySearchAppBar() {
   };
 
   const navigateToOrdersPage = () => {
-    // for now routing to home page
-    router.push("/restaurants");
+    router.push("/myorder");
     handleMenuClose();
     handleMobileMenuClose();
   };
@@ -118,7 +113,9 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>
+      {user?.role.includes("USER") && (
+        <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>
+      )}
       <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
     </Menu>
   );
@@ -142,20 +139,26 @@ export default function PrimarySearchAppBar() {
     >
       {user ? (
         <div>
-          <MenuItem onClick={navigateToCartPage}>
-            <IconButton size="large" color="inherit">
-              <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <span>Cart</span>
-          </MenuItem>
-          <MenuItem onClick={navigateToOrdersPage}>
-            <IconButton size="large" color="inherit">
-              <ListIcon />
-            </IconButton>
-            <span>My Orders</span>
-          </MenuItem>
+          {user?.role.includes("USER") && (
+              <MenuItem onClick={navigateToCartPage}>
+                <IconButton size="large" color="inherit">
+                  <Badge
+                    badgeContent={cartItems.length ? cartItems.length : "0"}
+                    color="error"
+                  >
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+                <span>Cart</span>
+              </MenuItem>
+            ) && (
+              <MenuItem onClick={navigateToOrdersPage}>
+                <IconButton size="large" color="inherit">
+                  <ListIcon />
+                </IconButton>
+                <span>My Orders</span>
+              </MenuItem>
+            )}
           <MenuItem onClick={handleSignOut}>
             <IconButton size="large" color="inherit">
               <LogoutIcon />
@@ -193,18 +196,30 @@ export default function PrimarySearchAppBar() {
       <AppBar position="fixed" color="default">
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            <Link href={user ? "/restaurants" : "/login"} className="no-underline">
+            <Link
+              href={user ? "/restaurants" : "/login"}
+              className="no-underline"
+            >
               <span className="company-first-word">Husky</span>
               <span className="company-last-word">Bites</span>
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" }, marginRight: "20px", columnGap: "15px" }}>
-            {user && (
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              marginRight: "20px",
+              columnGap: "15px",
+            }}
+          >
+            {user?.role.includes("USER") && (
               <>
                 <Link href="/cart" className="text-black">
                   <IconButton size="large" color="inherit">
-                    <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
+                    <Badge
+                      badgeContent={cartItems.length ? cartItems.length : "0"}
+                      color="error"
+                    >
                       <ShoppingCartIcon />
                     </Badge>
                   </IconButton>
@@ -225,7 +240,9 @@ export default function PrimarySearchAppBar() {
               </IconButton>
             )}
           </Box>
-          <Box sx={{ display: { xs: "flex", md: `${user ? "none" : "flex"}`  } }}>
+          <Box
+            sx={{ display: { xs: "flex", md: `${user ? "none" : "flex"}` } }}
+          >
             <IconButton
               size="large"
               aria-label="show more"

@@ -3,10 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { Order } from "@/models/order";
 import OrderCard from "@/components/CustomerOrder/OrderCard"; // Adjust the path accordingly
+import { User } from "@/models/auth";
+import { useAppSelector } from "@/redux/store";
 
 const OrderDetails: React.FC = () => {
   const [pastOrders, setPastOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const user: User | null = useAppSelector((state) => state.auth.user);
+  const userId = user ? user._id : null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +18,8 @@ const OrderDetails: React.FC = () => {
         setIsLoading(true);
         // Replace with your API endpoint
         const response = await fetch(
-          "http://localhost:8080/orders/search?page=1&pageSize=10&userId=user6"
+          "http://localhost:8080/orders/search?page=1&pageSize=10&userId=" +
+            userId
         );
         const data = await response.json();
         setPastOrders(data);

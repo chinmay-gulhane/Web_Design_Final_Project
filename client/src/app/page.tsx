@@ -1,21 +1,17 @@
 "use client";
-import MenuAppBar from "@/components/Header/Header";
-import Layout from "@/components/Layout/Layout";
 import Title from "@/components/Title";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import Image from "next/image";
+import LogoImage from "../../public/images/logo.jpg";
+import { Typography } from "@mui/material";
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push("/login");
-  });
-
   return (
     <>
-      <Title title="Welcome to Husky Bites Application" variant="h1"></Title>
-      {/* <h1>Welcome to Husky Bites Application</h1> */}
+      <div className="home-page-main-div">
+      <Title title="Welcome to Husky Bites Application" variant="h2"></Title>
+        <Image src={LogoImage} width={300} height={300} alt="husky" className="image" />
+        <Typography title="Welcome to Husky Bites Application" variant="h4">Hungry? Let the Huskies Howl in Flavorful Delivery!</Typography>
+      </div>
     </>
   );
 }

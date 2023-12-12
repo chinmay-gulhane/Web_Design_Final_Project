@@ -1,4 +1,6 @@
 import React, { ReactNode } from "react";
+import { User } from "./auth";
+
 interface SidebarDataItem {
   title: string;
   icon?: any;
@@ -6,3 +8,9 @@ interface SidebarDataItem {
   link: string;
 }
 export default SidebarDataItem;
+
+export interface UserResponse {
+  success: boolean;
+  message: string;
+  users: User[];
+}
