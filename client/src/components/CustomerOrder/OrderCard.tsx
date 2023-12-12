@@ -19,6 +19,8 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
         className="object-cover w-full rounded-start-3 h-100 hidden md:block md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
         src={restaurant ? restaurant.profilePhoto : ""}
         alt={"Restaurant Photo"}
+        width={100}
+        height={100}
       />
 
       <div className="flex flex-col p-4 leading-normal">
