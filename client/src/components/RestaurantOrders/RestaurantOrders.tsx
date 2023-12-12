@@ -116,7 +116,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                         className="status-dropdown"
                         value={order.status}
                         onChange={(event: any) =>
-                          handleStatusChange(event, order._id)
+                          handleStatusChange(event, order._id ? order._id : "")
                         }
                       >
                         <MenuItem value="Placed">Placed</MenuItem>
@@ -137,7 +137,9 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => handleUpdateStatus(order._id)}
+                        onClick={() =>
+                          handleUpdateStatus(order._id ? order._id : "")
+                        }
                       >
                         Update Status
                       </Button>

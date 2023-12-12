@@ -1,13 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
 import "./admin-orders.scss";
 import * as orderService from "@/services/order-service";
-import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Link from "next/link";
-import { useAppSelector } from "@/redux/store";
-import { User } from "@/models/auth";
-import AdminSideNav from "@/components/AdminSideNav/SideNav";
 import {
   TableContainer,
   Paper,
@@ -15,6 +9,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Table,
 } from "@mui/material";
 import { Order } from "@/models/order";
 
@@ -30,7 +25,6 @@ const AdminOrders: React.FC = () => {
       try {
         const data = await orderService.getAllOrders();
         setOrders(data);
-        console.log("orders", data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
@@ -50,17 +44,21 @@ const AdminOrders: React.FC = () => {
       {/* components */}
       <div>
         <h2>Orders</h2>
-        <div className="body">
+        <div className="tbl-container">
           <TableContainer component={Paper}>
-            <Table>
+            <Table className="orders-tbl">
               <TableHead>
                 <TableRow>
-                  <TableCell>Order ID</TableCell>
-                  <TableCell>Customer Name</TableCell>
-                  <TableCell>Customer Phone Number</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Restaurant Name</TableCell>
-                  <TableCell>Final Amount</TableCell>
+                  <TableCell className="table-header">Order ID</TableCell>
+                  <TableCell className="table-header">Customer Name</TableCell>
+                  <TableCell className="table-header">
+                    Customer Phone Number
+                  </TableCell>
+                  <TableCell className="table-header">Status</TableCell>
+                  <TableCell className="table-header">
+                    Restaurant Name
+                  </TableCell>
+                  <TableCell className="table-header">Final Amount</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
