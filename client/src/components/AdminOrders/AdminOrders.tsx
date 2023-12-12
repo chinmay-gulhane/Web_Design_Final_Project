@@ -110,7 +110,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
 
   return (
     <>
-      <div className="container">
+      <div>
         <div className="header-div">
           <div className="page-header">Orders</div>
           <div>
