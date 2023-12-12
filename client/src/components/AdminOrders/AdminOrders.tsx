@@ -1,4 +1,4 @@
-"use client";
+// Importing necessary libraries
 import React, { useEffect, useState } from "react";
 import "./admin-orders.scss";
 import * as orderService from "@/services/order-service";
@@ -18,20 +18,25 @@ import {
   Fade,
   InputBase,
   IconButton,
+  Stack, // New import for Material-UI Stack
+  Pagination, // New import for Material-UI Pagination
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Order } from "@/models/order";
 import { toast } from "react-toastify";
 
+// Main component
 const AdminOrders: React.FC = () => {
+  // State for orders, loading, error, search query, sorting, and pagination
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("createdDateTime");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const ordersPerPage = 10; // Number of orders to display per page
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 10;
 
+  // Fetch orders on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,23 +63,25 @@ const AdminOrders: React.FC = () => {
       const dateB = b.createdDateTime ? new Date(b.createdDateTime) : null;
 
       if (dateA && dateB) {
-        return (dateA as any) - (dateB as any); // Explicitly cast to 'any'
+        return (dateA as any) - (dateB as any);
       } else if (dateA) {
-        return -1; // a comes first
+        return -1;
       } else if (dateB) {
-        return 1; // b comes first
+        return 1;
       }
 
-      return 0; // both dates are undefined
+      return 0;
     });
 
     setOrders(sortedOrders);
   }, [orders]);
 
+  // Handle search form submission
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
+  // Filter orders based on search query
   const filteredOrders = orders.filter((order) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (
@@ -84,19 +91,22 @@ const AdminOrders: React.FC = () => {
     );
   });
 
-  // Paginate orders
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = filteredOrders.slice(
-    indexOfFirstOrder,
-    indexOfLastOrder
-  );
+  // Calculate the range of orders to display on the current page
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedOrders = filteredOrders.slice(startIndex, endIndex);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  // Handle page change in pagination
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
 
   return (
     <>
-      <div>
+      <div className="container">
         <div className="header-div">
           <div className="page-header">Orders</div>
           <div>
@@ -146,7 +156,7 @@ const AdminOrders: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {currentOrders.map((order) => (
+                {displayedOrders.map((order) => (
                   <TableRow key={order._id}>
                     <TableCell>{order._id}</TableCell>
                     <TableCell>{order.customerName}</TableCell>
@@ -159,17 +169,16 @@ const AdminOrders: React.FC = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          {/* <div className="pagination">
-            {Array.from(
-              { length: Math.ceil(filteredOrders.length / ordersPerPage) },
-              (_, i) => (
-                <Button key={i + 1} onClick={() => paginate(i + 1)}>
-                  {i + 1}
-                </Button>
-              )
-            )}
-          </div> */}
         </div>
+        {/* <div className="pagination">
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(filteredOrders.length / itemsPerPage)}
+              page={page}
+              onChange={handleChangePage}
+            />
+          </Stack>
+        </div> */}
       </div>
     </>
   );
