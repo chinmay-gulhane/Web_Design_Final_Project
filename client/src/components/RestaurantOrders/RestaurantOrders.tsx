@@ -41,6 +41,26 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // Sort orders by latest createdDateTime
+  useEffect(() => {
+    const sortedOrders = [...orders].sort((a, b) => {
+      const dateA = a.createdDateTime ? new Date(a.createdDateTime) : null;
+      const dateB = b.createdDateTime ? new Date(b.createdDateTime) : null;
+
+      if (dateA && dateB) {
+        return (dateA as any) - (dateB as any); // Explicitly cast to 'any'
+      } else if (dateA) {
+        return -1; // a comes first
+      } else if (dateB) {
+        return 1; // b comes first
+      }
+
+      return 0; // both dates are undefined
+    });
+
+    setOrders(sortedOrders);
+  }, [orders]);
+
   const handleStatusChange = (event: any, orderId: string) => {
     const updatedOrders = orders.map((order) =>
       order._id === orderId
@@ -111,7 +131,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
             >
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Search for an order..."
+                placeholder="Search for an order"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -144,6 +164,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                 <TableCell className="table-header" align="center">
                   Actions
                 </TableCell>
+                {/* <TableCell className="table-header">Created DateTime</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -186,6 +207,10 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                       Update Status
                     </Button>
                   </TableCell>
+                  {/* <TableCell>
+                    {order.createdDateTime &&
+                      new Date(order.createdDateTime).toLocaleString()}
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
