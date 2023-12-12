@@ -45,7 +45,7 @@ export default function Footer() {
                   Copyright <CopyrightIcon className="copy-logo" /> 2023 - 2016
                   HuskyBites
                 </p>
-                <p>Shree</p>
+                {/* <p>Shree</p> */}
               </div>
             </div>
           </div>

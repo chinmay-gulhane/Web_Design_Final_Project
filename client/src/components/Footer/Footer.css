@@ -1,15 +1,19 @@
 .footer {
-    width: 100%;
-    background-color: red;
-    color: white;
-    text-align: center;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  /* position: fixed; */
+  /* height: 22vh; */
+  /* bottom: 0%; */
+  /* overflow: hidden; */
 }
 
 .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    border-top: solid 1.5rem rgba(255, 0, 0, 10);
-    padding-inline: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  border-top: solid 1.5rem rgba(255, 0, 0, 10);
+  padding-inline: 2.5rem;
 }
 
 .first-name {
