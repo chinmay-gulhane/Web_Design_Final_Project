@@ -10,6 +10,9 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import TranslateIcon from "@mui/icons-material/Translate";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 import Image from "next/image";
+import Link from "next/link";
+import ContactUsPage from "@/app/contact-us/page";
+import AboutUsPage from "@/app/about-us/page";
 
 export default function Footer() {
 
@@ -52,15 +55,20 @@ export default function Footer() {
 
           <div className="center-content">
             <span>
-              <FacebookIcon className="icon" /> |
-              <InstagramIcon className="icon" /> |
-              <TwitterIcon className="icon" />
+
+              <a href="https://www.facebook.com" target="_blank" className="icon">
+              <FacebookIcon className="icon" /></a> |
+              <a href="https://www.instagram.com" target="_blank" className="icon">
+              <InstagramIcon className="icon" /> </a> |
+              <a href="https://www.twitter.com" target="_blank" className="icon">
+              <TwitterIcon className="icon" /> </a>
             </span>
           </div>
 
           <div className="right-content" style={{ color: "black" }}>
-            <p>Contact Us</p>
-            <p>About Us</p>
+            <p>
+              <Link href="/contact-us" className="contact">Contact Us</Link></p>
+            <p><Link href="/about-us" className="contact">About Us</Link></p>
             <p>
               <TranslateIcon /> English
             </p>

@@ -1,7 +1,8 @@
 .side-nav {
     padding-top: 20px;
     height: 91vh;
-    width: 250px;
+    width: 220px;
+    padding-left: 3px;
     background-color: #2F4050;
     color: white;
 }
@@ -23,9 +24,30 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        vertical-align: middle;
+        
+    }
+    .row:hover{
+        background-color: rgb(38, 58, 58);
+        
+
     }
 }
 
 a {
     text-decoration: none;
 }
+.list-item{
+    padding-inline: 10px;
+    vertical-align: middle;
+    font-size: 1.4rem;
+    align-items: center;
+}
+.side-bar-list .row.active {
+    // color: rgb(38, 58, 58);
+    color: white;
+    background-color: rgb(38, 58, 58);
+    font-weight: bold;
+    // height: 2rem;
+    // Add other styles if needed
+  }
