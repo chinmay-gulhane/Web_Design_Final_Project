@@ -95,7 +95,7 @@ const CenteredCard: React.FC = () => {
         customerPhoneNumber: user.phone,
         orderItems: orderItems,
         promoCode: "",
-        status: "Pending",
+        status: "Placed",
         restaurantId: restaurant ? restaurant._id : "",
         paymentDetails: paymentDetail,
         finalAmount: parseFloat(orderFinalAmount),

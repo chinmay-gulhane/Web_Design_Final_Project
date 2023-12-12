@@ -97,21 +97,23 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       {/* <div> */}
       {buttonState === "quantity" && (
         <button
-          className="h-10 px-6 font-semibold rounded-full bg-black text-white"
+          className="h-10 border-0 font-semibold rounded-start-circle bg-black text-white"
           onClick={handleDecreaseQuantity}
         >
           -
         </button>
       )}
       <button
-        className="h-10 px-6 font-semibold rounded-full bg-black text-white"
+        className={`h-10 px-4 text-center font-semibold border-0 bg-black text-white ${
+          buttonState === "add" ? "rounded-full w-75" : "border-0 w-50"
+        }`}
         onClick={handleAddToCartButton}
       >
         {buttonState === "add" ? "Add" : `${quantity}`}
       </button>
       {buttonState === "quantity" && (
         <button
-          className="h-10 px-6 font-semibold rounded-full bg-black text-white"
+          className="h-10 border-0 font-semibold rounded-end-circle bg-black text-white"
           onClick={handleIncreaseQuantity}
         >
           +
