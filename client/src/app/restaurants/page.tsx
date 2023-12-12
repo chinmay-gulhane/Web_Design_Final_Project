@@ -53,7 +53,7 @@ const RestaurantPage: React.FC = () => {
       <div className="flex flex-col">
         <div className="flex flex-row items-center text-center mb-10 justify-between flex-wrap">
           <div className="text-3xl my-2">
-            <span className="font-bold">Hi {user?.firstName}👋, </span>&nbsp;
+            <span className="font-bold">Hi {user?.firstName} 👋, </span>&nbsp;
             <span className="text-xl mt-2">Which restaurant will you try today?</span>
           </div>
 
