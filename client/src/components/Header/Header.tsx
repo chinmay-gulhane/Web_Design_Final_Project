@@ -29,7 +29,6 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { authActions } from "@/redux/reducers/authSlice";
 
-
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);

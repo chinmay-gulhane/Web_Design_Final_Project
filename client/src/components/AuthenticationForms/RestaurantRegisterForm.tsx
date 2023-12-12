@@ -47,6 +47,7 @@ const RestaurantRegiserForm: React.FC<RestaurantRegisterFormProps> = ({
   setPhone,
   showPassword,
   handleClickShowPassword,
+  params
 }) => {
   return (
     <>
