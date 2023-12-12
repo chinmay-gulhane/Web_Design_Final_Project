@@ -25,19 +25,16 @@ const AdminHomePage = () => {
     const fetchData = async () => {
       try {
         // get all orders
-        // const data = await orderService.getAllOrders();
-        // setOrdersData(data);
+        const data = await orderService.getAllOrders();
+        setOrdersData(data);
 
         // get all restaurants
-        // const restaurantData = await restaurantService.getRestaurants();
-        // setRestaurantsData(restaurantData);
+        const restaurantData = await restaurantService.getRestaurants();
+        setRestaurantsData(restaurantData);
 
         // get all users
         const userData = await orderService.getAllUsers();
         setUsersData(userData);
-
-        // setOrdersData(ordersdata);
-        // setFoodItems(foodData);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
@@ -59,9 +56,9 @@ const AdminHomePage = () => {
       case "Users":
         return <AdminUsers usersData={usersData} />;
       case "Restaurants":
-        return <AdminRestaurants />;
+        return <AdminRestaurants restaurantsData={restaurantsData} />;
       case "Orders":
-        return <AdminOrders />;
+        return <AdminOrders ordersData={ordersData} />;
       default:
         return null;
     }

@@ -5,7 +5,7 @@ interface FoodItem {
   restaurantId: string;
   price: number;
   rating: number;
-  image?: File | null;
+  image?: File | null | string;
 }
 
 export interface FoodItemPayload {
@@ -14,7 +14,7 @@ export interface FoodItemPayload {
   restaurantId: string;
   price: number;
   rating: number;
-  image?: File | null;
+  image?: File | null | string;
 }
 
 export interface CartItem {

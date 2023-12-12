@@ -35,15 +35,14 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
   restaurantId,
   ordersData,
 }) => {
-  const initialOrders = ordersData;
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [orders, setOrders] = useState<Order[]>([...ordersData]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Sort orders by latest createdDateTime
   useEffect(() => {
-    const sortedOrders = [...orders].sort((a, b) => {
+    const sortedOrders = [...ordersData].sort((a, b) => {
       const dateA = a.createdDateTime ? new Date(a.createdDateTime) : null;
       const dateB = b.createdDateTime ? new Date(b.createdDateTime) : null;
 
@@ -59,7 +58,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
     });
 
     setOrders(sortedOrders);
-  }, [orders]);
+  }, [ordersData]);
 
   const handleStatusChange = (event: any, orderId: string) => {
     const updatedOrders = orders.map((order) =>

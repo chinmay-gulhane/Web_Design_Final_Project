@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./admin-restaurant.scss";
-import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
 import {
   TableContainer,
@@ -15,30 +14,15 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const AdminRestaurants: React.FC = () => {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+interface AdminRestaurantsProps {
+  restaurantsData: Restaurant[];
+}
+
+const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({
+  restaurantsData,
+}) => {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>(restaurantsData);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await restaurantService.getRestaurants();
-        setRestaurants(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("An unknown error occurred"));
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   // Filter restaurants based on search query
   const filteredRestaurants = restaurants.filter((restaurant) => {

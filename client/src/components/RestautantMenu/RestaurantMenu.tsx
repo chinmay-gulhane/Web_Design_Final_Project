@@ -74,7 +74,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         _id: "",
         name: "",
         foodImage: "",
-
+        image: null,
         restaurantId: restaurantId,
         price: 0,
         rating: 0,
@@ -112,6 +112,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
           restaurantId: restaurantId,
           price: 0,
           rating: 0,
+          image: null,
         });
 
         toast.success("Food item updated successfully!");

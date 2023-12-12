@@ -25,10 +25,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Order } from "@/models/order";
 import { toast } from "react-toastify";
 
+interface AdminOrdersProps {
+  ordersData: Order[];
+}
+
 // Main component
-const AdminOrders: React.FC = () => {
+const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
   // State for orders, loading, error, search query, sorting, and pagination
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>(ordersData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -37,24 +41,24 @@ const AdminOrders: React.FC = () => {
   const itemsPerPage = 10;
 
   // Fetch orders on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await orderService.getAllOrders();
-        setOrders(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("An unknown error occurred"));
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await orderService.getAllOrders();
+  //       setOrders(data);
+  //     } catch (err: unknown) {
+  //       if (err instanceof Error) {
+  //         setError(err);
+  //       } else {
+  //         setError(new Error("An unknown error occurred"));
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   // Sort orders by latest createdDateTime
   useEffect(() => {
