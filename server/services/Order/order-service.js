@@ -34,16 +34,18 @@ export const getAll = async (params = {}) => {
 // search orders
 export const search = async (params = {}, page = 1, pageSize = 10) => {
   try {
-    // Extract userId from the params
-    const { userId, ...otherParams } = params;
+    // Extract userId and restaurantId from the params
+    const { userId, restaurantId, ...otherParams } = params;
 
     // Calculate skip based on page and pageSize
     const skip = Math.max(0, (page - 1) * pageSize);
 
-    // Build the query condition with userId if available
-    const queryCondition = userId
-      ? { ...otherParams, userId }
-      : { ...otherParams };
+    // Build the query condition with userId and restaurantId if available
+    const queryCondition = {
+      ...otherParams,
+      ...(userId && { userId }),
+      ...(restaurantId && { restaurantId }),
+    };
 
     // Use the extracted values or fallback to default values if not provided
     const orders = await Order.find(queryCondition)

@@ -9,7 +9,9 @@ import RestaurantMenu from "@/components/RestautantMenu/RestaurantMenu";
 import Restaurant from "@/models/restaurant";
 import * as restaurantService from "@/services/restaurant-service";
 import * as foodItemService from "@/services/fooditem-service";
-import { FoodItem } from "@/interfaces/interfaces";
+import * as orderService from "@/services/order-service";
+import FoodItem from "@/models/foodItem";
+import { Order } from "@/models/order";
 
 interface PageProps {
   params: {
@@ -19,8 +21,9 @@ interface PageProps {
 
 const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");
-  const [restaurant, setRestaurant] = useState<Restaurant>();
+  // const [restaurant, setRestaurant] = useState<Restaurant>();
   const [menuItems, setFoodItems] = useState<FoodItem[]>([]);
+  const [ordersData, setOrdersData] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -31,9 +34,14 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
       try {
         const data = await restaurantService.getRestaurantById(restaurantId);
         const foodData = await foodItemService.getFoodItems(restaurantId);
-        // console.log(data);
-        // console.log(foodData);
-        setRestaurant(data);
+        const ordersdata = await orderService.searchOrders(
+          0,
+          50,
+          undefined,
+          restaurantId
+        );
+        // setRestaurant(data);
+        setOrdersData(ordersdata);
         setFoodItems(foodData);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -58,7 +66,12 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
           <RestaurantMenu menuItems={menuItems} restaurantId={restaurantId} />
         );
       case "Orders":
-        return <RestaurantOrders />;
+        return (
+          <RestaurantOrders
+            ordersData={ordersData}
+            restaurantId={restaurantId}
+          />
+        );
       default:
         return null;
     }
