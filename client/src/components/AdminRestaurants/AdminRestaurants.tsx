@@ -1,14 +1,7 @@
-"use client";
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
 import "./admin-restaurant.scss";
 import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
-import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import Link from "next/link";
-import { useAppSelector } from "@/redux/store";
-import { User } from "@/models/auth";
-import AdminSideNav from "@/components/AdminSideNav/SideNav";
 import {
   TableContainer,
   Paper,
@@ -16,23 +9,23 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Table,
+  InputBase,
+  IconButton,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const AdminRestaurants: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-
-  // const user: User | null = useAppSelector((state) => state.auth.user);
-
-  // console.log("USer from state", user);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await restaurantService.getRestaurants();
         setRestaurants(data);
-        console.log(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
@@ -47,39 +40,78 @@ const AdminRestaurants: React.FC = () => {
     fetchData();
   }, []);
 
+  // Filter restaurants based on search query
+  const filteredRestaurants = restaurants.filter((restaurant) => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    return (
+      restaurant._id?.toLowerCase().includes(lowerCaseSearchQuery) ||
+      restaurant.name.toLowerCase().includes(lowerCaseSearchQuery) ||
+      restaurant.email.toLowerCase().includes(lowerCaseSearchQuery)
+    );
+  });
+
   return (
     <>
       <div className="body">
-        <h2>Restaurants</h2>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Restaurant Name</TableCell>
-                <TableCell>Rating</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>Phone Number</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Cuisine</TableCell>
-                <TableCell>Offers</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {restaurants.map((restaurant) => (
-                <TableRow key={restaurant._id}>
-                  <TableCell>{restaurant.name}</TableCell>
-
-                  <TableCell>{restaurant.rating}</TableCell>
-                  <TableCell>{restaurant.address.addressLine}</TableCell>
-                  <TableCell>{restaurant.phoneNumber}</TableCell>
-                  <TableCell>{restaurant.email}</TableCell>
-                  <TableCell>{restaurant.cuisine.join(", ")}</TableCell>
-                  <TableCell>{restaurant.offers.join(", ")}</TableCell>
+        <div className="header-div">
+          <div className="page-header">Restaurants</div>
+          <div className="search-bar">
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: 400,
+                marginBottom: "16px",
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search for a restaurant"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </div>
+        </div>
+        <div className="tbl-container">
+          <TableContainer component={Paper}>
+            <Table className="restaurant-tbl">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="table-header">
+                    Restaurant Name
+                  </TableCell>
+                  <TableCell className="table-header">Rating</TableCell>
+                  <TableCell className="table-header">Phone Number</TableCell>
+                  <TableCell className="table-header">Email</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {filteredRestaurants.map((restaurant) => (
+                  <TableRow key={restaurant._id} className="table-row">
+                    <TableCell className="table-cell">
+                      {restaurant.name}
+                    </TableCell>
+                    <TableCell className="table-cell">
+                      {restaurant.rating}
+                    </TableCell>
+                    <TableCell className="table-cell">
+                      {restaurant.phoneNumber}
+                    </TableCell>
+                    <TableCell className="table-cell">
+                      {restaurant.email}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </div>
     </>
   );

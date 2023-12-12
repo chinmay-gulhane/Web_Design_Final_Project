@@ -3,7 +3,8 @@
 }
 
 .page-header {
-  font-size: 40px;
+  font-size: 38px;
+  font-weight: 500;
 }
 
 .modal-content {
@@ -103,11 +104,6 @@
 .add-food-item-btn {
   width: auto;
   height: 38px;
-}
-
-.table-header {
-  background-color: black;
-  color: white;
 }
 
 .food-items-table tbody tr:hover {
