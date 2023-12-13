@@ -26,8 +26,7 @@ import { attachUserToCart, clearCart } from "@/redux/reducers/cartSlice";
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -113,9 +112,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {user?.role.includes("USER") && (
-        <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>
-      )}
+      {user?.role.includes("USER") && <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>}
       <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
     </Menu>
   );
@@ -142,10 +139,7 @@ export default function PrimarySearchAppBar() {
           {user?.role.includes("USER") && (
               <MenuItem onClick={navigateToCartPage}>
                 <IconButton size="large" color="inherit">
-                  <Badge
-                    badgeContent={cartItems.length ? cartItems.length : "0"}
-                    color="error"
-                  >
+                  <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
@@ -196,15 +190,16 @@ export default function PrimarySearchAppBar() {
       <AppBar position="fixed" color="default">
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            <Link
-              href={user ? "/restaurants" : "/login"}
-              className="no-underline"
-            >
+            <Link href={user ? "/restaurants" : "/"} className="no-underline">
               <span className="company-first-word">Husky</span>
               <span className="company-last-word">Bites</span>
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ marginRight: "20px"}}>
+            {user?.role.includes("RESTAURANT") && <Typography sx={{fontWeight: 'bold'}}>RESTAURANT</Typography>}
+            {user?.role.includes("ADMIN") && <Typography sx={{fontWeight: 'bold'}}>ADMIN</Typography>}
+          </Box>
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
@@ -216,10 +211,7 @@ export default function PrimarySearchAppBar() {
               <>
                 <Link href="/cart" className="text-black">
                   <IconButton size="large" color="inherit">
-                    <Badge
-                      badgeContent={cartItems.length ? cartItems.length : "0"}
-                      color="error"
-                    >
+                    <Badge badgeContent={cartItems.length ? cartItems.length : "0"} color="error">
                       <ShoppingCartIcon />
                     </Badge>
                   </IconButton>
@@ -240,9 +232,7 @@ export default function PrimarySearchAppBar() {
               </IconButton>
             )}
           </Box>
-          <Box
-            sx={{ display: { xs: "flex", md: `${user ? "none" : "flex"}` } }}
-          >
+          <Box sx={{ display: { xs: "flex", md: `${user ? "none" : "flex"}` } }}>
             <IconButton
               size="large"
               aria-label="show more"

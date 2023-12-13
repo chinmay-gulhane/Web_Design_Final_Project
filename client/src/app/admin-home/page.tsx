@@ -17,7 +17,7 @@ import Spinner from "@/components/Spinner/Spinner";
 
 const AdminHomePage = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const dispatch = useDispatch();
   const adminState = useAppSelector((state) => state.auth.loading);

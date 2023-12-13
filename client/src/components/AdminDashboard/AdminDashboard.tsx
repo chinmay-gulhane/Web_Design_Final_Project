@@ -4,14 +4,15 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from '@mui/icons-material/Person';
 import RamenDiningIcon from '@mui/icons-material/RamenDining';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import { useAppSelector } from "@/redux/store";
 
 const AdminDashboard = () => {
-  const styles = {
-    largeIcon: {
-      width: 60,
-      height: 60,
-    },
-  };
+
+  const adminState = useAppSelector(state => state.admin);
+
+  const calculateRevenue = () => {
+    return adminState.orders.reduce((acc, currentOrder) => acc + currentOrder.finalAmount, 0).toFixed(2);
+  }
 
   return (
     <div className="flex flex-col">
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
       <div className="card-container">
           <div className="card purple">
             <div>
-              <h2>2050</h2>
+              <h2>{adminState.orders.length}</h2>
               <h4>Total Orders</h4>
             </div>
             <div>
@@ -33,7 +34,7 @@ const AdminDashboard = () => {
 
           <div className="card pink">
             <div>
-              <h2>2050</h2>
+              <h2>{adminState.users.length}</h2>
               <h4>Total Users</h4>
             </div>
             <div>
@@ -43,7 +44,7 @@ const AdminDashboard = () => {
 
           <div className="card green">
             <div>
-              <h2>2050</h2>
+              <h2>{adminState.restaurants.length}</h2>
               <h4>Total Restaurants</h4>
             </div>
             <div>
@@ -53,7 +54,7 @@ const AdminDashboard = () => {
 
           <div className="card yellow">
             <div>
-              <h2>2050</h2>
+              <h2>{calculateRevenue()}</h2>
               <h4>Total Revenue</h4>
             </div>
             <div>
