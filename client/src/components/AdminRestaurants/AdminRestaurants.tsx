@@ -186,10 +186,20 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
+          <Button
+            onClick={handleCloseModal}
+            color="inherit"
+            variant="outlined"
+            className="modal-cancel-btn"
+          >
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} color="secondary">
+          <Button
+            onClick={handleDeleteConfirm}
+            color="secondary"
+            variant="contained"
+            className="modal-delete-btn"
+          >
             Delete
           </Button>
         </DialogActions>

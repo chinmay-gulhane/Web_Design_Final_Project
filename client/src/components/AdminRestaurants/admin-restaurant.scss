@@ -15,3 +15,15 @@
     min-width: 10px;
   }
   
+  .modal-cancel-btn {
+    color: grey;
+  }
+  
+  .modal-delete-btn {
+    background-color: black;
+    color: white;
+    &:hover {
+      background-color: black;  
+      color: white;           
+    }
+  }
