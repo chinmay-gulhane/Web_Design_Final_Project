@@ -21,6 +21,13 @@ const adminSlice = createSlice({
     sortAction: (state, action) => {
       state.orders = action.payload;
     },
+    deleteRestaurant: (state, action) => {
+      // Assuming action.payload contains the ID of the restaurant to be deleted
+      const deletedRestaurantId = action.payload;
+      state.restaurants = state.restaurants.filter(
+        (restaurant) => restaurant._id !== deletedRestaurantId
+      );
+    },
   },
   extraReducers: (builder) => {},
 });

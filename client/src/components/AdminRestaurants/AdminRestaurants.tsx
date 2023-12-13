@@ -1,21 +1,31 @@
 import React, { useState } from "react";
-import "./admin-restaurant.scss";
-import Restaurant from "@/models/restaurant";
 import {
-  TableContainer,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  InputBase,
   Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Table,
-  InputBase,
-  IconButton,
-  Stack,
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useAppSelector } from "@/redux/store";
+import "./admin-restaurant.scss";
+import { FaTrash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { adminActions } from "@/redux/reducers/adminSlice";
+import * as restaurantService from "@/services/restaurant-service";
+import { toast } from "react-toastify";
 
 interface AdminRestaurantsProps {}
 
@@ -23,10 +33,33 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [selectedRestaurant, setSelectedRestaurant] = useState<string | null>(
+    null
+  );
   const itemsPerPage = 10;
   const restaurantState = useAppSelector((state) => state.admin.restaurants);
+  const dispatch = useDispatch();
 
-  // Filter restaurants based on search query
+  const handleCloseModal = () => {
+    setSelectedRestaurant(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (selectedRestaurant) {
+      // Dispatch the deleteRestaurant action with the selected restaurant ID
+      try {
+        // Call the deleteRestaurantById function from the service
+        await restaurantService.deleteRestaurantById(selectedRestaurant);
+        toast.success("Restaurant deleted successfully!");
+        dispatch(adminActions.deleteRestaurant(selectedRestaurant));
+        setSelectedRestaurant(null);
+      } catch (error) {
+        toast.error("Error deleting restaurant");
+        console.error("Error deleting restaurant:", error);
+      }
+    }
+  };
+
   const filteredRestaurants = restaurantState.filter((restaurant) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (
@@ -36,12 +69,10 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
     );
   });
 
-  // Calculate the range of restaurants to display on the current page
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedRestaurants = filteredRestaurants.slice(startIndex, endIndex);
 
-  // Handle page change in pagination
   const handleChangePage = (
     event: React.ChangeEvent<unknown>,
     newPage: number
@@ -55,6 +86,10 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
     const newSize = event.target.value as number;
     setPageSize(newSize);
     setPage(1);
+  };
+
+  const handleDeleteClick = (restaurantId: string) => {
+    setSelectedRestaurant(restaurantId);
   };
 
   return (
@@ -96,6 +131,7 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
                   <TableCell className="table-header">Rating</TableCell>
                   <TableCell className="table-header">Phone Number</TableCell>
                   <TableCell className="table-header">Email</TableCell>
+                  <TableCell className="table-header">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -113,6 +149,15 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
                     <TableCell className="table-cell">
                       {restaurant.email}
                     </TableCell>
+                    <TableCell className="table-cell">
+                      <Button
+                        className="delete-btn"
+                        variant="contained"
+                        onClick={() => handleDeleteClick(restaurant._id)}
+                      >
+                        <FaTrash />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -125,10 +170,30 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
               count={Math.ceil(filteredRestaurants.length / itemsPerPage)}
               page={page}
               onChange={handleChangePage}
+              showFirstButton
+              showLastButton
             />
           </Stack>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <Dialog open={!!selectedRestaurant} onClose={handleCloseModal}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this restaurant?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="secondary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

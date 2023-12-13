@@ -27,3 +27,12 @@ export const getRestaurantById = async (
     throw error;
   }
 };
+
+export const deleteRestaurantById = async (restaurantId: string) => {
+  try {
+    const response = await axios.delete(`${baseURL}${API_URL}/${restaurantId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
