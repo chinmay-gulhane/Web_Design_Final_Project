@@ -107,7 +107,7 @@ const OrderSummary: React.FC = () => {
       </div>
       <Link href={`/checkout`}>
         <button
-          className="bg-black text-white font-bold py-2 px-4 rounded-full"
+          className="bg-danger border-0 text-white font-bold py-2 px-4 rounded-full"
           onClick={handleCheckout}
         >
           Checkout
