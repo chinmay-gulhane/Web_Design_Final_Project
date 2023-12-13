@@ -5,11 +5,7 @@ const Title: React.FC<{
   variant: TypographyProps["variant"];
   ratint?: string | undefined;
 }> = ({ title, variant }) => {
-  return (
-    <>
-      <Typography variant={variant}>{title}</Typography>
-    </>
-  );
+  return <Typography variant={variant}>{title}</Typography>;
 };
 
 export default Title;

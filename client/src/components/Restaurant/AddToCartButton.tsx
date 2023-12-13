@@ -4,12 +4,9 @@ import {
   addToCart,
   updateCartItemQuantity,
   removeItemFromCart,
-  clearCart,
-  attachUserToCart,
 } from "@/redux/reducers/cartSlice";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/redux/store";
-import { Modal, Tooltip } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 interface AddToCartButtonProps {
   foodItem: FoodItem;
   foodItemQuantity: number;
@@ -19,12 +16,9 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   foodItemQuantity,
 }) => {
   const buttonStateInitial = foodItemQuantity === 0 ? "add" : "quantity";
-  const [buttonState, setButtonState] = useState(buttonStateInitial); // 'add', 'quantity'
+  const [buttonState, setButtonState] = useState(buttonStateInitial);
   const [quantity, setQuantity] = useState(foodItemQuantity);
   const [shouldShowPopup, setShouldShowPopup] = useState(false);
-  // const user = useAppSelector((state) => state.auth.user);
-  // const cart = useAppSelector((state) => state.cart.cart);
-  // const cartUserId = useAppSelector((state) => state.cart.userId);
   const dispatch = useDispatch();
   const handleAddToCartButton = () => {
     if (buttonState === "add") {
@@ -35,14 +29,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       dispatch(addToCart({ foodItem: foodItem, quantity: 5 }));
       setButtonState("quantity");
     }
-    // } else {
-    //   // Handle adding to cart with the current quantity
-    //   setButtonState("add"); // Reset back to 'add' state after adding to the cart
-    // }
   };
   const handleIncreaseQuantity = () => {
-    // setQuantity(quantity + 1);
-    // dispatch(updateCartItemQuantity({ foodItemId: foodItem._id, quantity }));
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
       dispatch(
@@ -67,44 +55,27 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         return newQuantity;
       });
     } else {
-      // If quantity is 1, revert to 'add' state
       setShouldShowPopup(true);
-      // setButtonState("add");
-      // dispatch(removeItemFromCart(foodItem._id));
     }
   };
   const handlePopupClose = () => setShouldShowPopup(false);
   const handleRemoveFromCart = () => {
     setQuantity(0);
     dispatch(removeItemFromCart(foodItem._id));
-    // dispatch(updateCartAction({ userId: user?._id, cart: cart }));
     setShouldShowPopup(false);
     setButtonState("add");
   };
   return (
     <>
-      {/* <div> */}
-      {/* {buttonState === "quantity" && (
-        <button
-          // className="h-10 border-0 font-semibold rounded-start-circle bg-black text-white"
-          onClick={handleDecreaseQuantity}
-        >
-          -
-        </button>
-      )} */}
       <button
-        className={`flex p-2 text-center text-white bg-black rounded-2xl border-0 w-2/3 font-semibold ${
+        className={`flex p-2 text-center text-white bg-black rounded-2xl border-0 w-[8rem] font-semibold ${
           buttonState === "add" ? "justify-center" : "justify-between"
         }`}
-        // className={`h-10 px-4 text-center font-semibold border-0 bg-black text-white ${
-        //   buttonState === "add" ? "rounded-full w-75" : "border-0 w-50"
-        // }`}
         onClick={handleAddToCartButton}
       >
         {buttonState === "quantity" && (
           <button
             className="text-white bg-black  font-semibold border-0"
-            // className="h-10 border-0 font-semibold rounded-start-circle bg-black text-white"
             onClick={handleDecreaseQuantity}
           >
             -
@@ -114,22 +85,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         {buttonState === "quantity" && (
           <button
             className="text-white bg-black  font-semibold border-0"
-            // className="h-10 border-0 font-semibold rounded-end-circle bg-black text-white"
             onClick={handleIncreaseQuantity}
           >
             +
           </button>
         )}
       </button>
-      {/* {buttonState === "quantity" && (
-        <button
-          // className="h-10 border-0 font-semibold rounded-end-circle bg-black text-white"
-          onClick={handleIncreaseQuantity}
-        >
-          +
-        </button>
-      )} */}
-      {/* </div> */}
       <Modal
         className="p-5 rounded-3 mt-2"
         show={shouldShowPopup}

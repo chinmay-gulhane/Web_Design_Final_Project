@@ -9,8 +9,8 @@ import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Spinner/Spinner";
-import restaurant from "@/models/restaurant";
 import { useAppSelector } from "@/redux/store";
+import restaurant from "@/models/restaurant";
 
 const baseUrl = "http://localhost:8080/restaurant";
 const FoodList: React.FC = () => {
@@ -40,7 +40,6 @@ const FoodList: React.FC = () => {
       }
     };
 
-    // /dashboard?search=my-project
     fetchData();
   }, [restaurant?.foodItems]);
 
@@ -65,28 +64,23 @@ const FoodList: React.FC = () => {
               <div className="flex justify-content-between items-center py-2">
                 <Title title={restaurant.name + " "} variant={"h2"}></Title>
                 <div className="flex">
-                  <Image
-                    width={40}
-                    height={40}
-                    src="https://img.icons8.com/color/48/rating-circled.png"
-                    alt="rating-circled"
-                  />
-                  <Title title={restaurant?.rating.toString()} variant={"h4"} />
+                  <span className="border border-dark-subtle border-4 text-bg-danger rounded-full text-2xl p-2">
+                    {restaurant.rating}
+                  </span>
                 </div>
               </div>
             )}
             <div className="flex flex-col md:flex-row">
-              <div className="w-full md:w-1/5 border-r-2">
-                <Title title="Menu" variant={"h5"}></Title>
-              </div>
-              <div className="flex flex-wrap md:px-10 justify-start w-full md:w-4/5">
+              <div className="flex flex-wrap justify-content-between md:px-10 justify-start w-full">
                 {foodItems.map((foodItem) => (
-                  <FoodCard
-                    key={foodItem._id}
-                    foodItem={foodItem}
-                    foodQuantity={0}
-                    addButtonIsVisible={addButtonIsVisible}
-                  />
+                  <div key={foodItem._id} className="w-[24rem] flex-wrap">
+                    <FoodCard
+                      key={foodItem._id}
+                      foodItem={foodItem}
+                      foodQuantity={0}
+                      addButtonIsVisible={addButtonIsVisible}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
