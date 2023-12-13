@@ -73,7 +73,7 @@ const AdminHomePage = () => {
     <>
       <div className="main-div">
         {/* navbar */}
-        <div className="admin-side-nav">
+        <div className="admin-side-nav hidden sm:hidden md:block lg:block xl:block">
           <AdminSideNav
             onSelect={setSelectedComponent}
             sidebarData={AdminSidebarData}

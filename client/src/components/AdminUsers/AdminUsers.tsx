@@ -121,6 +121,8 @@ const AdminUsers: React.FC<AdminUsersProps> = () => {
             count={Math.ceil(filteredUsers.length / itemsPerPage)}
             page={page}
             onChange={handleChangePage}
+            showFirstButton
+            showLastButton
           />
         </Stack>
       </div>

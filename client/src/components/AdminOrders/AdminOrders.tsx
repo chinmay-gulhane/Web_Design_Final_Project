@@ -161,7 +161,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = () => {
                     <TableCell>{order.customerPhoneNumber}</TableCell>
                     <TableCell>{order.status}</TableCell>
                     <TableCell>{order.restaurantName}</TableCell>
-                    <TableCell>{order.finalAmount}</TableCell>
+                    <TableCell>{order.finalAmount} $</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -174,6 +174,8 @@ const AdminOrders: React.FC<AdminOrdersProps> = () => {
               count={Math.ceil(filteredOrders.length / itemsPerPage)}
               page={page}
               onChange={handleChangePage}
+              showFirstButton
+              showLastButton
             />
           </Stack>
         </div>
