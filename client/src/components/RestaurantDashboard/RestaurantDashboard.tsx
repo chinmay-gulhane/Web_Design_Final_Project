@@ -6,7 +6,13 @@ import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useAppSelector } from "@/redux/store";
 
-const RestaurantDashboard = ({ totalFoodItems, totalOrders , totalRevenue}) => {
+type RestaurantDashboardProps = {
+  totalFoodItems: number,
+  totalOrders: number,
+  totalRevenue: number
+}
+
+const RestaurantDashboard: React.FC<RestaurantDashboardProps>= ({ totalFoodItems, totalOrders , totalRevenue}) => {
 
   const user = useAppSelector(state => state.auth.user);
 
@@ -25,16 +31,6 @@ const RestaurantDashboard = ({ totalFoodItems, totalOrders , totalRevenue}) => {
           </div>
           <div>
             <ShoppingCartIcon sx={{ fontSize: 80 }} />
-          </div>
-        </div>
-
-        <div className="card pink">
-          <div>
-            <h2>2050</h2>
-            <h4>Total Users</h4>
-          </div>
-          <div>
-            <PersonIcon sx={{ fontSize: 80 }} />
           </div>
         </div>
 

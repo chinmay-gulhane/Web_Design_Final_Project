@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Row, Col, Spinner } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+// import Spinner from "@/components/Spinner/Spinner";
 import "./restaurant.scss";
 import * as restaurantService from "@/services/restaurant-service";
 import Restaurant from "@/models/restaurant";
@@ -8,7 +9,7 @@ import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
 import Link from "next/link";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { User } from "@/models/auth";
-import { InputBase, Paper, IconButton } from "@mui/material";
+import { InputBase, Paper, IconButton, CircularProgress, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { getRestaurants } from "@/redux/actions/restaurant-actions";
@@ -19,9 +20,7 @@ const RestaurantPage: React.FC = () => {
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState<Error | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>(
-    []
-  );
+  const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
 
   const user: User | null = useAppSelector((state) => state.auth.user);
 
@@ -76,7 +75,7 @@ const RestaurantPage: React.FC = () => {
         </div>
 
         {/* Display Filtered Restaurants */}
-        <Row>
+        <Row className="restaurant_container">
           {filteredRestaurants.map((restaurant: Restaurant) => (
             <Col key={restaurant._id} sm={12} md={6} lg={4} xl={3}>
               <Link href={`/restaurants/${restaurant._id}`}>
@@ -84,9 +83,18 @@ const RestaurantPage: React.FC = () => {
               </Link>
             </Col>
           ))}
+          {loading && (
+            <div>
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                <CircularProgress />
+              </Box>
+            </div>
+          )}
           {!filteredRestaurants.length && !loading && (
-            <div className="flex justify-center">
-              <p className="text-2xl">Oops...! No Restaurants found</p>
+            <div>
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                <p className="text-2xl">Oops...! No Restaurants found</p>
+              </Box>
             </div>
           )}
         </Row>

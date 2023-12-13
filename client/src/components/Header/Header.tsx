@@ -206,8 +206,11 @@ export default function PrimarySearchAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ marginRight: "20px" }}>
-            {user?.role.includes("RESTAURANT") && <Typography sx={{ fontWeight: "bold" }}>RESTAURANT</Typography>}
-            {user?.role.includes("ADMIN") && <Typography sx={{ fontWeight: "bold" }}>ADMIN</Typography>}
+            <Typography sx={{ fontWeight: "bold" }}>
+              {user?.role === "USER" && user?.firstName.toLocaleUpperCase()}
+              {user?.role === "RESTAURANT" && "RESTAURANT"}
+              {user?.role === "ADMIN" && "ADMIN"}
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -255,10 +258,13 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      <ProfileModal open={openProfileModal} onClose={() => {
-        setOpenProfileModal(false)
-        return null
-      }} />
+      <ProfileModal
+        open={openProfileModal}
+        onClose={() => {
+          setOpenProfileModal(false);
+          return null;
+        }}
+      />
       {renderMobileMenu}
       {renderMenu}
     </Box>

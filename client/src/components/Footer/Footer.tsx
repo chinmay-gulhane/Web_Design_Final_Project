@@ -46,7 +46,7 @@ export default function Footer() {
               </p>
               <div className="copyright">
                 <p>
-                  Copyright <CopyrightIcon className="copy-logo" /> 2023 - 2016
+                  Copyright <CopyrightIcon sx={{ fontSize: "large"}}/> 2023 - 2016
                   HuskyBites
                 </p>
                 {/* <p>Shree</p> */}
