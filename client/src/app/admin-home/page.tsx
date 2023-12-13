@@ -9,40 +9,46 @@ import AdminRestaurants from "@/components/AdminRestaurants/AdminRestaurants";
 import { Order } from "@/models/order";
 import * as orderService from "@/services/order-service";
 import * as restaurantService from "@/services/restaurant-service";
-import Restaurant from "@/models/restaurant";
-import { User } from "@/models/auth";
 import AdminSidebarData from "@/components/AdminSideNav/AdminSidebarData";
+import { useDispatch } from "react-redux";
+import { adminActions } from "@/redux/reducers/adminSlice";
+import { useAppSelector } from "@/redux/store";
+import Spinner from "@/components/Spinner/Spinner";
 
 const AdminHomePage = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");
-  const [restaurantsData, setRestaurantsData] = useState<Restaurant[]>([]);
-  const [usersData, setUsersData] = useState<User[]>([]);
-  const [ordersData, setOrdersData] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const dispatch = useDispatch();
+  const adminState = useAppSelector((state) => state.auth.loading);
+
+  // to be removed
+  const [ordersData, setOrdersData] = useState<Order[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // get all orders
-        const data = await orderService.getAllOrders();
-        setOrdersData(data);
+        const ordersData = await orderService.getAllOrders();
 
         // get all restaurants
         const restaurantData = await restaurantService.getRestaurants();
-        setRestaurantsData(restaurantData);
 
         // get all users
         const userData = await orderService.getAllUsers();
-        setUsersData(userData);
+        setOrdersData(ordersData);
+
+        dispatch(
+          adminActions.adminAction({ ordersData, restaurantData, userData })
+        );
+        setLoading(false);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
         } else {
           setError(new Error("An unknown error occurred"));
         }
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -54,9 +60,9 @@ const AdminHomePage = () => {
       case "Home":
         return <AdminDashboard />;
       case "Users":
-        return <AdminUsers usersData={usersData} />;
+        return <AdminUsers />;
       case "Restaurants":
-        return <AdminRestaurants restaurantsData={restaurantsData} />;
+        return <AdminRestaurants />;
       case "Orders":
         return <AdminOrders ordersData={ordersData} />;
       default:
@@ -75,7 +81,10 @@ const AdminHomePage = () => {
           ></AdminSideNav>
         </div>
         {/* components */}
-        <div className="admin-main-content">{renderSelectedComponent()}</div>
+        <>
+          <div className="admin-main-content">{renderSelectedComponent()}</div>
+          {loading && <Spinner />}
+        </>
       </div>
     </>
   );

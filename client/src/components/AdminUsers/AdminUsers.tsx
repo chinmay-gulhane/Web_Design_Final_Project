@@ -15,19 +15,21 @@ import {
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useAppSelector } from "@/redux/store";
 
 interface AdminUsersProps {
-  usersData: User[];
+  // usersData: User[];
 }
 
-const AdminUsers: React.FC<AdminUsersProps> = ({ usersData }) => {
+const AdminUsers: React.FC<AdminUsersProps> = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const itemsPerPage = 10;
+  const userState = useAppSelector((state) => state.admin.users);
 
   // Filter users based on search query
-  const filteredUsers = usersData.filter((user) => {
+  const filteredUsers = userState.filter((user) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (
       user._id?.toLowerCase().includes(lowerCaseSearchQuery) ||
