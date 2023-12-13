@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,10 +23,13 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { authActions } from "@/redux/reducers/authSlice";
 import { attachUserToCart, clearCart } from "@/redux/reducers/cartSlice";
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const [openProfileModal, setOpenProfileModal] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -95,6 +98,11 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
+  const setProfilePhoto = () => {
+    setOpenProfileModal(true);
+    handleMenuClose();
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -113,6 +121,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       {user?.role.includes("USER") && <MenuItem onClick={navigateToOrdersPage}>My Orders</MenuItem>}
+      {user?.role.includes("RESTAURANT") && <MenuItem onClick={setProfilePhoto}>Set Profile Photo</MenuItem>}
       <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
     </Menu>
   );
@@ -196,9 +205,9 @@ export default function PrimarySearchAppBar() {
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ marginRight: "20px"}}>
-            {user?.role.includes("RESTAURANT") && <Typography sx={{fontWeight: 'bold'}}>RESTAURANT</Typography>}
-            {user?.role.includes("ADMIN") && <Typography sx={{fontWeight: 'bold'}}>ADMIN</Typography>}
+          <Box sx={{ marginRight: "20px" }}>
+            {user?.role.includes("RESTAURANT") && <Typography sx={{ fontWeight: "bold" }}>RESTAURANT</Typography>}
+            {user?.role.includes("ADMIN") && <Typography sx={{ fontWeight: "bold" }}>ADMIN</Typography>}
           </Box>
           <Box
             sx={{
@@ -246,6 +255,10 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
+      <ProfileModal open={openProfileModal} onClose={() => {
+        setOpenProfileModal(false)
+        return null
+      }} />
       {renderMobileMenu}
       {renderMenu}
     </Box>
