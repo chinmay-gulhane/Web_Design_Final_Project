@@ -90,7 +90,7 @@ export default function PrimarySearchAppBar() {
   const handleSignOut = () => {
     let token = localStorage.getItem("token");
     if (token) {
-      localStorage.removeItem("token");
+      localStorage.clear();
     }
     dispatch(authActions.logout());
     router.replace("/login");

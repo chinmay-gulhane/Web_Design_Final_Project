@@ -15,18 +15,19 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   foodItem,
   foodItemQuantity,
 }) => {
+
   const buttonStateInitial = foodItemQuantity === 0 ? "add" : "quantity";
   const [buttonState, setButtonState] = useState(buttonStateInitial);
   const [quantity, setQuantity] = useState(foodItemQuantity);
   const [shouldShowPopup, setShouldShowPopup] = useState(false);
   const dispatch = useDispatch();
+
   const handleAddToCartButton = () => {
     if (buttonState === "add") {
       setQuantity((prevQuantity) => {
-        const newQuantity = prevQuantity + 1;
-        return newQuantity;
+        return prevQuantity + 1;
       });
-      dispatch(addToCart({ foodItem: foodItem, quantity: 5 }));
+      dispatch(addToCart({ foodItem: foodItem, quantity: 1 }));
       setButtonState("quantity");
     }
   };
