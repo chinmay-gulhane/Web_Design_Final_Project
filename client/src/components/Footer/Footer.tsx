@@ -30,6 +30,7 @@ export default function Footer() {
             {/* <div className="Logo"> */}
             <Image
               src={logo}
+              priority={true}
               width={150}
               height={150}
               alt="husky"

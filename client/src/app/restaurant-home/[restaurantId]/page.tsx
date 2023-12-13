@@ -6,7 +6,6 @@ import { RestaurantSidebarData } from "../../../components/AdminSideNav/Restaura
 import RestaurantDashboard from "@/components/RestaurantDashboard/RestaurantDashboard";
 import RestaurantOrders from "@/components/RestaurantOrders/RestaurantOrders";
 import RestaurantMenu from "@/components/RestautantMenu/RestaurantMenu";
-import Restaurant from "@/models/restaurant";
 import * as restaurantService from "@/services/restaurant-service";
 import * as foodItemService from "@/services/fooditem-service";
 import * as orderService from "@/services/order-service";
