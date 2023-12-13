@@ -9,7 +9,7 @@ interface RestaurantsState {
 }
 
 const initialState: RestaurantsState = {
-  loading: false,
+  loading: true,
   restaurants: [],
   error: null,
 };

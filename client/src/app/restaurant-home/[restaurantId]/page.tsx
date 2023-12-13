@@ -14,6 +14,7 @@ import { Order } from "@/models/order";
 import { useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { restaurantActions } from "@/redux/reducers/restaurantHomeSlice";
+import Spinner from "@/components/Spinner/Spinner";
 
 interface PageProps {
   params: {
@@ -29,7 +30,7 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const dispatch = useDispatch();
-  const restaurantHomeState = useAppSelector((state) => state.auth.loading);
+  const restaurantHomeState = useAppSelector((state) => state.restaurantHome);
   const restaurantId = params.restaurantId;
 
   useEffect(() => {
@@ -46,7 +47,8 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
         // setRestaurant(data);
         setOrdersData(allOrdersData);
         setFoodItems(foodData);
-        dispatch(restaurantActions.adminAction({ foodData, allOrdersData }));
+        dispatch(restaurantActions.restaurant({ foodData, allOrdersData }));
+        setLoading(false);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err);
@@ -62,7 +64,7 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
   }, []);
 
   const calculateRevenue = () => {
-    return ordersData.reduce((acc, currentValue) => {
+    return restaurantHomeState.orders.reduce((acc, currentValue) => {
       return acc + currentValue.finalAmount;
     }, 0);
   };
@@ -72,8 +74,8 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
       case "Home":
         return (
           <RestaurantDashboard
-            totalOrders={ordersData.length}
-            totalFoodItems={menuItems.length}
+            totalOrders={restaurantHomeState.orders.length}
+            totalFoodItems={restaurantHomeState.menu.length}
             totalRevenue={calculateRevenue()}
           />
         );
@@ -105,6 +107,7 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
         </div>
         {/* components */}
         <div className="admin-main-content">{renderSelectedComponent()}</div>
+        {loading && <Spinner />}
       </div>
     </>
   );
