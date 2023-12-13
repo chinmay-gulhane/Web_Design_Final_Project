@@ -3,6 +3,7 @@ import authSlice from "./reducers/authSlice";
 import cartReducer from "./reducers/cartSlice";
 import orderReducer from "./reducers/orderSlice";
 import restaurantReducer from "./reducers/restaurantSlice";
+import adminReducer from "./reducers/adminSlice";
 import thunk from "redux-thunk";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
@@ -12,6 +13,7 @@ const store = configureStore({
     cart: cartReducer,
     order: orderReducer,
     restaurant: restaurantReducer,
+    admin: adminReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

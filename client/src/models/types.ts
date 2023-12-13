@@ -1,5 +1,7 @@
+import Restaurant from "@/models/restaurant";
 import React, { ReactNode } from "react";
 import { User } from "./auth";
+import { Order } from "./order";
 
 interface SidebarDataItem {
   title: string;
@@ -13,4 +15,12 @@ export interface UserResponse {
   success: boolean;
   message: string;
   users: User[];
+}
+
+export interface AdminState {
+  loading: boolean;
+  error: null | string;
+  users: User[];
+  orders: Order[];
+  restaurants: Restaurant[];
 }
