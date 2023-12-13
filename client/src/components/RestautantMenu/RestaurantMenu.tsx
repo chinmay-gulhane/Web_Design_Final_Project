@@ -313,10 +313,20 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
+          <Button
+            onClick={handleDeleteCancel}
+            color="inherit"
+            variant="outlined"
+            className="modal-cancel-btn"
+          >
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} color="secondary">
+          <Button
+            onClick={handleDeleteConfirm}
+            color="secondary"
+            variant="contained"
+            className="modal-delete-btn"
+          >
             Delete
           </Button>
         </DialogActions>
