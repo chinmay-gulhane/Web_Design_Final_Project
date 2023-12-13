@@ -17,6 +17,9 @@ const FoodList: React.FC = () => {
   const restaurant: Restaurant | undefined = useAppSelector((state) =>
     state.restaurant.restaurants.find((r) => r._id === params.restaurant)
   );
+
+  const userCart = useAppSelector(state => state.cart.cart);
+
   const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector((state) => state.auth.user);
 
@@ -39,6 +42,17 @@ const FoodList: React.FC = () => {
 
     fetchData();
   }, [restaurant?.foodItems]);
+
+  const getCartQuantity = (id: any) => {
+
+    for(let i = 0; i < userCart.length ; i++){
+      if(id === userCart[i].foodItem._id){
+        return userCart[i].quantity
+      }
+    }
+
+    return 0;
+  }
 
   return (
     <div className="flex justify-center w-full">
@@ -74,7 +88,7 @@ const FoodList: React.FC = () => {
                     <FoodCard
                       key={foodItem._id}
                       foodItem={foodItem}
-                      foodQuantity={0}
+                      foodQuantity={getCartQuantity(foodItem._id)}
                       addButtonIsVisible={addButtonIsVisible}
                     />
                   </div>

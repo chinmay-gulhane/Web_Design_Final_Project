@@ -17,8 +17,6 @@ export const loginAction = createAsyncThunk(
       toast.success(data.message, {
         autoClose: 900,
       });
-      // window.location.replace("/restaurants");
-      console.log("data", data);
       return data;
     } catch (error: any) {
       toast.error(error.response.data.error, {
@@ -42,7 +40,6 @@ export const registerAction = createAsyncThunk(
             autoClose: 900,
           });
         }
-        // window.location.replace("/login");
       }
       return data;
     } catch (error: any) {
