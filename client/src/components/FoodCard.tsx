@@ -18,7 +18,7 @@ const FoodCard: React.FC<{
       {/* food item image */}
       <div className="flex w-full justify-center">
         <CardMedia
-          sx={{ height: 120, width: 300 }}
+          sx={{ height: 200, width: 300 }}
           className="rounded-md mx-3 transform transition-transform hover:scale-110"
           image={
             typeof foodItem?.image === "string"
@@ -50,7 +50,11 @@ const FoodCard: React.FC<{
           </div>
           {/* restaurant price */}
           <div className="flex w-full justify-between ">
-            <Typography variant="body2" color="text.secondary" className="">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              className="food-price"
+            >
               ${foodItem.price.toFixed(2)}
             </Typography>
           </div>

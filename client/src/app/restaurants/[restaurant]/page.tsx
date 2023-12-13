@@ -59,7 +59,8 @@ const FoodList: React.FC = () => {
           <div className="flex flex-col w-full lg:p-10">
             {restaurant?.name && (
               <div className="flex justify-content-between items-center py-2">
-                <Title title={restaurant.name + " "} variant={"h2"}></Title>
+                <div className="restaurant-name-header">{restaurant.name}</div>
+                {/* <Title title={restaurant.name + " "} variant={"h2"}></Title> */}
                 <div className="flex">
                   <span className="border border-dark-subtle border-4 text-bg-danger rounded-full text-2xl p-2">
                     {restaurant.rating}
