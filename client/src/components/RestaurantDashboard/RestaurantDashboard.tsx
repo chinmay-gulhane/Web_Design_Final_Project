@@ -4,19 +4,16 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { useAppSelector } from "@/redux/store";
 
 const RestaurantDashboard = ({ totalFoodItems, totalOrders , totalRevenue}) => {
-  const styles = {
-    largeIcon: {
-      width: 60,
-      height: 60,
-    },
-  };
+
+  const user = useAppSelector(state => state.auth.user);
 
   return (
     <div className="flex flex-col">
       <div className="text-3xl my-2">
-        <span className="font-bold">Hi Admin 👋, </span>&nbsp;
+        <span className="font-bold">Hi {user?.name} 👋, </span>&nbsp;
         <span className="text-xl mt-2">Welcome to Husky Bites</span>
       </div>
 
