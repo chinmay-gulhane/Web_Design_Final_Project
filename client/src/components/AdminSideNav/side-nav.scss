@@ -43,10 +43,8 @@ a {
     align-items: center;
 }
 .side-bar-list .row.active {
-    // color: rgb(38, 58, 58);
     color: white;
-    background-color: #ff4500;
+    // background-color: #ff4500;
+    background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(216, 27, 37) 98.4%);
     font-weight: bold;
-    // height: 2rem;
-    // Add other styles if needed
   }

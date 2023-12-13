@@ -22,6 +22,8 @@ import {
   ListItemText,
   InputBase,
   IconButton,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { toast } from "react-toastify";
@@ -39,6 +41,9 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const itemsPerPage = 10;
 
   // Sort orders by latest createdDateTime
   useEffect(() => {
@@ -112,6 +117,25 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
     );
   });
 
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedOrders = filteredOrders.slice(startIndex, endIndex);
+
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const newSize = event.target.value as number;
+    setPageSize(newSize);
+    setPage(1);
+  };
+
   return (
     <div>
       <div className="restaurant-header-div">
@@ -152,23 +176,31 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                   Final Amount
                 </TableCell>
                 <TableCell className="table-header" align="center">
-                  Status
+                  Order Items
                 </TableCell>
                 <TableCell className="table-header" align="center">
-                  Order Items
+                  Status
                 </TableCell>
                 <TableCell className="table-header" align="center">
                   Actions
                 </TableCell>
-                {/* <TableCell className="table-header">Created DateTime</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredOrders.map((order) => (
+              {displayedOrders.map((order) => (
                 <TableRow key={order._id}>
                   <TableCell>{order._id}</TableCell>
                   <TableCell>{order.customerName}</TableCell>
-                  <TableCell align="center">{order.finalAmount}</TableCell>
+                  <TableCell align="center">{order.finalAmount} $</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleViewOrderItems(order)}
+                    >
+                      View
+                    </Button>
+                  </TableCell>
                   <TableCell>
                     <Select
                       className="status-dropdown"
@@ -186,15 +218,6 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => handleViewOrderItems(order)}
-                    >
-                      View
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      color="primary"
                       onClick={() =>
                         handleUpdateStatus(order._id ? order._id : "")
                       }
@@ -202,17 +225,12 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                       Update Status
                     </Button>
                   </TableCell>
-                  {/* <TableCell>
-                    {order.createdDateTime &&
-                      new Date(order.createdDateTime).toLocaleString()}
-                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
-      {/* Modal for Order Items */}
       <Modal open={isModalOpen} onClose={handleCloseModal} closeAfterTransition>
         <Fade in={isModalOpen}>
           <div className="order-modal-content">
@@ -253,6 +271,17 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
           </div>
         </Fade>
       </Modal>
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(filteredOrders.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            showFirstButton
+            showLastButton
+          />
+        </Stack>
+      </div>
     </div>
   );
 };

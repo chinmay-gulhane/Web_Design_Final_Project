@@ -34,7 +34,12 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
       try {
         const data = await restaurantService.getRestaurantById(restaurantId);
         const foodData = await foodItemService.getFoodItems(restaurantId);
-        const ordersdata = await orderService.searchOrders(0, 50, undefined, restaurantId);
+        const ordersdata = await orderService.searchOrders(
+          0,
+          50,
+          undefined,
+          restaurantId
+        );
         // setRestaurant(data);
         setOrdersData(ordersdata);
         setFoodItems(foodData);
@@ -53,19 +58,32 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
   }, []);
 
   const calculateRevenue = () => {
-    return ordersData.reduce((acc, currentValue)=>{
+    return ordersData.reduce((acc, currentValue) => {
       return acc + currentValue.finalAmount;
-    },0);
-  }
+    }, 0);
+  };
 
   const renderSelectedComponent = () => {
     switch (selectedComponent) {
       case "Home":
-        return <RestaurantDashboard totalOrders={ordersData.length} totalFoodItems={menuItems.length} totalRevenue={calculateRevenue()}/>;
+        return (
+          <RestaurantDashboard
+            totalOrders={ordersData.length}
+            totalFoodItems={menuItems.length}
+            totalRevenue={calculateRevenue()}
+          />
+        );
       case "Menu":
-        return <RestaurantMenu menuItems={menuItems} restaurantId={restaurantId} />;
+        return (
+          <RestaurantMenu menuItems={menuItems} restaurantId={restaurantId} />
+        );
       case "Orders":
-        return <RestaurantOrders ordersData={ordersData} restaurantId={restaurantId} />;
+        return (
+          <RestaurantOrders
+            ordersData={ordersData}
+            restaurantId={restaurantId}
+          />
+        );
       default:
         return null;
     }
@@ -75,8 +93,11 @@ const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
     <>
       <div className="main-div">
         {/* navbar */}
-        <div className="admin-side-nav">
-          <AdminSideNav onSelect={setSelectedComponent} sidebarData={RestaurantSidebarData}></AdminSideNav>
+        <div className="admin-side-nav hidden sm:hidden md:block lg:block xl:block">
+          <AdminSideNav
+            onSelect={setSelectedComponent}
+            sidebarData={RestaurantSidebarData}
+          ></AdminSideNav>
         </div>
         {/* components */}
         <div className="admin-main-content">{renderSelectedComponent()}</div>
