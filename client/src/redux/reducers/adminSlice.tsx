@@ -19,7 +19,7 @@ const adminSlice = createSlice({
       state.users = action.payload.userData;
     },
     sortAction: (state, action) => {
-      state.orders = action.payload.ordersData;
+      state.orders = action.payload;
     },
   },
   extraReducers: (builder) => {},

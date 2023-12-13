@@ -24,15 +24,14 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { Order } from "@/models/order";
 import { toast } from "react-toastify";
+import { useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { adminActions } from "@/redux/reducers/adminSlice";
 
-interface AdminOrdersProps {
-  ordersData: Order[];
-}
+interface AdminOrdersProps {}
 
 // Main component
-const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
-  // State for orders, loading, error, search query, sorting, and pagination
-  const [orders, setOrders] = useState<Order[]>([...ordersData]);
+const AdminOrders: React.FC<AdminOrdersProps> = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -41,30 +40,12 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
   const [pageSize, setPageSize] = useState<number>(10);
   const availablePageSizes = [5, 10, 20];
   const itemsPerPage = 10;
-
-  // Fetch orders on component mount
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await orderService.getAllOrders();
-  //       setOrders(data);
-  //     } catch (err: unknown) {
-  //       if (err instanceof Error) {
-  //         setError(err);
-  //       } else {
-  //         setError(new Error("An unknown error occurred"));
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  const dispatch = useDispatch();
+  const orderState = useAppSelector((state) => state.admin.orders);
 
   // Sort orders by latest createdDateTime
   useEffect(() => {
-    const sortedOrders = [...ordersData].sort((a, b) => {
+    const sortedOrders = [...orderState].sort((a, b) => {
       const dateA = a.createdDateTime ? new Date(a.createdDateTime) : null;
       const dateB = b.createdDateTime ? new Date(b.createdDateTime) : null;
 
@@ -79,8 +60,11 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
       return 0;
     });
 
-    setOrders(sortedOrders);
-  }, [ordersData]);
+    // Dispatch a sort action without triggering an infinite loop
+    if (JSON.stringify(sortedOrders) !== JSON.stringify(orderState)) {
+      dispatch(adminActions.sortAction([...sortedOrders]));
+    }
+  }, [dispatch, orderState]);
 
   // Handle search form submission
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -88,7 +72,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = ({ ordersData }) => {
   };
 
   // Filter orders based on search query
-  const filteredOrders = orders.filter((order) => {
+  const filteredOrders = orderState.filter((order) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (
       order._id?.toLowerCase().includes(lowerCaseSearchQuery) ||

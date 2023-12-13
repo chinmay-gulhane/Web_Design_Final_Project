@@ -37,7 +37,6 @@ const AdminHomePage = () => {
 
         // get all users
         const userData = await orderService.getAllUsers();
-        setOrdersData(ordersData);
 
         dispatch(
           adminActions.adminAction({ ordersData, restaurantData, userData })
@@ -64,7 +63,7 @@ const AdminHomePage = () => {
       case "Restaurants":
         return <AdminRestaurants />;
       case "Orders":
-        return <AdminOrders ordersData={ordersData} />;
+        return <AdminOrders />;
       default:
         return null;
     }
