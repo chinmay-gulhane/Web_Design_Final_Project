@@ -68,7 +68,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   return (
     <>
       <button
-        className={`flex p-2 text-center text-white bg-black rounded-2xl border-0 w-[8rem] font-semibold ${
+        className={`flex p-2 text-center text-white bg-black rounded-2xl border-0 w-[10rem] font-semibold ${
           buttonState === "add" ? "justify-center" : "justify-between"
         }`}
         onClick={handleAddToCartButton}

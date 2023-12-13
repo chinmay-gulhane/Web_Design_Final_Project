@@ -5,12 +5,10 @@ import * as React from "react";
 import CoverImage from "@/components/CoverImage";
 import FoodItem from "@/models/foodItem";
 import Restaurant from "@/models/restaurant";
-import Image from "next/image";
 import Title from "../../../components/Title";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Spinner/Spinner";
 import { useAppSelector } from "@/redux/store";
-import restaurant from "@/models/restaurant";
 
 const baseUrl = "http://localhost:8080/restaurant";
 const FoodList: React.FC = () => {
@@ -25,7 +23,6 @@ const FoodList: React.FC = () => {
   const addButtonIsVisible = user ? true : false;
 
   useEffect(() => {
-    // Fetch data from your API
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -71,7 +68,7 @@ const FoodList: React.FC = () => {
               </div>
             )}
             <div className="flex flex-col md:flex-row">
-              <div className="flex flex-wrap justify-content-between md:px-10 justify-start w-full">
+              <div className="flex flex-wrap justify-content-between justify-start w-full">
                 {foodItems.map((foodItem) => (
                   <div key={foodItem._id} className="w-[24rem] flex-wrap">
                     <FoodCard

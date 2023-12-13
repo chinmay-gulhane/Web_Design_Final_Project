@@ -45,7 +45,9 @@ const CartComponent: React.FC = () => {
                   ))}
                 </div>
                 <div className="flex-lg-shrink-0">
-                  <OrderSummary />
+                  <div>
+                    <OrderSummary />
+                  </div>
                 </div>
               </div>
             </>

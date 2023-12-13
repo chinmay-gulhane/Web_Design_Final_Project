@@ -12,8 +12,6 @@ import { CardDetails, Order, PaymentDetails } from "@/models/order";
 import { useRouter } from "next/navigation";
 import { User } from "@/models/auth";
 import { RootState, useAppSelector } from "@/redux/store";
-import { toast } from "react-toastify";
-import FoodItem from "@/models/foodItem";
 import Restaurant from "@/models/restaurant";
 import OrderState from "@/models/orderSummary";
 import { useDispatch } from "react-redux";

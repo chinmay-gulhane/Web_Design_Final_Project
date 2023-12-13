@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Order } from "@/models/order";
-import OrderCard from "@/components/CustomerOrder/OrderCard"; // Adjust the path accordingly
+import OrderCard from "@/components/CustomerOrder/OrderCard";
 import { User } from "@/models/auth";
 import { useAppSelector } from "@/redux/store";
 import { Modal } from "react-bootstrap";
@@ -18,7 +18,6 @@ const OrderDetails: React.FC = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        // Replace with your API endpoint
         const response = await fetch(
           "http://localhost:8080/orders/search?page=1&pageSize=10&userId=" +
             userId
@@ -61,7 +60,6 @@ const OrderDetails: React.FC = () => {
       <Modal
         className="p-5 rounded-3 mt-2"
         show={shouldShowPopup}
-        // size="sm-3"
         onHide={handlePopupClose}
         backdrop={"static"}
       >
