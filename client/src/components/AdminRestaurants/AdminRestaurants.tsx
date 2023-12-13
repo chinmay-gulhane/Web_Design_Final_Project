@@ -15,22 +15,19 @@ import {
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useAppSelector } from "@/redux/store";
 
-interface AdminRestaurantsProps {
-  restaurantsData: Restaurant[];
-}
+interface AdminRestaurantsProps {}
 
-const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({
-  restaurantsData,
-}) => {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>(restaurantsData);
+const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const itemsPerPage = 10;
+  const restaurantState = useAppSelector((state) => state.admin.restaurants);
 
   // Filter restaurants based on search query
-  const filteredRestaurants = restaurants.filter((restaurant) => {
+  const filteredRestaurants = restaurantState.filter((restaurant) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (
       restaurant._id?.toLowerCase().includes(lowerCaseSearchQuery) ||
