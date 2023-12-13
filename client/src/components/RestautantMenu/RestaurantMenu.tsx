@@ -26,6 +26,8 @@ import FoodItem, { FoodItemPayload } from "@/models/foodItem";
 import * as foodItemService from "@/services/fooditem-service";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { restaurantActions } from "@/redux/reducers/restaurantHomeSlice";
 
 interface FoodItemsTableProps {
   menuItems: FoodItem[];
@@ -54,6 +56,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
+  const dispatch = useDispatch();
 
   const handleAdd = async () => {
     try {
@@ -72,6 +75,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
       );
 
       setFoodItems((prevItems) => [...prevItems, newFoodItem]);
+      dispatch(restaurantActions.addFood(newFoodItem));
       setOpenAddModal(false);
 
       setFormData({
@@ -136,7 +140,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     try {
       if (editFormData) {
         await foodItemService.deleteFoodItem(restaurantId, editFormData._id);
-
+        dispatch(restaurantActions.deleteFood(editFormData._id));
         setFoodItems((prevItems) =>
           prevItems.filter((item) => item._id !== editFormData._id)
         );
