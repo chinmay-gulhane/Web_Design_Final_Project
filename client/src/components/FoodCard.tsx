@@ -2,8 +2,6 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FoodItem from "@/models/foodItem";
 import Title from "./Title";
@@ -61,13 +59,13 @@ const FoodCard: React.FC<{
               ${foodItem.price.toFixed(2)}
             </Typography>
           </div>
-          <div className="my-2">
+          {/* <div className="my-2">
             <AddToCartButton
               foodItem={foodItem}
               foodItemQuantity={foodQuantity}
             />
-          </div>
-          {/* {addButtonIsVisible ? (
+          </div> */}
+          {addButtonIsVisible ? (
             // <div>
             <AddToCartButton
               foodItem={foodItem}
@@ -76,7 +74,7 @@ const FoodCard: React.FC<{
           ) : (
             // </div>
             <></>
-          )} */}
+          )}
         </div>
         {/* </div> */}
       </CardContent>

@@ -7,18 +7,13 @@ import {
   clearCart,
   attachUserToCart,
 } from "@/redux/reducers/cartSlice";
-import CartComponent from "../Cart/CartComponent";
 import { useDispatch } from "react-redux";
-import store, { useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 import { Modal, Tooltip } from "react-bootstrap";
-import { IconButton } from "@mui/material";
-import { updateCartAction } from "@/redux/actions/cart-actions";
-
 interface AddToCartButtonProps {
   foodItem: FoodItem;
   foodItemQuantity: number;
 }
-
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   foodItem,
   foodItemQuantity,
@@ -27,29 +22,27 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const [buttonState, setButtonState] = useState(buttonStateInitial); // 'add', 'quantity'
   const [quantity, setQuantity] = useState(foodItemQuantity);
   const [shouldShowPopup, setShouldShowPopup] = useState(false);
-  const user = useAppSelector((state) => state.auth.user);
-  const cart = useAppSelector((state) => state.cart.cart);
-  const cartUserId = useAppSelector((state) => state.cart.userId);
+  // const user = useAppSelector((state) => state.auth.user);
+  // const cart = useAppSelector((state) => state.cart.cart);
+  // const cartUserId = useAppSelector((state) => state.cart.userId);
   const dispatch = useDispatch();
-
   const handleAddToCartButton = () => {
     if (buttonState === "add") {
       setQuantity((prevQuantity) => {
         const newQuantity = prevQuantity + 1;
         return newQuantity;
       });
-      dispatch(addToCart({ foodItem: foodItem, quantity: 1 }));
+      dispatch(addToCart({ foodItem: foodItem, quantity: 5 }));
       setButtonState("quantity");
-    } else {
-      // Handle adding to cart with the current quantity
-      setButtonState("add"); // Reset back to 'add' state after adding to the cart
     }
+    // } else {
+    //   // Handle adding to cart with the current quantity
+    //   setButtonState("add"); // Reset back to 'add' state after adding to the cart
+    // }
   };
-
   const handleIncreaseQuantity = () => {
     // setQuantity(quantity + 1);
     // dispatch(updateCartItemQuantity({ foodItemId: foodItem._id, quantity }));
-
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
       dispatch(
@@ -61,7 +54,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       return newQuantity;
     });
   };
-
   const handleDecreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity((prevQuantity) => {
@@ -81,9 +73,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       // dispatch(removeItemFromCart(foodItem._id));
     }
   };
-
   const handlePopupClose = () => setShouldShowPopup(false);
-
   const handleRemoveFromCart = () => {
     setQuantity(0);
     dispatch(removeItemFromCart(foodItem._id));
@@ -91,7 +81,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     setShouldShowPopup(false);
     setButtonState("add");
   };
-
   return (
     <>
       {/* <div> */}
@@ -174,5 +163,4 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     </>
   );
 };
-
 export default AddToCartButton;
