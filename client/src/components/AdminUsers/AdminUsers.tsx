@@ -53,7 +53,7 @@ const AdminUsers: React.FC<AdminUsersProps> = () => {
     if (selectedUser) {
       try {
         // Call the delete service function and dispatch the action on success
-        // await userService.deleteUserById(selectedUser);
+        await userService.deleteUserById(selectedUser);
         toast.success("User deleted successfully!");
         dispatch(adminActions.deleteUser(selectedUser));
         setSelectedUser(null);
