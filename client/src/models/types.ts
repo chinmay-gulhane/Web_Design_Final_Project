@@ -1,7 +1,7 @@
 import Restaurant from "@/models/restaurant";
-import React, { ReactNode } from "react";
 import { User } from "./auth";
 import { Order } from "./order";
+import FoodItem from "./foodItem";
 
 interface SidebarDataItem {
   title: string;
@@ -23,4 +23,10 @@ export interface AdminState {
   users: User[];
   orders: Order[];
   restaurants: Restaurant[];
+}
+export interface RestaurantHomeState {
+  loading: boolean;
+  error: null | string;
+  menu: FoodItem[];
+  orders: Order[];
 }

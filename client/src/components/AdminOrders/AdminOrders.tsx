@@ -150,7 +150,9 @@ const AdminOrders: React.FC<AdminOrdersProps> = () => {
                   <TableCell className="table-header">
                     Restaurant Name
                   </TableCell>
-                  <TableCell className="table-header">Final Amount</TableCell>
+                  <TableCell className="table-header" align="center">
+                    Final Amount
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -161,7 +163,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = () => {
                     <TableCell>{order.customerPhoneNumber}</TableCell>
                     <TableCell>{order.status}</TableCell>
                     <TableCell>{order.restaurantName}</TableCell>
-                    <TableCell>{order.finalAmount} $</TableCell>
+                    <TableCell align="center">{order.finalAmount} $</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
