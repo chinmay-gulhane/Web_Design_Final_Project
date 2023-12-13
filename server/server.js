@@ -15,7 +15,7 @@ connectDB();
 const app = express();
 
 // Handles the responses in json format
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 // for cross origin issues i.e client and server running on different ports
 app.use(cors());

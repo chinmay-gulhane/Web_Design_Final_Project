@@ -6,6 +6,7 @@ import restaurantReducer from "./reducers/restaurantSlice";
 import adminReducer from "./reducers/adminSlice";
 import thunk from "redux-thunk";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import restaurantHomeSlice from "./reducers/restaurantHomeSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     order: orderReducer,
     restaurant: restaurantReducer,
     admin: adminReducer,
+    restaurantHome: restaurantHomeSlice,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

@@ -15,6 +15,8 @@ import {
   Paper,
   InputBase,
   IconButton,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -50,6 +52,8 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
   });
 
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   const handleAdd = async () => {
     try {
@@ -172,9 +176,24 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
     // You can add additional logic if needed
   };
 
-  const filteredFoodItems = foodItems.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    const newSize = event.target.value as number;
+    setPageSize(newSize);
+    setPage(1);
+  };
+
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedFoodItems = foodItems.slice(startIndex, endIndex);
 
   return (
     <div>
@@ -232,7 +251,7 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredFoodItems.map((item) => (
+              {paginatedFoodItems.map((item) => (
                 <TableRow key={item._id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>
@@ -302,6 +321,18 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
+
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(foodItems.length / pageSize)}
+            page={page}
+            onChange={handleChangePage}
+            showFirstButton
+            showLastButton
+          />
+        </Stack>
+      </div>
     </div>
   );
 };
