@@ -15,7 +15,7 @@ const Products: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
     <>
       {/* <h1>Restaurent card</h1> */}
       <Card
-        className="restaurant-card"
+        className="restaurant-card shadow-md hover:shadow-lg transition-transform hover:scale-110"
         style={{
           color: "black",
           backgroundColor: "white",
