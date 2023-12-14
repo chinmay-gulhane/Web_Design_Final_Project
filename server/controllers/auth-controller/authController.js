@@ -1,3 +1,5 @@
+// Importing libraries and models
+
 import validator from "validator";
 
 import User from "../../model/User.js";
@@ -8,40 +10,40 @@ import { sendEmail } from "../../services/emailService.js";
 import crypto from "crypto";
 import RestaurantModel from "../../model/Restaurant.js";
 
-
+// Controller for validating user regostration
 export const registerController = async (req, res) => {
   const { firstName, lastName, email, password, phone, profilePhoto, role } = req.body;
   try {
     if (!firstName) {
-      throw new Error("Please enter first name");
+      throw new Error("Please enter first name");   /* Validating first Name */
     }
     if (!lastName) {
-      throw new Error("Please enter last name");
+      throw new Error("Please enter last name");   /* Validating last Name */
     }
     if (!email) {
-      throw new Error("Please enter email");
+      throw new Error("Please enter email");  /* Validating email */
     }
     if (!password) {
-      throw new Error("Please enter password");
+      throw new Error("Please enter password");  /* Validating password */
     }
     if (!phone) {
-      throw new Error("Please enter phone no.");
+      throw new Error("Please enter phone no.");   /* Validating phone number */
     }
     if (!role) {
-      throw new Error("Role is required");
+      throw new Error("Role is required");    /* Validating role */
     }
 
     if (!validator.isEmail(email)) {
-      throw new Error("Please enter valid email");
+      throw new Error("Please enter valid email");   /* Validating email */
     }
 
-    const isExistingUser = await User.findOne({ email }).exec();
+    const isExistingUser = await User.findOne({ email }).exec();       /* Validating if user already exists */
     if (isExistingUser) {
       throw new Error("Email already exists");
     }
 
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    const isValidPassword = regex.test(password);
+    const isValidPassword = regex.test(password);          /* Validation for password*/
     if (!isValidPassword) {
       throw new Error(
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long"
@@ -49,7 +51,7 @@ export const registerController = async (req, res) => {
     }
 
     if (phone.length !== 10) {
-      throw new Error("Phone number should be 10 digits long");
+      throw new Error("Phone number should be 10 digits long");    /* Validation for phone number */
     }
 
     let user = new User(req.body);
@@ -57,19 +59,20 @@ export const registerController = async (req, res) => {
     user.password = await maskPassword(password);
     user = await user.save();
 
+    // Sending welcome email to new user
     let subject = `Welcome to Husky Bites!`;
     let text = `Hello ${user.firstName},  We are excited to have you aboard!`;
     let content = `<h4>Hello ${user.firstName}, </ph4> <div><h6>We are excited to have you aboard<h6></div> <br> <br> <h6>From <br> Husky Bites </h6>`;
     sendEmail(user.email, subject, text, content);
 
-    res.status(201).json({
+    res.status(201).json({       /**Sending success response */
       success: true,
       message: "User registered successfully",
       user,
     });
   } catch (error) {
     console.log("Error while registering user. ", error);
-    res.status(500).json({
+    res.status(500).json({       /* Handling errors*/
       success: false,
       message: "Failed to register user",
       error: error.message,
@@ -101,21 +104,21 @@ export const loginController = async (req, res) => {
       throw new Error("Password not matching");
     }
 
-    const token = generateAuthToken(isExistingUser._id);
+    const token = generateAuthToken(isExistingUser._id);    /* Generating auth token */
 
     if(isExistingUser.role === "RESTAURANT"){
       isExistingUser = await RestaurantModel.findOne({ email }).exec();
     }
 
     res.status(200).json({
-      success: true,
+      success: true,   /**Sending success response */
       message: `Login successful`,
       user: isExistingUser,
       token: token,
     });
   } catch (error) {
     console.log("Error while logging user ", error);
-    res.status(500).json({
+    res.status(500).json({   /* Handling errors*/
       success: false,
       message: "Failed to login user",
       error: error.message,
@@ -141,6 +144,7 @@ export const generateOtpController = async (req, res) => {
     isExistingUser.otp = otp;
     await isExistingUser.save();
 
+    // Sending email with OTP to reset password
     let subject = `Forgot Password!`;
     let text = `Hello ${isExistingUser.firstName},  Your otp to generate new password is ${otp}`;
     let content = `<h4>Hello ${isExistingUser.firstName}, </ph4> <div><h6>Please find your otp below to generate new password<h6></div> <br> <h2>${otp}</h2> <br> <h6>From <br> Husky Bites </h6>`;
@@ -160,6 +164,7 @@ export const generateOtpController = async (req, res) => {
   }
 };
 
+// Resetting password
 export const createNewPasswordController = async (req, res) => {
   const { otp, password, email } = req.body;
 
@@ -186,21 +191,21 @@ export const createNewPasswordController = async (req, res) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     const isValidPassword = regex.test(password);
     if (!isValidPassword) {
-      throw new Error(
+      throw new Error(        /* Validating password */
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long"
       );
     }
 
-    user.password = await maskPassword(password);
+    user.password = await maskPassword(password);   /* Masking password */
     user.otp = "";
     user = await user.save();
 
-    res.status(200).json({
+    res.status(200).json({    /**Sending success response */
       success: true,
       message: "Password updated successfully",
       user: user,
     });
-  } catch (error) {
+  } catch (error) {    /* Handling errors*/
     console.log("Error while creating new password", error);
     res.status(500).json({
       success: false,
@@ -213,7 +218,7 @@ export const createNewPasswordController = async (req, res) => {
 export const getCurrentUserController = (req, res) => {
   try {
     res.status(200).json({
-      success: true,
+      success: true,     /**Sending success response */
       message: "User authenticated successfully",
       user: req.user,
       token: req.token,
@@ -221,7 +226,7 @@ export const getCurrentUserController = (req, res) => {
   } catch (error) {
     console.log("Error while registering user. ", error);
     res.status(500).json({
-      success: false,
+      success: false,   /* Handling errors*/
       message: "Failed to authenticate user",
       error: error.message,
     });
