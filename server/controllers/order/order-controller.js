@@ -11,7 +11,7 @@ export const find = async (request, response) => {
     setErrorResponse(response, error);
   }
 };
-
+// Creating new order
 export const post = async (request, response) => {
   try {
     const newOrder = { ...request.body }; // to get actual json
@@ -21,7 +21,7 @@ export const post = async (request, response) => {
     setErrorResponse(response, error);
   }
 };
-
+// Searching order by ID
 export const get = async (request, response) => {
   try {
     const id = request.params.id;
