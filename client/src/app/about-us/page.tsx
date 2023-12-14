@@ -1,5 +1,7 @@
 import Logo from "./Logo.png";
 import Image from "next/image";
+
+// about us page
 const AboutUsPage = () => {
   return (
     <>

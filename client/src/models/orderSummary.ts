@@ -1,3 +1,5 @@
+
+// order summary model
 interface OrderState {
   customTip: string;
   orderTotal: number;

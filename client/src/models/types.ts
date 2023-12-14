@@ -3,6 +3,8 @@ import { User } from "./auth";
 import { Order } from "./order";
 import FoodItem from "./foodItem";
 
+
+//  common types
 interface SidebarDataItem {
   title: string;
   icon?: any;

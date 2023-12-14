@@ -4,6 +4,7 @@ import axiosInstance from "@/services/axios-service";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
+// restaurant actions for restaurantSlice
 export const getRestaurants = createAsyncThunk(
   "restaurant/getRestaurants",
   async () => {

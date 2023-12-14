@@ -19,6 +19,7 @@ const initialState: AuthState = {
   error: null,
 };
 
+// auth slice for updating auth state
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,

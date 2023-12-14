@@ -17,6 +17,7 @@ function getLocale(request: Request): string {
   return match(languages, locales, defaultLocale);
 }
 
+// middleware function for internationalization
 export function middleware(request: NextRequest) {
   if (
     request.nextUrl.pathname.includes("login") ||

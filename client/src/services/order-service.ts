@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios";
 const baseURL = "http://localhost:8080";
 const API_URL = "/orders";
 
+// order slice for order actions
 export const getAllOrders = async (): Promise<Order[]> => {
   try {
     const response: AxiosResponse<Order[]> = await axios.get(

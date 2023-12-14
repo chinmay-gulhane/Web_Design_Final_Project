@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 import { buttonStyle } from "@/components/AuthenticationForms/formStyles";
 import { useRouter } from "next/navigation";
 
+// individual orders page 
 const CheckoutPage: React.FC = () => {
   const router = useRouter();
   const navigateToHomePage = () => {

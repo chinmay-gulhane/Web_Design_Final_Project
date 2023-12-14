@@ -49,7 +49,7 @@ const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({
 
         <div className="card yellow">
           <div>
-            <h2>$ {totalRevenue}</h2>
+            <h2>$ {totalRevenue.toFixed(2)}</h2>
             <h4>Total Revenue</h4>
           </div>
           <div>

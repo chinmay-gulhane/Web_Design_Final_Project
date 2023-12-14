@@ -2,7 +2,7 @@ import { loginData, registerData, registerRestaurantData, updatePasswordPayLoadT
 import { loginAction, registerAction, registerRestaurantAction, generateOtpAction, updatePasswordAction } from "@/redux/actions/auth-actions";
 import store from "@/redux/store"
 
-
+// auth services for dispatching  actions
 export const loginService = (loginData : loginData) => {
     const dispatchedResult = store.dispatch(loginAction(loginData));
     return dispatchedResult;

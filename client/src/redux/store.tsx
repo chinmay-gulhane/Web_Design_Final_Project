@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import restaurantHomeSlice from "./reducers/restaurantHomeSlice";
 
+// app store with all slices
 const store = configureStore({
   reducer: {
     auth: authSlice,

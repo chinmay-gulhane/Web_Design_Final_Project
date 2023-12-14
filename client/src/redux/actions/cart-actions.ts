@@ -3,11 +3,7 @@ import { CartItem } from "@/models/foodItem";
 import axiosInstance from "@/services/axios-service";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// const userCartData = {
-//     userId: userId,
-//     cart: [CartItem]
-// }
-
+// cart action for redux store
 export const updateCartAction = createAsyncThunk(
   "cart/updateCart",
   async (cartData: { userId: String; cart: [CartItem] }) => {

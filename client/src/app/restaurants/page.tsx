@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { getRestaurants } from "@/redux/actions/restaurant-actions";
 import Footer from "@/components/Footer/Footer";
 
+// restaurant mainpage
 const RestaurantPage: React.FC = () => {
   // const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   // const [loading, setLoading] = useState(true);
