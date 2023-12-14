@@ -6,6 +6,8 @@ import { User } from "@/models/auth";
 import { useAppSelector } from "@/redux/store";
 import { Modal } from "react-bootstrap";
 
+
+// orders main page
 const OrderDetails: React.FC = () => {
   const [pastOrders, setPastOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(false);

@@ -11,6 +11,8 @@ import Spinner from "@/components/Spinner/Spinner";
 import { useAppSelector } from "@/redux/store";
 
 const baseUrl = "http://localhost:8080/restaurant";
+
+// restaurant fooditems page
 const FoodList: React.FC = () => {
   const params = useParams();
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
@@ -85,7 +87,7 @@ const FoodList: React.FC = () => {
             <div className="flex flex-col md:flex-row">
               <div className="flex flex-wrap justify-content-between justify-start w-full">
                 {foodItems.map((foodItem) => (
-                  <div key={foodItem._id} className="w-[24rem] flex-wrap">
+                  <div key={foodItem._id} className="w-[24rem] flex-wrap ">
                     <FoodCard
                       key={foodItem._id}
                       foodItem={foodItem}

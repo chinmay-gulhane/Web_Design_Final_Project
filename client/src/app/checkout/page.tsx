@@ -17,6 +17,8 @@ import OrderState from "@/models/orderSummary";
 import { useDispatch } from "react-redux";
 import { clearCart } from "@/redux/reducers/cartSlice";
 
+
+// checkout form
 const CenteredCard: React.FC = () => {
   const dispatch = useDispatch();
   const steps = ["Delivery address", "Payment details"];

@@ -14,6 +14,7 @@ const initialState: RestaurantsState = {
   error: null,
 };
 
+// restaurant slice for restaurant store
 const restaurantsSlice = createSlice({
   name: "restaurant",
   initialState,

@@ -1,3 +1,4 @@
+// models for fooditems
 interface FoodItem {
   _id: string;
   name: string;

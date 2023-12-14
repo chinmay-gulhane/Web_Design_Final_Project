@@ -5,6 +5,8 @@ import CustomForm from "@/components/CustomForm";
 import { useAppSelector } from "@/redux/store";
 import Spinner from "@/components/Spinner/Spinner";
 
+
+// all users login page
 const Login = ({ params }: { params: { lang: string } }) => {
 
   const loading = useAppSelector((state) => state.auth.loading);

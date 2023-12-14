@@ -1,6 +1,7 @@
 import Address from "./address";
 import FoodItem from "./foodItem";
 
+// types for restaurant
 interface Restaurant {
   _id: string;
   name: string;

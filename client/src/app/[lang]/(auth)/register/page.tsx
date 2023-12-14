@@ -6,6 +6,7 @@ import { useAppSelector } from "@/redux/store";
 import Spinner from "@/components/Spinner/Spinner";
 
 
+// user registration page
 const Register = ({ params }: { params: { lang: string } }) => {
 
   const loading = useAppSelector((state) => state.auth.loading);

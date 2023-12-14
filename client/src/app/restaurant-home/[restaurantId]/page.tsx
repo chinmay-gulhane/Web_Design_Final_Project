@@ -22,6 +22,7 @@ interface PageProps {
   };
 }
 
+// restaurant home page
 const RestaurantHomePage: React.FC<PageProps> = ({ params }) => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");
   // const [restaurant, setRestaurant] = useState<Restaurant>();

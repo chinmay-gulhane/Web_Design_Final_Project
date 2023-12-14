@@ -37,13 +37,16 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
     null
   );
   const itemsPerPage = 10;
+  // Redux state and dispatch
   const restaurantState = useAppSelector((state) => state.admin.restaurants);
   const dispatch = useDispatch();
 
+  // Function to close the delete confirmation modal
   const handleCloseModal = () => {
     setSelectedRestaurant(null);
   };
 
+  // Function to handle the restaurant deletion confirmation
   const handleDeleteConfirm = async () => {
     if (selectedRestaurant) {
       // Dispatch the deleteRestaurant action with the selected restaurant ID
@@ -55,11 +58,11 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
         setSelectedRestaurant(null);
       } catch (error) {
         toast.error("Error deleting restaurant");
-        console.error("Error deleting restaurant:", error);
       }
     }
   };
 
+  // Filtered restaurant list based on search query
   const filteredRestaurants = restaurantState.filter((restaurant) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (
@@ -69,6 +72,7 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
     );
   });
 
+  // Pagination logic
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedRestaurants = filteredRestaurants.slice(startIndex, endIndex);
@@ -88,6 +92,7 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
     setPage(1);
   };
 
+  // Function to handle the click on the delete button for a restaurant
   const handleDeleteClick = (restaurantId: string) => {
     setSelectedRestaurant(restaurantId);
   };

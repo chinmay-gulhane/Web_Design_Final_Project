@@ -4,6 +4,8 @@ import Image from "next/image";
 import LogoImage from "../../public/images/logo.jpg";
 import { Typography } from "@mui/material";
 
+
+// home page which renders on default route
 export default function Home() {
   return (
     <>
