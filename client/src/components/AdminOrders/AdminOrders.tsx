@@ -163,7 +163,7 @@ const AdminOrders: React.FC<AdminOrdersProps> = () => {
                     <TableCell>{order.customerPhoneNumber}</TableCell>
                     <TableCell>{order.status}</TableCell>
                     <TableCell>{order.restaurantName}</TableCell>
-                    <TableCell align="center">{order.finalAmount} $</TableCell>
+                    <TableCell align="center">$ {order.finalAmount}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

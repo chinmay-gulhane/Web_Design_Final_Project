@@ -191,7 +191,7 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
                 <TableRow key={order._id}>
                   <TableCell>{order._id}</TableCell>
                   <TableCell>{order.customerName}</TableCell>
-                  <TableCell align="center">{order.finalAmount} $</TableCell>
+                  <TableCell align="center">$ {order.finalAmount}</TableCell>
                   <TableCell align="center">
                     <Button
                       variant="contained"

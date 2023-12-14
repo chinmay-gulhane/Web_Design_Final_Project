@@ -7,14 +7,17 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useAppSelector } from "@/redux/store";
 
 type RestaurantDashboardProps = {
-  totalFoodItems: number,
-  totalOrders: number,
-  totalRevenue: number
-}
+  totalFoodItems: number;
+  totalOrders: number;
+  totalRevenue: number;
+};
 
-const RestaurantDashboard: React.FC<RestaurantDashboardProps>= ({ totalFoodItems, totalOrders , totalRevenue}) => {
-
-  const user = useAppSelector(state => state.auth.user);
+const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({
+  totalFoodItems,
+  totalOrders,
+  totalRevenue,
+}) => {
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <div className="flex flex-col">
@@ -46,7 +49,7 @@ const RestaurantDashboard: React.FC<RestaurantDashboardProps>= ({ totalFoodItems
 
         <div className="card yellow">
           <div>
-            <h2>{totalRevenue}</h2>
+            <h2>$ {totalRevenue}</h2>
             <h4>Total Revenue</h4>
           </div>
           <div>
