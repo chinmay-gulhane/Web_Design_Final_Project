@@ -34,11 +34,11 @@ HuskyBites is a meal delivery site that allows customers to place orders from ne
 
 # Presentation
 
-![Presentation](/docs/Slide/INFO6150_HuskyBites.pptx)
+![Presentation](/Slide/INFO6150_HuskyBites.pptx)
 
 # Video
 
-![Video](/docs/Video/INFO6150_HuskyBites.mp4)
+![Video](/Video/INFO6150_HuskyBites.mp4)
 
 # Techstack
 
@@ -60,3 +60,10 @@ HuskyBites is a meal delivery site that allows customers to place orders from ne
 
 ```bash
 npm start
+```
+
+# How to run client
+
+```bash
+npm run dev
+```
