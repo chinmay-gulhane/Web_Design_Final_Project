@@ -48,11 +48,28 @@ const RestaurantOrders: React.FC<RestaurantOrdersProps> = ({
   // Sort orders by latest createdDateTime
   useEffect(() => {
     const sortedOrders = [...ordersData].sort((a, b) => {
+      // Map status to a numerical priority
+      const statusPriority = {
+        Placed: 1,
+        Cooking: 2,
+        Delivered: 3,
+      } as Record<string, number>;
+
+      // Get the priority for each order status
+      const priorityA = statusPriority[a.status] || 0;
+      const priorityB = statusPriority[b.status] || 0;
+
+      // If priorities are different, sort by status priority
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB;
+      }
+
+      // If priorities are the same, sort by creation date
       const dateA = a.createdDateTime ? new Date(a.createdDateTime) : null;
       const dateB = b.createdDateTime ? new Date(b.createdDateTime) : null;
 
       if (dateA && dateB) {
-        return (dateA as any) - (dateB as any); // Explicitly cast to 'any'
+        return (dateA as any) - (dateB as any);
       } else if (dateA) {
         return -1; // a comes first
       } else if (dateB) {
