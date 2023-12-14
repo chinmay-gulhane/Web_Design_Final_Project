@@ -10,6 +10,9 @@ HuskyBites is a meal delivery site that allows customers to place orders from ne
 
 - [Project Object Model](#project-object-model)
 - [OpenAPI spec 3.1](#openapi-spec-31-documentation)
+- [Presentation](#presentation)
+- [Video](#video)
+- [Techstack](#techstack)
 
 # Project Object Model
 
@@ -28,6 +31,29 @@ HuskyBites is a meal delivery site that allows customers to place orders from ne
 
 ### Delivery Executive
 [Delivery Executive OpenAPI Spec](/docs/openapi%20spec/delivery/openapi-delivery-executive.yml)
+
+# Presentation
+
+![Presentation](/docs/Slide/INFO6150_HuskyBites.pptx)
+
+# Video
+
+![Video](/docs/Video/INFO6150_HuskyBites.mp4)
+
+# Techstack
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-blue?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-latest-green?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![BCrypt](https://img.shields.io/badge/BCrypt-latest-blue?style=flat-square&logo=npm)](https://www.npmjs.com/package/bcrypt)
+[![TypeScript](https://img.shields.io/badge/TypeScript-latest-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Axios](https://img.shields.io/badge/Axios-latest-blue?style=flat-square&logo=axios)](https://github.com/axios/axios)
+[![Node.js](https://img.shields.io/badge/Node.js-latest-green?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Material-UI](https://img.shields.io/badge/Material--UI-latest-blue?style=flat-square&logo=material-ui&logoColor=white)](https://material-ui.com/)
+[![NodeMailer](https://img.shields.io/badge/NodeMailer-latest-blue?style=flat-square&logo=nodemailer)](https://nodemailer.com/)
+[![Postman](https://img.shields.io/badge/Postman-latest-orange?style=flat-square&logo=postman)](https://www.postman.com/)
+[![Redux](https://img.shields.io/badge/Redux-latest-purple?style=flat-square&logo=redux&logoColor=white)](https://redux.js.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-latest-green?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
+[![Mongoose](https://img.shields.io/badge/Mongoose-latest-green?style=flat-square&logo=mongoose)](https://mongoosejs.com/)
 
 
 # How to run server
