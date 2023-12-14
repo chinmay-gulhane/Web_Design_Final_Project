@@ -85,7 +85,7 @@ const FoodList: React.FC = () => {
             <div className="flex flex-col md:flex-row">
               <div className="flex flex-wrap justify-content-between justify-start w-full">
                 {foodItems.map((foodItem) => (
-                  <div key={foodItem._id} className="w-[24rem] flex-wrap">
+                  <div key={foodItem._id} className="w-[24rem] flex-wrap ">
                     <FoodCard
                       key={foodItem._id}
                       foodItem={foodItem}
