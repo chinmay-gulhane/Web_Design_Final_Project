@@ -144,7 +144,7 @@ const AdminRestaurants: React.FC<AdminRestaurantsProps> = ({}) => {
                       {restaurant.rating}
                     </TableCell>
                     <TableCell className="table-cell">
-                      {restaurant.phoneNumber}
+                      {restaurant.phone}
                     </TableCell>
                     <TableCell className="table-cell">
                       {restaurant.email}

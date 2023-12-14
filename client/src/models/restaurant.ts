@@ -7,7 +7,7 @@ interface Restaurant {
   foodItems: FoodItem[];
   rating: number;
   address: Address;
-  phoneNumber: string;
+  phone: string;
   profilePhoto: string;
   email: string;
   password: string;
