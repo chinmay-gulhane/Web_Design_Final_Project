@@ -16,6 +16,7 @@ export const getRestaurants = async (): Promise<Restaurant[]> => {
   }
 };
 
+// get restaurant by id
 export const getRestaurantById = async (
   restaurantId: string
 ): Promise<Restaurant> => {
@@ -29,6 +30,7 @@ export const getRestaurantById = async (
   }
 };
 
+// delete restaurant by id
 export const deleteRestaurantById = async (restaurantId: string) => {
   try {
     const response = await axios.delete(`${baseURL}${API_URL}/${restaurantId}`);

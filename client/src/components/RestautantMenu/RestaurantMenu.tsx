@@ -90,7 +90,6 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
 
       toast.success("Food item added successfully!");
     } catch (error) {
-      console.error("Error adding food item:", error);
       toast.error("Error adding food item. Please try again.");
     }
   };
@@ -126,7 +125,6 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         toast.success("Food item updated successfully!");
       }
     } catch (error) {
-      console.error("Error updating food item:", error);
       toast.error("Error updating food item. Please try again.");
     }
   };
@@ -150,7 +148,6 @@ const FoodItemsTable: React.FC<FoodItemsTableProps> = ({
         toast.success("Food item deleted successfully!");
       }
     } catch (error) {
-      console.error("Error deleting food item:", error);
       toast.error("Error deleting food item. Please try again.");
     }
   };

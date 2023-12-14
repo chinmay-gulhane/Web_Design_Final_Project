@@ -33,6 +33,7 @@ export const updateOrder = async (
   }
 };
 
+// search orders
 export const searchOrders = async (
   page: number = 1,
   pageSize: number = 10,
@@ -65,6 +66,7 @@ export const searchOrders = async (
   }
 };
 
+//  get all usesrs
 export const getAllUsers = async (): Promise<User[]> => {
   try {
     const response: AxiosResponse<UserResponse> = await axios.get(
