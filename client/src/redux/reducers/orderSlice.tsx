@@ -9,6 +9,7 @@ const initialState: OrderState = {
   tipPercentage: 0,
 };
 
+// order slice for maintaining order state
 const orderSlice = createSlice({
   name: "order",
   initialState,

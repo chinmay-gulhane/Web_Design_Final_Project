@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// common axios service
 const axiosInstance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 
 axiosInstance.interceptors.request.use((req) => {

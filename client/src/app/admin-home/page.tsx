@@ -15,6 +15,7 @@ import { adminActions } from "@/redux/reducers/adminSlice";
 import { useAppSelector } from "@/redux/store";
 import Spinner from "@/components/Spinner/Spinner";
 
+// admin home page
 const AdminHomePage = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>("Home");
   const [loading, setLoading] = useState(true);

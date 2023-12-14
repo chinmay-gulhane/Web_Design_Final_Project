@@ -11,6 +11,8 @@ import Spinner from "@/components/Spinner/Spinner";
 import { useAppSelector } from "@/redux/store";
 
 const baseUrl = "http://localhost:8080/restaurant";
+
+// restaurant fooditems page
 const FoodList: React.FC = () => {
   const params = useParams();
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);

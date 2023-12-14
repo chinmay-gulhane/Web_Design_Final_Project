@@ -1,5 +1,6 @@
 import FoodItem from "./foodItem";
 
+// models for oders
 export interface Order {
   _id?: string;
   userId: string;

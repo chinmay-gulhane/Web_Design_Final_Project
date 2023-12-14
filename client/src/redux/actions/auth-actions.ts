@@ -4,6 +4,7 @@ import axiosInstance from "@/services/axios-service";
 import { loginData, loginErrorResponse, registerData, registerRestaurantData, updatePasswordPayLoadType } from "@/models/auth";
 import { Role } from "@/enums/constants";
 
+// auth actions for storing data in store
 export const loginAction = createAsyncThunk(
   "auth/login",
   async (loginData: loginData) => {
