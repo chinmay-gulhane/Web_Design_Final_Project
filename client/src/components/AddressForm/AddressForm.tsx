@@ -16,6 +16,7 @@ export interface FormData {
   country: string;
 }
 
+// Props for the AddressForm component
 interface AddressFormProps {
   onNext: (data: Address) => void;
 }
@@ -24,6 +25,7 @@ type FormErrors = {
   [K in keyof Address]?: string;
 };
 
+// AddressForm component
 const AddressForm: React.FC<AddressFormProps> = ({ onNext }) => {
   const [formData, setFormData] = useState<Address>({
     // firstName: "",
@@ -43,6 +45,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onNext }) => {
   };
 
   const handleNextClick = () => {
+    // Array of required fields
     const requiredFields: Array<keyof Address> = [
       "addressLine",
       "city",
@@ -51,9 +54,11 @@ const AddressForm: React.FC<AddressFormProps> = ({ onNext }) => {
       "country",
     ];
 
+    // Object to store new form validation errors
     const newFormErrors: FormErrors = {};
     let isValid = true;
 
+    // Check required fields
     requiredFields.forEach((field) => {
       if (!formData[field]) {
         newFormErrors[field] = "This field is required";

@@ -59,7 +59,6 @@ const AdminUsers: React.FC<AdminUsersProps> = () => {
         setSelectedUser(null);
       } catch (error) {
         toast.error("Error deleting user");
-        console.error("Error deleting user:", error);
       }
     }
   };

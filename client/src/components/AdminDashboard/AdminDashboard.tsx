@@ -7,8 +7,10 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useAppSelector } from "@/redux/store";
 
 const AdminDashboard = () => {
+  // Get admin state from the Redux store
   const adminState = useAppSelector((state) => state.admin);
 
+  // Calculate total revenue based on orders
   const calculateRevenue = () => {
     return adminState.orders
       .reduce((acc, currentOrder) => acc + currentOrder.finalAmount, 0)
